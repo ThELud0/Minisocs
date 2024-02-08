@@ -14,9 +14,10 @@ left to right direction
 
 'Déclaration des acteurs :'
 actor Administrateur
-actor Utilisateur	
-Membre <|-- Administrateur
-
+actor Moderateur
+actor Membre
+Moderateur <|-- Administrateur
+Membre <|-- Moderateur
 'Déclaration des cas d'utilisation dans le système'
 rectangle "MiniSocs" {
 

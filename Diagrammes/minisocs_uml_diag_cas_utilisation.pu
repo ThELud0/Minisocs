@@ -21,20 +21,21 @@ Membre <|-- Moderateur
 'Déclaration des cas d'utilisation dans le système'
 rectangle "MiniSocs" {
 
-:Administrateur: -- (bloquer un compte utilisateur)
-:Moderateur: -- (ajouter un utilisateur)
-:Moderateur: -- (promouvoir un utilisateur)
-:Moderateur: -- (lister les utilisateur)
-:Moderateur: -- (fermer son réseau social)
-:Moderateur: -- (accepter un message)
-:Moderateur: -- (refuser un message)
-:Membre:    -- (désactiver son compte)
-:Membre:    -- (réactiver son compte)
+:Administrateur: -- (bloquer un compte utilisateur) 
+:Moderateur: -- (ajouter un utilisateur) 
+:Moderateur: -- (retirer un utilisateur) 
+:Moderateur: -- (promouvoir un utilisateur) 
+:Moderateur: -- (lister les utilisateurs)
+:Moderateur: -- (fermer son réseau social) 
+:Moderateur: -- (accepter un message) 
+:Moderateur: -- (refuser un message) 
+:Membre:    -- (désactiver son compte) 
+:Membre:    -- (réactiver son compte) 
 :Membre:    -- (poster un message)
-:Membre:    -- (cacher son message)
-:Membre:    -- (initialiser son compte)
-:Membre:    -- (définir son pseudo pour un réseau)
-:Membre:    -- (créer un réseau social)
+:Membre:    -- (cacher son message) 
+:Membre:    -- (initialiser son compte) 
+:Membre:    -- (définir son pseudo pour un réseau) 
+:Membre:    -- (créer un réseau social) 
 }
 
 @enduml

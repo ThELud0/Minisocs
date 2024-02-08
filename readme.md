@@ -1,8 +1,8 @@
 # Gestion de mini réseaux sociaux MiniSocs
 
 Binôme :
-* Prénom1 NOM1
-* Prénom2 NOM2
+* Ludovic HU
+* Jeanne VILLETTE
 
 ## Syntaxe MarkDown
 

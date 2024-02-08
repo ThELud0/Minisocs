@@ -1,7 +1,7 @@
 # Gestion de mini réseaux sociaux MiniSocs
 
 Binôme :
-* Ludovic HU b
+* Ludovic HU
 * Jeanne VILLETTE
 
 ## Syntaxe MarkDown

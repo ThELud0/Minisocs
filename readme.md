@@ -90,6 +90,12 @@ priorité HAUTE.
 
 NB : l'opération est idempotente.
 
+#### Poster un message (HAUTE)
+
+#### Initialiser son compte (HAUTE)
+
+#### Créer un réseau social (HAUTE)
+
 #### Autres cas d'utilisation et leur priorité respective
 
 - Retirer un utilisateur (basse)
@@ -97,6 +103,21 @@ NB : l'opération est idempotente.
 - Bloquer le compte d'un utilisateur (basse)
 
 - Lister les utilisateurs (moyenne)
+
+- Promouvoir un utilisateur (moyenne)
+
+- Fermer son réseau social (basse)
+
+- Accepter un message (moyenne)
+
+- Refuser un message (moyenne)
+
+- Réactiver son compte (basse)
+
+- Cacher son message (basse)
+
+- Définir son pseudo pour un réseau (basse)
+
 
 ## 2. Préparation des tests de validation des cas d'utilisation
 

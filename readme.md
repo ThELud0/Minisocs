@@ -73,13 +73,12 @@ priorité HAUTE.
 #### Ajouter un utilisateur (HAUTE)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
-∧ nom bien formé  (non null ∧ non vide) \
-∧ prénom bien formé  (non null ∧ non vide) \
-∧ courriel bien formé (respectant le standard RFC822) \
-∧ utilisateur avec ce pseudo inexistant
-- postcondition : \
+∧ le compte n'est pas bloqué \
+∧ le compte est actif \
 ∧ utilisateur avec ce pseudo existant \
-∧ le compte de l'utilisateur est actif
+∧ utilisateur n'est pas membre du réseau
+- postcondition : \
+∧ utilisateur est membre du réseau
 
 #### Désactiver son compte (HAUTE)
 - précondition : \
@@ -91,10 +90,50 @@ priorité HAUTE.
 NB : l'opération est idempotente.
 
 #### Poster un message (HAUTE)
+- précondition 1 : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ le compte n'est pas bloqué \
+∧ utilisateur avec ce pseudo existant \
+∧ message bien formé (non null ∧ non vide) \
+∧ l'utilisateur est un membre du réseau
+- postcondition 1 : \
+∧ le message est posté \
+∧ le message est non visible \
+∧ le message est en attente de traitement par un modérateur \
+
+- précondition 2 : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ le compte n'est pas bloqué \
+∧ utilisateur avec ce pseudo existant \
+∧ message bien formé (non null ∧ non vide) \
+∧ l'utilisateur est un modérateur du réseau
+- postcondition 2 : \
+∧ le message est posté \
+∧ le message est visible
+
 
 #### Initialiser son compte (HAUTE)
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ nom bien formé  (non null ∧ non vide) \
+∧ prénom bien formé  (non null ∧ non vide) \
+∧ courriel bien formé (respectant le standard RFC822) \
+∧ utilisateur avec ce pseudo inexistant
+- postcondition : \
+∧ utilisateur avec ce pseudo existant \
+∧ le compte de l'utilisateur est actif
 
 #### Créer un réseau social (HAUTE)
+- précondition : \
+∧ pseudo bien formé (non null ∧ non vide) \
+∧ le compte n'est pas bloqué \
+∧ utilisateur avec ce pseudo existant \
+∧ réseau avec ce nom inexistant \
+∧ nom du réseau bien formé (non null ∧ non vide)
+- postcondition : \
+∧ réseau existant \
+∧ utilisateur est membre du réseau \
+∧ utilisateur est modérateur du réseau
 
 #### Autres cas d'utilisation et leur priorité respective
 
@@ -125,7 +164,21 @@ NB : l'opération est idempotente.
 
 |                                                     | 1 | 2 | 3 | 4 | 5 | 6 |
 |:----------------------------------------------------|:--|:--|:--|---|---|---|
-| pseudo bien formé (non null ∧ non vide)              | F | T | T | T | T | T |
+| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T |
+| le compte n'est pas bloqué                          |   | F | T | T | T | T |
+| le compte est actif                                 |   |   | F | T | T | T |
+| utilisateur avec ce pseudo existant                 |   |   |   | F | T | T |
+| utilisateur n'est pas membre du réseau              |   |   |   |   | F | T |
+|                                                     |   |   |   |   |   |   |
+| utilisateur est membre du réseau                    | F | F | F | F | F | T |
+|                                                     |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                | 2 | 1 | 1 | 1 | 1 | 1 |
+
+#### Initialiser son compte (HAUTE)
+
+|                                                     | 1 | 2 | 3 | 4 | 5 | 6 |
+|:----------------------------------------------------|:--|:--|:--|---|---|---|
+| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T |
 | nom bien formé  (non null ∧ non vide)               |   | F | T | T | T | T |
 | prénom bien formé  (non null ∧ non vide)            |   |   | F | T | T | T |
 | courriel bien formé (respectant le standard RFC822) |   |   |   | F | T | T |
@@ -145,13 +198,48 @@ conditions.
 
 |                                          | 1 | 2 | 3 | 4 |
 |:-----------------------------------------|:--|:--|:--|:--|
-| pseudo bien formé (non null ∧ non vide)   | F | T | T | T |
+| pseudo bien formé (non null ∧ non vide)  | F | T | T | T |
 | le compte n'est pas bloqué               |   | F | T | T |
 | utilisateur avec ce pseudo existant      |   |   | F | T |
 |                                          |   |   |   |   |
 | le compte de l'utilisateur est désactivé | F | F | F | T |
 |                                          |   |   |   |   |
 | nombre de tests dans le jeu de tests     | 2 | 1 | 1 | 1 |
+
+#### Poster un message (HAUTE)
+
+|                                             | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|:--------------------------------------------|:--|:--|:--|---|---|---|---|
+| pseudo bien formé (non null ∧ non vide)     | F | T | T | T | T | T | T |
+| le compte n'est pas bloqué                  |   | F | T | T | T | T | T |
+| utilisateur avec ce pseudo existant         |   |   | F | T | T | T | T |   
+| message bien formé (non null ∧ non vide)    |   |   |   | F | T | T | T |
+| utilisateur est un membre du réseau         |   |   |   |   | F | T | T |
+| utilisateur est un modérateur du réseau     |   |   |   |   |   | F | T |
+|                                             |   |   |   |   |   |   |   |
+| message posté                               | F | F | F | F | F | T | T |
+| message est non visible                     | F | F | F | F | F | T | F |
+| message est visible                         | F | F | F | F | F | F | T |
+| message en attente de traitement par un mod | F | F | F | F | F | T | F |
+|                                             |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests        | 2 | 1 | 1 | 2 | 1 | 1 | 1 |
+
+#### Créer un réseau (HAUTE)
+
+|                                                     | 1 | 2 | 3 | 4 | 5 | 6 |
+|:----------------------------------------------------|:--|:--|:--|---|---|---|
+| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T |
+| le compte n'est pas bloqué                          |   | F | T | T | T | T |
+| utilisateur avec ce pseudo existant                 |   |   | F | T | T | T |
+| nom bien formé (non null ∧ non vide)                |   |   |   | F | T | T |
+| réseau avec ce nom inexistant                       |   |   |   |   | F | T |
+|                                                     |   |   |   |   |   |   |
+| réseau existant                                     | F | F | F | F | F | T |
+| utilisateur est membre du réseau                    | F | F | F | F | F | T |
+| utilisateur est modérateur du réseau                | F | F | F | F | F | T |
+|                                                     |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                | 2 | 1 | 1 | 2 | 1 | 1 |
+
 
 # 3. Conception
 

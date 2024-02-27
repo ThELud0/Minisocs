@@ -70,7 +70,7 @@ retrait de priorité « basse ».
 Voici les précondition et postcondition des cas d'utilisation de
 priorité HAUTE.
 
-#### Ajouter un utilisateur (HAUTE)
+#### Ajouter un membre (à un réseau) (HAUTE)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
 ∧ le compte n'est pas bloqué \
@@ -112,15 +112,17 @@ NB : l'opération est idempotente.
 ∧ le message est visible
 
 
-#### Initialiser son compte (HAUTE)
+#### Ajouter un utilisateur (à MiniSocs) (HAUTE)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
 ∧ nom bien formé  (non null ∧ non vide) \
 ∧ prénom bien formé  (non null ∧ non vide) \
 ∧ courriel bien formé (respectant le standard RFC822) \
-∧ utilisateur avec ce pseudo inexistant
+∧ utilisateur avec ce pseudo inexistant \
+^ utilisateur avec ce courriel inexistant \
 - postcondition : \
 ∧ utilisateur avec ce pseudo existant \
+^ utilisateur avec ce courriel existant \
 ∧ le compte de l'utilisateur est actif
 
 #### Créer un réseau social (HAUTE)
@@ -137,19 +139,21 @@ NB : l'opération est idempotente.
 
 #### Autres cas d'utilisation et leur priorité respective
 
-- Retirer un utilisateur (basse)
+- Retirer un utilisateur (de MiniSocs) (basse)
+
+- Retirer un membre (d'un réseau) (basse)
 
 - Bloquer le compte d'un utilisateur (basse)
 
-- Lister les utilisateurs (moyenne)
+- Lister les membres (moyenne)
 
-- Promouvoir un utilisateur (moyenne)
+- Promouvoir un membre (moyenne)
+
+- Déstituer un modérateur (basse)
 
 - Fermer son réseau social (basse)
 
-- Accepter un message (moyenne)
-
-- Refuser un message (moyenne)
+- Modérer un message (moyenne)
 
 - Réactiver son compte (basse)
 
@@ -160,7 +164,7 @@ NB : l'opération est idempotente.
 
 ## 2. Préparation des tests de validation des cas d'utilisation
 
-#### Ajouter un utilisateur (HAUTE)
+#### Ajouter un membre (à un réseau) (HAUTE)
 
 |                                                     | 1 | 2 | 3 | 4 | 5 | 6 |
 |:----------------------------------------------------|:--|:--|:--|---|---|---|
@@ -174,20 +178,22 @@ NB : l'opération est idempotente.
 |                                                     |   |   |   |   |   |   |
 | nombre de tests dans le jeu de tests                | 2 | 1 | 1 | 1 | 1 | 1 |
 
-#### Initialiser son compte (HAUTE)
+#### Ajouter un utilisateur (à MiniSocs) (HAUTE)
 
-|                                                     | 1 | 2 | 3 | 4 | 5 | 6 |
-|:----------------------------------------------------|:--|:--|:--|---|---|---|
-| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T |
-| nom bien formé  (non null ∧ non vide)               |   | F | T | T | T | T |
-| prénom bien formé  (non null ∧ non vide)            |   |   | F | T | T | T |
-| courriel bien formé (respectant le standard RFC822) |   |   |   | F | T | T |
-| utilisateur avec ce pseudo inexistant               |   |   |   |   | F | T |
-|                                                     |   |   |   |   |   |   |
-| utilisateur avec ce pseudo existant                 | F | F | F | F | F | T |
-| compte de l'utilisateur actif                       | F | F | F | F | F | T |
-|                                                     |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests                | 2 | 2 | 2 | 3 | 1 | 1 |
+|                                                     | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|:----------------------------------------------------|:--|:--|:--|---|---|---|---|
+| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T | T |
+| nom bien formé  (non null ∧ non vide)               |   | F | T | T | T | T | T |
+| prénom bien formé  (non null ∧ non vide)            |   |   | F | T | T | T | T |
+| courriel bien formé (respectant le standard RFC822) |   |   |   | F | T | T | T |
+| utilisateur avec ce pseudo inexistant               |   |   |   |   | F | T | T |
+| utilisateur avec ce courriel inexistant               |   |   |   |   |   | F | T |
+|                                                     |   |   |   |   |   |   |   |
+| utilisateur avec ce pseudo existant                 | F | F | F | F | F | F | T |
+| utilisateur avec ce courriel existant                 | F | F | F | F | F | F | T |
+| compte de l'utilisateur actif                       | F | F | F | F | F | F | T |
+|                                                     |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                | 2 | 2 | 2 | 3 | 1 | 1 | 1 |
 
 Le jeu de test 4 comporte trois tests : non null, non vide, et adresse
 courriel bien formée. On aurait pu n'en faire qu'un en considérant la

@@ -90,13 +90,13 @@ priorité HAUTE.
 NB : l'opération est idempotente.
 
 #### Poster un message (HAUTE)
-- précondition 1 : \
+- précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
 ∧ le compte n'est pas bloqué \
 ∧ utilisateur avec ce pseudo existant \
 ∧ message bien formé (non null ∧ non vide) \
 ∧ l'utilisateur est un membre du réseau
-- postcondition 1 : \
+- postcondition : \
 ∧ le message est posté \
 ∧ le message est non visible \
 ∧ le message est en attente de traitement par un modérateur \
@@ -313,6 +313,11 @@ Version recommandée
 
 ![diagrammeséquencedesactivercompte](./Diagrammes/minisocs_uml_diag_seq_desactiver_compte.svg)
 ([source](./Diagrammes/minisocs_uml_diag_seq_desactiver_compte.pu))
+
+#### Poster un message (HAUTE)
+
+
+
 
 
 

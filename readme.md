@@ -72,11 +72,14 @@ priorité HAUTE.
 
 #### Ajouter un membre (à un réseau) (HAUTE)
 - précondition : \
+∧ nom du réseau bien formé (non null ∧ non vide) \
+∧ réseau avec ce nom existant \
 ∧ pseudo bien formé (non null ∧ non vide) \
 ∧ le compte n'est pas bloqué \
 ∧ le compte est actif \
 ∧ utilisateur avec ce pseudo existant \
 ∧ utilisateur n'est pas membre du réseau
+∧ l'acteur est modérateur du réseau \
 - postcondition : \
 ∧ utilisateur est membre du réseau
 
@@ -91,6 +94,8 @@ NB : l'opération est idempotente.
 
 #### Poster un message (HAUTE)
 - précondition : \
+∧ nom du réseau bien formé (non null ∧ non vide) \
+∧ réseau avec ce nom existant \
 ∧ pseudo bien formé (non null ∧ non vide) \
 ∧ le compte n'est pas bloqué \
 ∧ utilisateur avec ce pseudo existant \
@@ -110,10 +115,10 @@ NB : l'opération est idempotente.
 ∧ prénom bien formé  (non null ∧ non vide) \
 ∧ courriel bien formé (respectant le standard RFC822) \
 ∧ utilisateur avec ce pseudo inexistant \
-^ utilisateur avec ce courriel inexistant \
+∧ utilisateur avec ce courriel inexistant \
 - postcondition : \
 ∧ utilisateur avec ce pseudo existant \
-^ utilisateur avec ce courriel existant \
+∧ utilisateur avec ce courriel existant \
 ∧ le compte de l'utilisateur est actif
 
 #### Créer un réseau social (HAUTE)
@@ -316,6 +321,11 @@ Version recommandée
 
 #### Poster un message (HAUTE)
 
+Version recommandée
+([source](./Diagrammes/minisocs_uml_diag_seq_poster_message.pu)).
+
+![diagrammeséquencepostermessage](./Diagrammes/minisocs_uml_diag_seq_poster_message.svg)
+([source](./Diagrammes/minisocs_uml_diag_seq_poster_message.pu))
 
 
 

@@ -1,0 +1,54 @@
+@startuml
+
+'Diagramme de séquence (PlantUML)'
+
+'Configuration charte graphique'
+hide footbox
+skinparam sequenceParticipantBackgroundColor White
+skinparam sequenceActorBackgroundColor White
+
+'Déclaration des acteurs et des participants (déjà existants avant la séquence)'
+
+actor "__mem:Membre__" as mem
+participant "__m:MiniSocs__" as m
+participant "__rs:RéseauSocial__" as rs
+participant "__msg:Message__" as msg
+
+'Séquence avec les messages, les créations de participants, etc.'
+
+mem -> m ++ : posterMessage(contenu, réseau)
+opt mem.pseudo non null ∧ non vide
+m -> m ++ : u=chercherUtilisateur(mem.pseudo)
+return
+opt (contenu, réseau non null ∧ non vide) ∧ (u != null)
+m -> m ++ : ec=checkEtatCompte(mem.pseudo)
+return
+m -> m ++ : r=chercherReseau(réseau)
+return
+opt (r != null) ∧ (ec == ACTIF)
+m -> rs ++ : p=faitpartie()
+return
+opt p == True
+m -> msg ++ : id=créerMessage(contenu, réseau)
+msg -> msg ++ : setContent(contenu)
+return
+msg -> msg ++ : setId(id)
+return
+msg -> msg ++ : nonAccepté()
+return
+msg -> msg ++ : nonCaché()
+return
+msg -> rs ++ : envoyerVersListeAttente()
+return
+return
+end
+end
+end
+end
+return
+
+
+
+
+
+@enduml

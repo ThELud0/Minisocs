@@ -162,17 +162,19 @@ NB : l'opération est idempotente.
 
 #### Ajouter un membre (à un réseau) (HAUTE)
 
-|                                                     | 1 | 2 | 3 | 4 | 5 | 6 |
-|:----------------------------------------------------|:--|:--|:--|---|---|---|
-| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T |
-| le compte n'est pas bloqué                          |   | F | T | T | T | T |
-| le compte est actif                                 |   |   | F | T | T | T |
-| utilisateur avec ce pseudo existant                 |   |   |   | F | T | T |
-| utilisateur n'est pas membre du réseau              |   |   |   |   | F | T |
-|                                                     |   |   |   |   |   |   |
-| utilisateur est membre du réseau                    | F | F | F | F | F | T |
-|                                                     |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests                | 2 | 1 | 1 | 1 | 1 | 1 |
+|                                                | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |  
+|:-----------------------------------------------|:--|:--|:--|---|---|---|---|---|
+| nom du réseau bien formé (non null ∧ non vide) | F | T | T | T | T | T | T | T |
+| réseau avec ce nom existant                    |   | F | T | T | T | T | T | T |
+| pseudo bien formé (non null ∧ non vide)        |   |   | F | T | T | T | T | T |
+| le compte n'est pas bloqué                     |   |   |   | F | T | T | T | T |
+| le compte est actif                            |   |   |   |   | F | T | T | T |
+| utilisateur avec ce pseudo existant            |   |   |   |   |   | F | T | T |
+| utilisateur n'est pas membre du réseau         |   |   |   |   |   |   | F | T |
+|                                                |   |   |   |   |   |   |   |   |
+| utilisateur est membre du réseau               | F | F | F | F | F | F | F | T |
+|                                                |   |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests           | 2 | 1 | 2 | 1 | 1 | 1 | 1 | 1 |
 
 #### Ajouter un utilisateur (à MiniSocs) (HAUTE)
 
@@ -210,19 +212,22 @@ conditions.
 
 #### Poster un message (HAUTE)
 
-|                                             | 1 | 2 | 3 | 4 | 5 | 6 |
-|:--------------------------------------------|:--|:--|:--|---|---|---|
-| pseudo bien formé (non null ∧ non vide)     | F | T | T | T | T | T |
-| le compte n'est pas bloqué                  |   | F | T | T | T | T |
-| utilisateur avec ce pseudo existant         |   |   | F | T | T | T |
-| message bien formé (non null ∧ non vide)    |   |   |   | F | T | T |
-| utilisateur est un membre du réseau         |   |   |   |   | F | T |
-|                                             |   |   |   |   |   |   |
-| message posté                               | F | F | F | F | F | T |
-| message est non visible                     | F | F | F | F | F | T |
-| message en attente de traitement par un mod | F | F | F | F | F | T |
-|                                             |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests        | 2 | 1 | 1 | 2 | 1 | 1 |
+|                                            | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|:-------------------------------------------|:--|:--|:--|---|---|---|---|---|---|
+| nom réseau bien formé (non null ∧ non vide)| F | T | T | T | T | T | T | T | T |
+| le compte n'est pas bloqué                 |   | F | T | T | T | T | T | T | T |
+| pseudo bien formé (non null ∧ non vide)    |   |   | F | T | T | T | T | T | T |
+| le compte n'est pas bloqué                 |   |   |   | F | T | T | T | T | T |
+| utilisateur avec ce pseudo existant        |   |   |   |   | F | T | T | T | T |
+| message bien formé (non null ∧ non vide)   |   |   |   |   |   | F | T | T | T |
+| utilisateur est un membre du réseau        |   |   |   |   |   |   | F | T | T |
+| réseau avec ce nom existant                |   |   |   |   |   |   |   | F | T |
+|                                            |   |   |   |   |   |   |   |   |   |
+| message posté                              | F | F | F | F | F | F | F | F | T |
+| message est non visible                    | F | F | F | F | F | F | F | F | T |
+| message en attente de traitement par un mod| F | F | F | F | F | F | F | F | T |
+|                                            |   |   |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests       | 2 | 1 | 2 | 1 | 1 | 2 | 1 | 1 | 1 |
 
 #### Créer un réseau (HAUTE)
 
@@ -327,6 +332,13 @@ Version recommandée
 ![diagrammeséquencepostermessage](./Diagrammes/minisocs_uml_diag_seq_poster_message.svg)
 ([source](./Diagrammes/minisocs_uml_diag_seq_poster_message.pu))
 
+#### Créer un réseau social (HAUTE)
+
+Version recommandée
+([source](./Diagrammes/minisocs_uml_diag_seq_creer_reseau.pu)).
+
+![diagrammeséquencecréerréseau](./Diagrammes/minisocs_uml_diag_seq_creer_reseau.svg)
+([source](./Diagrammes/minisocs_uml_diag_seq_creer_reseau.pu))
 
 
 

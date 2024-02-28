@@ -1,0 +1,38 @@
+@startuml
+
+'Diagramme de séquence (PlantUML)'
+
+'Configuration charte graphique'
+hide footbox
+skinparam sequenceParticipantBackgroundColor White
+skinparam sequenceActorBackgroundColor White
+
+'Déclaration des acteurs et des participants (déjà existants avant la séquence)'
+
+actor "__u:Utilisateur__" as u
+participant "__m:MiniSocs__" as m
+participant "__rs:RéseauSocial__" as rs
+
+'Séquence avec les messages, les créations de participants, etc.'
+
+u -> m ++ : creerReseau(nom)
+opt u.pseudo non null ∧ non vide
+m -> m ++ : user=chercherUtilisateur(u.pseudo)
+return
+opt (nom non null ∧ non vide) ∧ (user != null)
+m -> m ++ : ec=checkEtatCompte(u.pseudo)
+return
+m -> m ++ : r=chercherReseau(nom)
+return
+opt (r == null) ∧ (ec == ACTIF)
+m -> rs ++ : createReseau(nom)
+return
+rs -> rs ++ : ajouterMembre(u)
+return
+rs -> rs ++ : setModerateur(u)
+return
+end
+end
+end
+return
+@enduml

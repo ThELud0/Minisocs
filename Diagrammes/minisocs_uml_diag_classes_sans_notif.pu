@@ -12,6 +12,7 @@ skinparam class {
 }
 
 'Classes, énumérations, etc.'
+
 class MiniSocs {
   - nom: String
 }
@@ -27,9 +28,38 @@ enum ÉtatCompte <<enum>> {
   DÉSACTIVÉ
   BLOQUÉ
 }
+class Membre {
+  - pseudoReseau: String
+  - typeMembre: TypeMembre
+}
+enum TypeMembre <<enum>> {
+  ADM
+  MOD
+  MEM
+}
+class ReseauSocial {
+  - nom: String
+  - etatReseau: EtatReseau
+}
+enum EtatReseau <<enum>> {
+  FERMÉ
+  OUVERT
+}
+class Message {
+  - idMessage: int
+  - contenu : String
+  - accepté: boolean
+  - caché: boolean
+}
 
 'Associations, etc.'
 MiniSocs *--> "*" Utilisateur
+MiniSocs *--> "*" Membre
+MiniSocs *--> "*" ReseauSocial
+Utilisateur <|-- Membre
+ReseauSocial "1..*" -- "1..*" Membre : < fait partie
+Message "*" -- "1" Membre : < a posté
+ReseauSocial o-- "*" Message : < posté dans
 
 'Au besoin, aides pour le positionnement'
 

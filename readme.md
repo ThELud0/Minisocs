@@ -101,15 +101,6 @@ NB : l'opération est idempotente.
 ∧ le message est non visible \
 ∧ le message est en attente de traitement par un modérateur \
 
-- précondition 2 : \
-∧ pseudo bien formé (non null ∧ non vide) \
-∧ le compte n'est pas bloqué \
-∧ utilisateur avec ce pseudo existant \
-∧ message bien formé (non null ∧ non vide) \
-∧ l'utilisateur est un modérateur du réseau
-- postcondition 2 : \
-∧ le message est posté \
-∧ le message est visible
 
 
 #### Ajouter un utilisateur (à MiniSocs) (HAUTE)
@@ -187,10 +178,10 @@ NB : l'opération est idempotente.
 | prénom bien formé  (non null ∧ non vide)            |   |   | F | T | T | T | T |
 | courriel bien formé (respectant le standard RFC822) |   |   |   | F | T | T | T |
 | utilisateur avec ce pseudo inexistant               |   |   |   |   | F | T | T |
-| utilisateur avec ce courriel inexistant               |   |   |   |   |   | F | T |
+| utilisateur avec ce courriel inexistant             |   |   |   |   |   | F | T |
 |                                                     |   |   |   |   |   |   |   |
 | utilisateur avec ce pseudo existant                 | F | F | F | F | F | F | T |
-| utilisateur avec ce courriel existant                 | F | F | F | F | F | F | T |
+| utilisateur avec ce courriel existant               | F | F | F | F | F | F | T |
 | compte de l'utilisateur actif                       | F | F | F | F | F | F | T |
 |                                                     |   |   |   |   |   |   |   |
 | nombre de tests dans le jeu de tests                | 2 | 2 | 2 | 3 | 1 | 1 | 1 |
@@ -214,21 +205,19 @@ conditions.
 
 #### Poster un message (HAUTE)
 
-|                                             | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
-|:--------------------------------------------|:--|:--|:--|---|---|---|---|
-| pseudo bien formé (non null ∧ non vide)     | F | T | T | T | T | T | T |
-| le compte n'est pas bloqué                  |   | F | T | T | T | T | T |
-| utilisateur avec ce pseudo existant         |   |   | F | T | T | T | T |   
-| message bien formé (non null ∧ non vide)    |   |   |   | F | T | T | T |
-| utilisateur est un membre du réseau         |   |   |   |   | F | T | T |
-| utilisateur est un modérateur du réseau     |   |   |   |   |   | F | T |
-|                                             |   |   |   |   |   |   |   |
-| message posté                               | F | F | F | F | F | T | T |
-| message est non visible                     | F | F | F | F | F | T | F |
-| message est visible                         | F | F | F | F | F | F | T |
-| message en attente de traitement par un mod | F | F | F | F | F | T | F |
-|                                             |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests        | 2 | 1 | 1 | 2 | 1 | 1 | 1 |
+|                                             | 1 | 2 | 3 | 4 | 5 | 6 |
+|:--------------------------------------------|:--|:--|:--|---|---|---|
+| pseudo bien formé (non null ∧ non vide)     | F | T | T | T | T | T |
+| le compte n'est pas bloqué                  |   | F | T | T | T | T |
+| utilisateur avec ce pseudo existant         |   |   | F | T | T | T |
+| message bien formé (non null ∧ non vide)    |   |   |   | F | T | T |
+| utilisateur est un membre du réseau         |   |   |   |   | F | T |
+|                                             |   |   |   |   |   |   |
+| message posté                               | F | F | F | F | F | T |
+| message est non visible                     | F | F | F | F | F | T |
+| message en attente de traitement par un mod | F | F | F | F | F | T |
+|                                             |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests        | 2 | 1 | 1 | 2 | 1 | 1 |
 
 #### Créer un réseau (HAUTE)
 

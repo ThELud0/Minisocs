@@ -14,15 +14,15 @@ participant "__m:MiniSocs__" as m
 
 'Séquence avec les messages, les créations de participants, etc.'
 
-admin -> m ++ : ajouterUtilisateur(pseudo, nom, prénom, courriel)
-opt pseudo, nom, prénom, courriel non null ∧ non vide
+admin -> m ++ : desactiverCompte(pseudo)
+opt pseudo non null ∧ non vide
   m -> m ++ : u=chercherUtilisateur(pseudo): Utilisateur
   return
-  m -> m ++ : u=chercherCourriel(courriel): Utilisateur
+  m -> m ++ : e=checkEtatCompte(pseudo): EtatCompte
   return
-  opt u == null
+  opt (u != null)^(e != BLOQUÉ)
     create "__u:Utilisateur__" as u
-    m -> "__u:Utilisateur__" as u ++ : u=<<create(pseudo, nom, prénom, courriel)>>
+    m -> "__u:Utilisateur__" as u ++ : u=<<block(pseudo)>>
     return
   end
 end

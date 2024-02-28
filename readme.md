@@ -246,7 +246,7 @@ Voici les listes des classes candidates et de leurs attributs:
 - `Utilisateur` avec les attributs `pseudo` pour identifier de manière
   unique un utilisateur, `nom` et `prénom`, adresse `courriel`, et
   `etatCompte` pour l'état de son compte,
-- `ÉtatCompte` avec les énumérateurs `COMPTE_ACTIF` et `COMPTE_DÉSACTIVÉ`,
+- `ÉtatCompte` avec les énumérateurs `ACTIF`, `DÉSACTIVÉ` et `BLOQUÉ`
 
 ## 3.2. Premières opérations des classes
 
@@ -303,9 +303,19 @@ Version simplifiée
 ([source](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur_version_simplifiee.pu)).
 
 
-
 ![diagrammeséquenceajouterutilisateursimplifié](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur_version_simplifiee.svg)
 ([source](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur_version_simplifiee.pu))
+
+#### Désactiver son compte (HAUTE)
+
+Version recommandée
+([source](./Diagrammes/minisocs_uml_diag_seq_desactiver_compte.pu)).
+
+![diagrammeséquencedesactivercompte](./Diagrammes/minisocs_uml_diag_seq_desactiver_compte.svg)
+([source](./Diagrammes/minisocs_uml_diag_seq_desactiver_compte.pu))
+
+
+
 
 # 7. Diagrammes de machine à états et invariants
 

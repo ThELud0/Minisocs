@@ -1,0 +1,22 @@
+@startuml
+
+'Diagramme de machine à états (PlantUML)'
+
+'Configuration charte graphique'
+
+'États et transitions'
+state EnCréation : entry : constructeur()
+state EnDestruction : entry : destructeur()
+
+[*] -right-> EnCréation
+EnCréation --> AcceptéEtNonCaché : post\n[typeMembre==MOD ∨ typeMembre==ADM]\n/modérer(mem.getTypeMembre(), etatMessage)
+EnCréation -right-> EnAttente : mise en attente\n[typeMembre==MEM]\n/envoyerVersListeAttente()
+AcceptéEtNonCaché -right-> AcceptéEtCaché : membre cache\n/cacher()
+AcceptéEtCaché -left-> AcceptéEtNonCaché : membre rend visible\n/setVisible()
+EnAttente --> AcceptéEtNonCaché : post/modérer()
+EnAttente --> EnDestruction : refus/modérer()
+EnAttente --> EnDestruction : supression du réseau
+AcceptéEtNonCaché --> EnDestruction : supression du réseau
+AcceptéEtCaché --> EnDestruction : supression du réseau
+EnDestruction -left-> [*]
+@enduml

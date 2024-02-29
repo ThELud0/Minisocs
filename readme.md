@@ -398,6 +398,14 @@ Voici tous les attributs de la classe :
 ∧ EmailValidator.getInstance().isValid(courriel)
 ∧ etatCompte != null
 ```
+## 7.1. Classe Message
+### 7.1.1. Diagramme de machine à états
+Diagramme ([source](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.pu)).
+
+![diagrammemachineaétatsmessage](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.svg)
+([source](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.pu))
+
+
 
 # 8 Préparation des tests unitaires
 

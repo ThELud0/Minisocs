@@ -48,8 +48,13 @@ enum EtatReseau <<enum>> {
 class Message {
   - idMessage: int
   - contenu : String
-  - accepté: boolean
+  - etatMessage: EtatMessage
   - caché: boolean
+}
+enum EtatMessage <<enum>> {
+  ACCEPTÉ
+  REFUSÉ
+  ATTENTE
 }
 
 'Associations, etc.'

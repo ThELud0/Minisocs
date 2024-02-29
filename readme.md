@@ -74,11 +74,13 @@ priorité HAUTE.
 - précondition : \
 ∧ nom du réseau bien formé (non null ∧ non vide) \
 ∧ réseau avec ce nom existant \
+∧ réseau avec ce nom ouvert \
 ∧ pseudo bien formé (non null ∧ non vide) \
-∧ le compte n'est pas bloqué \
 ∧ le compte est actif \
 ∧ utilisateur avec ce pseudo existant \
-∧ utilisateur n'est pas membre du réseau
+∧ utilisateur n'est pas membre du réseau \
+∧ l'acteur a un nom bien formé (non null ^ non vide) \
+∧ l'acteur existe \ 
 ∧ l'acteur est modérateur du réseau \
 - postcondition : \
 ∧ utilisateur est membre du réseau
@@ -86,7 +88,7 @@ priorité HAUTE.
 #### Désactiver son compte (HAUTE)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
-∧ le compte n'est pas bloqué \
+∧ le compte est actif \
 ∧ utilisateur avec ce pseudo existant
 - postcondition : le compte de l'utilisateur est désactivé
 
@@ -96,6 +98,7 @@ NB : l'opération est idempotente.
 - précondition : \
 ∧ nom du réseau bien formé (non null ∧ non vide) \
 ∧ réseau avec ce nom existant \
+∧ réseau avec ce nom ouvert \
 ∧ pseudo bien formé (non null ∧ non vide) \
 ∧ le compte n'est pas bloqué \
 ∧ utilisateur avec ce pseudo existant \
@@ -116,6 +119,9 @@ NB : l'opération est idempotente.
 ∧ courriel bien formé (respectant le standard RFC822) \
 ∧ utilisateur avec ce pseudo inexistant \
 ∧ utilisateur avec ce courriel inexistant \
+∧ l'acteur a un nom bien formé (non null ^ non vide)\
+∧ l'acteur existe \ 
+∧ l'acteur est administrateur du réseau \
 - postcondition : \
 ∧ utilisateur avec ce pseudo existant \
 ∧ utilisateur avec ce courriel existant \
@@ -124,12 +130,13 @@ NB : l'opération est idempotente.
 #### Créer un réseau social (HAUTE)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
-∧ le compte n'est pas bloqué \
+∧ le compte est actif \
 ∧ utilisateur avec ce pseudo existant \
 ∧ réseau avec ce nom inexistant \
 ∧ nom du réseau bien formé (non null ∧ non vide)
 - postcondition : \
 ∧ réseau existant \
+∧ réseau ouvert \
 ∧ utilisateur est membre du réseau \
 ∧ utilisateur est modérateur du réseau
 
@@ -162,36 +169,42 @@ NB : l'opération est idempotente.
 
 #### Ajouter un membre (à un réseau) (HAUTE)
 
-|                                                | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |  
-|:-----------------------------------------------|:--|:--|:--|---|---|---|---|---|
-| nom du réseau bien formé (non null ∧ non vide) | F | T | T | T | T | T | T | T |
-| réseau avec ce nom existant                    |   | F | T | T | T | T | T | T |
-| pseudo bien formé (non null ∧ non vide)        |   |   | F | T | T | T | T | T |
-| le compte n'est pas bloqué                     |   |   |   | F | T | T | T | T |
-| le compte est actif                            |   |   |   |   | F | T | T | T |
-| utilisateur avec ce pseudo existant            |   |   |   |   |   | F | T | T |
-| utilisateur n'est pas membre du réseau         |   |   |   |   |   |   | F | T |
-|                                                |   |   |   |   |   |   |   |   |
-| utilisateur est membre du réseau               | F | F | F | F | F | F | F | T |
-|                                                |   |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests           | 2 | 1 | 2 | 1 | 1 | 1 | 1 | 1 |
+|                                                | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+|:-----------------------------------------------|:--|:--|:--|---|---|---|---|---|---|---|---|
+| nom du réseau bien formé (non null ∧ non vide) | F | T | T | T | T | T | T | T | T | T | T |
+| réseau avec ce nom existant                    |   | F | T | T | T | T | T | T | T | T | T |
+| réseau avec ce nom ouvert                      |   |   | F | T | T | T | T | T | T | T | T |
+| pseudo bien formé (non null ∧ non vide)        |   |   |   | F | T | T | T | T | T | T | T |
+| utilisateur avec ce pseudo existant            |   |   |   |   | F | T | T | T | T | T | T |
+| utilisateur n'est pas membre du réseau         |   |   |   |   |   | F | T | T | T | T | T |
+| le compte est actif                            |   |   |   |   |   |   | F | T | T | T | T |
+| nom acteur bien formé (non null ∧ non vide)    |   |   |   |   |   |   |   | F | T | T | T |
+| acteur existant                                |   |   |   |   |   |   |   |   | F | T | T |
+| acteur est modérateur                          |   |   |   |   |   |   |   |   |   | F | T |
+|                                                |   |   |   |   |   |   |   |   |   |   |   |
+| utilisateur est membre du réseau               | F | F | F | F | F | F | F | F | F | F | T |
+|                                                |   |   |   |   |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests           | 2 | 1 | 2 | 1 | 1 | 1 | 1 | 2 | 1 | 1 | 1 |
 
 #### Ajouter un utilisateur (à MiniSocs) (HAUTE)
 
-|                                                     | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
-|:----------------------------------------------------|:--|:--|:--|---|---|---|---|
-| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T | T |
-| nom bien formé  (non null ∧ non vide)               |   | F | T | T | T | T | T |
-| prénom bien formé  (non null ∧ non vide)            |   |   | F | T | T | T | T |
-| courriel bien formé (respectant le standard RFC822) |   |   |   | F | T | T | T |
-| utilisateur avec ce pseudo inexistant               |   |   |   |   | F | T | T |
-| utilisateur avec ce courriel inexistant             |   |   |   |   |   | F | T |
-|                                                     |   |   |   |   |   |   |   |
-| utilisateur avec ce pseudo existant                 | F | F | F | F | F | F | T |
-| utilisateur avec ce courriel existant               | F | F | F | F | F | F | T |
-| compte de l'utilisateur actif                       | F | F | F | F | F | F | T |
-|                                                     |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests                | 2 | 2 | 2 | 3 | 1 | 1 | 1 |
+|                                                     | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|:----------------------------------------------------|:--|:--|:--|---|---|---|---|---|---|---|
+| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T | T | T | T | T |
+| nom bien formé  (non null ∧ non vide)               |   | F | T | T | T | T | T | T | T | T |
+| prénom bien formé  (non null ∧ non vide)            |   |   | F | T | T | T | T | T | T | T |
+| courriel bien formé (respectant le standard RFC822) |   |   |   | F | T | T | T | T | T | T |
+| utilisateur avec ce pseudo inexistant               |   |   |   |   | F | T | T | T | T | T |
+| utilisateur avec ce courriel inexistant             |   |   |   |   |   | F | T | T | T | T |
+| nom acteur bien formé (non null ∧ non vide)         |   |   |   |   |   |   | F | T | T | T |
+| acteur existant                                     |   |   |   |   |   |   |   | F | T | T |
+| acteur est modérateur                               |   |   |   |   |   |   |   |   | F | T |
+|                                                     |   |   |   |   |   |   |   |   |   |   |
+| utilisateur avec ce pseudo existant                 | F | F | F | F | F | F | F | F | F | T |
+| utilisateur avec ce courriel existant               | F | F | F | F | F | F | F | F | F | T |
+| compte de l'utilisateur actif                       | F | F | F | F | F | F | F | F | F | T |
+|                                                     |   |   |   |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                | 2 | 2 | 2 | 3 | 1 | 1 | 2 | 1 | 1 | 1 |
 
 Le jeu de test 4 comporte trois tests : non null, non vide, et adresse
 courriel bien formée. On aurait pu n'en faire qu'un en considérant la
@@ -203,8 +216,8 @@ conditions.
 |                                          | 1 | 2 | 3 | 4 |
 |:-----------------------------------------|:--|:--|:--|:--|
 | pseudo bien formé (non null ∧ non vide)  | F | T | T | T |
-| le compte n'est pas bloqué               |   | F | T | T |
-| utilisateur avec ce pseudo existant      |   |   | F | T |
+| utilisateur avec ce pseudo existant      |   | F | T | T |
+| le compte est actif                      |   |   | F | T |
 |                                          |   |   |   |   |
 | le compte de l'utilisateur est désactivé | F | F | F | T |
 |                                          |   |   |   |   |
@@ -215,13 +228,13 @@ conditions.
 |                                            | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
 |:-------------------------------------------|:--|:--|:--|---|---|---|---|---|---|
 | nom réseau bien formé (non null ∧ non vide)| F | T | T | T | T | T | T | T | T |
-| le compte n'est pas bloqué                 |   | F | T | T | T | T | T | T | T |
-| pseudo bien formé (non null ∧ non vide)    |   |   | F | T | T | T | T | T | T |
-| le compte n'est pas bloqué                 |   |   |   | F | T | T | T | T | T |
-| utilisateur avec ce pseudo existant        |   |   |   |   | F | T | T | T | T |
+| pseudo bien formé (non null ∧ non vide)    |   | F | T | T | T | T | T | T | T |
+| utilisateur avec ce pseudo existant        |   |   | F | T | T | T | T | T | T |
+| réseau avec ce nom existant                |   |   |   | F | T | T | T | T | T |
+| le compte utilisateur n'est pas bloqué     |   |   |   |   | F | T | T | T | T |
 | message bien formé (non null ∧ non vide)   |   |   |   |   |   | F | T | T | T |
 | utilisateur est un membre du réseau        |   |   |   |   |   |   | F | T | T |
-| réseau avec ce nom existant                |   |   |   |   |   |   |   | F | T |
+| réseau avec ce nom ouvert                  |   |   |   |   |   |   |   | F | T |
 |                                            |   |   |   |   |   |   |   |   |   |
 | message posté                              | F | F | F | F | F | F | F | F | T |
 | message est non visible                    | F | F | F | F | F | F | F | F | T |
@@ -234,12 +247,13 @@ conditions.
 |                                                     | 1 | 2 | 3 | 4 | 5 | 6 |
 |:----------------------------------------------------|:--|:--|:--|---|---|---|
 | pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T |
-| le compte n'est pas bloqué                          |   | F | T | T | T | T |
+| le compte est actif                                 |   | F | T | T | T | T |
 | utilisateur avec ce pseudo existant                 |   |   | F | T | T | T |
 | nom bien formé (non null ∧ non vide)                |   |   |   | F | T | T |
 | réseau avec ce nom inexistant                       |   |   |   |   | F | T |
 |                                                     |   |   |   |   |   |   |
 | réseau existant                                     | F | F | F | F | F | T |
+| réseau ouvert                                       | F | F | F | F | F | T |
 | utilisateur est membre du réseau                    | F | F | F | F | F | T |
 | utilisateur est modérateur du réseau                | F | F | F | F | F | T |
 |                                                     |   |   |   |   |   |   |
@@ -309,20 +323,8 @@ Version recommandée
 ![diagrammeséquenceajouterutilisateur](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur.svg)
 ([source](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur.pu))
 
-Version simplifiée
-([source](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur_version_simplifiee.pu)).
 
-
-![diagrammeséquenceajouterutilisateursimplifié](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur_version_simplifiee.svg)
-([source](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur_version_simplifiee.pu))
-
-#### Désactiver son compte (HAUTE)
-
-Version recommandée
-([source](./Diagrammes/minisocs_uml_diag_seq_desactiver_compte.pu)).
-
-![diagrammeséquencedesactivercompte](./Diagrammes/minisocs_uml_diag_seq_desactiver_compte.svg)
-([source](./Diagrammes/minisocs_uml_diag_seq_desactiver_compte.pu))
+*
 
 #### Poster un message (HAUTE)
 

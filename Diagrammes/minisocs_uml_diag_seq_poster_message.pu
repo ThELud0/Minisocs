@@ -34,7 +34,7 @@ msg -> msg ++ : setContent(contenu)
 return
 msg -> msg ++ : setId(id)
 return
-msg -> msg ++ : nonAccepté()
+msg -> msg ++ : initEtatMessage()
 return
 msg -> msg ++ : nonCaché()
 return

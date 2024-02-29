@@ -58,8 +58,8 @@ MiniSocs *--> "*" Membre
 MiniSocs *--> "*" ReseauSocial
 Utilisateur <|-- Membre
 ReseauSocial "1..*" -- "1..*" Membre : < fait partie
-Message "*"<-- "1" Membre : < a posté
-ReseauSocial *-- "*" Message : < posté dans
+Message "*" -- "1" Membre : < a posté
+ReseauSocial o-- "*" Message : < posté dans
 
 'Au besoin, aides pour le positionnement'
 

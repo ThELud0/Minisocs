@@ -25,12 +25,19 @@ return
 m -> m ++ : r=chercherReseau(nom)
 return
 opt (r == null) ∧ (ec == ACTIF)
-m -> rs ++ : createReseau(nom)
+m -> m ++ : createReseau(nom)
 return
-rs -> rs ++ : ajouterMembre(u)
+create "__mem:Membre__" as mem
+m -> "__mem:Membre__" as mem ++ : ajouterMembre(u, rs)
+mem -> mem ++ : setPseudoRS(u.pseudo)
 return
-rs -> rs ++ : setModerateur(u)
+mem -> mem ++ : initType()
 return
+return
+
+rs -> "__mem:Membre__" as mem ++ : setModerateur(mem)
+return
+
 end
 end
 end

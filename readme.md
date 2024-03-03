@@ -398,14 +398,52 @@ Voici tous les attributs de la classe :
 ∧ EmailValidator.getInstance().isValid(courriel)
 ∧ etatCompte != null
 ```
-## 7.1. Classe Message
-### 7.1.1. Diagramme de machine à états
+## 7.2. Classe Message
+
+### 7.2.1. Diagramme de machine à états
+
 Diagramme ([source](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.pu)).
 
 ![diagrammemachineaétatsmessage](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.svg)
 ([source](./Diagrammes/minisocs_uml_diag_machine_a_etats_message.pu))
 
+### 7.2.2. Fiche de la classe
 
+Voici tous les attributs de la classe :
+```
+— final int idMessage
+— String contenu
+— EtatMessage etatMessage 
+— boolean cache
+— ReseauSocial reseauSocial
+— Membre membre
+
+Voici toute les méthodes de la classe : 
+# constructeur()
++ modérer()
++ cacher()
++ visible()
++ setId()
++ setContent()
++ initEtatMessage()
++ envoyerVersListeAttente()
++ getId() : int
++ getcontent : String
++ getEtatMessage : EtatMessage
++ getMembre() : Membre
+# destructeur
+
+```
+
+### 7.2.3. Invariant
+
+```
+  (cache ⇒ etatMessage==ACCEPTE)
+∧ contenu != null ∧ !contenu.isBlank()
+∧ idMessage != null
+∧ reseauSocial != null
+∧ membre != null^
+```
 
 # 8 Préparation des tests unitaires
 

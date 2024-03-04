@@ -240,7 +240,7 @@ conditions.
 | message est non visible                    | F | F | F | F | F | F | F | F | T |
 | message en attente de traitement par un mod| F | F | F | F | F | F | F | F | T |
 |                                            |   |   |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests       | 2 | 1 | 2 | 1 | 1 | 2 | 1 | 1 | 1 |
+| nombre de tests dans le jeu de tests       | 2 | 2 | 1 | 1 | 2 | 2 | 1 | 1 | 1 |
 
 #### Créer un réseau (HAUTE)
 
@@ -413,10 +413,10 @@ Voici tous les attributs de la classe :
 ```
 — final int idMessage
 — String contenu
-— EtatMessage etatMessage 
+— etatMessage EtatMessage 
 — boolean cache
-— ReseauSocial reseauSocial
-— Membre membre
+— reseauSocial ReseauSocial
+— membre Membre
 
 Voici toute les méthodes de la classe : 
 # constructeur()
@@ -428,7 +428,7 @@ Voici toute les méthodes de la classe :
 + initEtatMessage()
 + envoyerVersListeAttente()
 + getId() : int
-+ getcontent : String
++ getContent : String
 + getEtatMessage : EtatMessage
 + getMembre() : Membre
 # destructeur
@@ -442,7 +442,7 @@ Voici toute les méthodes de la classe :
 ∧ contenu != null ∧ !contenu.isBlank()
 ∧ idMessage != null
 ∧ reseauSocial != null
-∧ membre != null^
+∧ membre != null
 ```
 
 # 8 Préparation des tests unitaires
@@ -468,7 +468,7 @@ Voici toute les méthodes de la classe :
 |                                              |     |     |     |     |     |
 | nombre de tests dans le jeu de tests         | 2   | 2   | 2   | 3   | 1   |
 
-Trois tests dans le jeu de tests 5 pour non null, puis non vide, et
+Trois tests dans le jeu de tests 4 pour non null, puis non vide, et
 enfin une chaîne de caractères qui n'est pas une adresse courriel.
 
 ### Opération désactiverCompte
@@ -484,6 +484,53 @@ enfin une chaîne de caractères qui n'est pas une adresse courriel.
 | nombre de tests dans le jeu de tests | 1   | 2   |
 
 Deux tests dans le jeu de tests 2 pour l'idempotence.
+
+
+## 8.2. Opérations de la classe Message
+
+### Opération constructeur
+
+|                                            | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|:-------------------------------------------|:--|:--|:--|---|---|---|---|---|---|
+| nom réseau bien formé (non null ∧ non vide)| F | T | T | T | T | T | T | T | T |
+| pseudo bien formé (non null ∧ non vide)    |   | F | T | T | T | T | T | T | T |
+| utilisateur avec ce pseudo existant        |   |   | F | T | T | T | T | T | T |
+| réseau avec ce nom existant                |   |   |   | F | T | T | T | T | T |
+| le compte utilisateur est actif            |   |   |   |   | F | T | T | T | T |
+| message bien formé (contenu non null ∧ non vide)|   |   |   |   |   | F | T | T | T |
+| utilisateur est un membre du réseau        |   |   |   |   |   |   | F | T | T |
+| réseau avec ce nom ouvert                  |   |   |   |   |   |   |   | F | T |
+|                                            |   |   |   |   |   |   |   |   |   |
+| idMessage = setId(id)                      | F | F | F | F | F | F | F | F | T |
+| contenu' = contenu                         | F | F | F | F | F | F | F | F | T |
+| etatMessage = ATTENTE                      | F | F | F | F | F | F | F | F | T |
+| cache = False                              | F | F | F | F | F | F | F | F | T |
+| reseauSocial = reseau                      | F | F | F | F | F | F | F | F | T |
+| membre' = membre                           | F | F | F | F | F | F | F | F | T |
+|                                            |   |   |   |   |   |   |   |   |   |
+| levée d'une exception                      | oui | oui | oui | oui | oui | oui | oui | oui | non |
+|                                            |   |   |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests       | 2 | 2 | 1 | 1 | 2 | 2 | 1 | 1 | 1 |
+
+### Opération modérer()
+ 
+|                                      | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   | 10  |
+|:-------------------------------------|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|
+| contenu != null ∧ !contenu.isBlank() | F   | T   | T   | T   | T   | T   | T   | T   | T   | T   |
+| reseauSocial != null                 |     | F   | T   | T   | T   | T   | T   | T   | T   | T   |
+| idMessage != null                    |     |     | F   | T   | T   | T   | T   | T   | T   | T   |
+| membre != null                       |     |     |     | F   | T   | T   | T   | T   | T   | T   |
+| membre appartient au réseau          |     |     |     |     | F   | T   | T   | T   | T   | T   |
+| réseau est ouvert                    |     |     |     |     |     | F   | T   | T   | T   | T   |
+| etatMessage = ATTENTE                |     |     |     |     |     |     | F   | T   | T   | T   |
+| acteur appartient au réseau          |     |     |     |     |     |     |     | F   | T   | T   |
+| acteur est modérateur ou administrateur du réseau|     |     |     |     |     |     |     |     | F   | T   |
+|                                      |     |     |     |     |     |     |     |     |     |     |
+| etatMessage = ACCEPTE ∨ REFUSE       | F   | F   | F   | F   | F   | F   | F   | F   | F   | T   |
+|                                      |     |     |     |     |     |     |     |     |     |     |
+| levée d'une exception                | oui | oui | oui | oui | oui | oui | oui | oui | oui | non |
+|                                      |     |     |     |     |     |     |     |     |     |     |
+| nombre de tests dans le jeu de tests | 2   | 2   | 1   | 2   | 1   | 1   | 1   | 1   | 1   | 1   |
 
 ---
 FIN DU DOCUMENT

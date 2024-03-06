@@ -96,3 +96,98 @@ pourquoi 2 cas (accepter et refuser) ? quand on peut faire 1 cas (moderer)
 - [] TABLEDECTV-07-MAJ-précondition-postcondition
   - Pensez à mettre à jour les tables de décision si vous faites des
     mises à jour des pré/post conditions.
+
+## 3. Conception
+
+### Diagramme de classes
+
+[] pourquoi avez-vous besoin d'un attribut booléen "caché" - cela pourrait être une valeur de l'énumération "Etat Message"
+
+- [] DIAGCLAS-07-Généralisation-spécialisation-inappropriée
+  
+  - Une ou plusieurs généralisation de votre diagramme de classes
+    sont inappropriées : par exemple, dans l'étude de cas
+    médiathèque, un client peut changer de catégorie et créer un
+    client dans une catégorie donnée pour le changer de catégorie
+    demanderait de supprimer un client (p.ex. de type
+    ClientTarifNormal) pour en recréer un (p.ex. de type
+    ClientTarifRéduit).
+  
+  Pourquoi définir "Membre" comme une sous-classe de "Utilisateur" alors qu'en fait il s'agit bien d'une adhésion/participation associant un utilisateur à un RS.
+
+- [] DIAGCLAS-13-Présence-acteur-dans-système
+  
+  - Les acteurs n'ont pas tous vocation à être modélisés dans le
+    système : par exemple, l'employé de la médiathèque n'est pas
+    dans le diagramme de classes car aucun cas d'utilisation ne
+    demande à utiliser des informations sur l'employé.
+  
+  Vous n'avez pas besoin de la valeur "ADM" (administrateur ?) dans l'énumération TypeMembre
+
+### Diagrammes de séquence
+
+1. Cas d'utilisation « créer un réseau social »
+
+[] DIAGSEQ-02-Pb-cohérence-avec-diag-classes
+
+- Un ou plusieurs éléments de la séquence ne sont pas cohérents
+  avec le diagramme de classes.
+
+"EnvoyerVersListeAttente"??? IL FAUT REVOIR CA AVEC PAUL
+
+- [] DIAGSEQ-03-Pb-cohérence-arguments-avec-précondition
+  - Pour un ou plusieurs diagrammes de séquence, les arguments du
+    message en provenance de l'acteur ne correspondent pas avec les
+    données de la précondition du cas d'utilisation correspondant.
+
+Lorsque vous créez le message vous passez le paramètre "réseau" mais ne l'utilisez pas dans la construction.
+
+2. Cas d'utilisation « ajouter un membre à un réseau social »
+- [] DIAGSEQ-01-diagramme-manquant
+  
+  - Il manque un ou plusieurs diagrammes de séquence, tel qu'indiqué
+    dans la [liste des
+    tâches](https://www-inf.telecom-sudparis.eu/COURS/CSC4102/?page=liste_recapitulative_des_taches). Re-parcourez
+    aussi l'énoncé du TP.
+3. Cas d'utilisation « poster un message »
+- [] DIAGSEQ-03-Pb-cohérence-arguments-avec-précondition
+  
+  - Pour un ou plusieurs diagrammes de séquence, les arguments du
+    message en provenance de l'acteur ne correspondent pas avec les
+    données de la précondition du cas d'utilisation correspondant.
+  
+  Comment tester le valuer de mem_pseudo lorsqu'il n'est pas passé en paramètre à la façade?
+  
+  Dans "setID(ID)", comment utiliser l'identifiant du message avant sa création est terminée?
+
+### Raffinement du diagramme de classes
+
+1. Fiche de la classe « Message »
+- OK
+
+### Diagramme de machine à états et invariant
+
+1. Diagramme de machine à états de la classe « Message »
+- [] DIAGMACHETATS-03-Cohérence-avec-diagramme-classes
+  - Un ou plusieurs états ne sont pas cohérents avec le diagramme de
+    classes : par exemple, vous utilisez un type énuméré pour nommer
+    les états, mais n'utilisez pas les mêmes noms dans le diagramme
+    de machine à états.
+  - 
+  - Le message n'est jamais dans un état "REFUSE" il est immédiatement détruit
+2. Invariant de la classe « Message »
+
+[] INV-03-Pb-cohérence-vocabulaire-avec-diagramme-machine-à-états
+
+- Une ou plusieurs variables utilisées dans la formulation de
+  l'invariant ne correspondent pas au vocabulaire utilisé pour
+  nommer les états du diagramme de machine à états.
+
+- [] "(cache ⇒ etatMessage==ACCEPTE)"  A REVOIR 
+
+## 4. Préparation des tests unitaires
+
+1. Table de décision des tests unitaires de la méthode Message::constructeur
+- OK
+2. Table de décision des tests unitaires de la méthode Message::modérer
+- OK

@@ -23,15 +23,21 @@ class Utilisateur {
   - courriel: String
   - etatCompte: ÉtatCompte
 }
+
+note left of Utilisateur: membres: Collection Membre
+
 enum ÉtatCompte <<enum>> {
   ACTIF
-  DÉSACTIVÉ
-  BLOQUÉ
+  DESACTIVE
+  BLOQUE
 }
 class Membre {
   - pseudoReseau: String
   - typeMembre: TypeMembre
 }
+
+note left of Membre: reseauSocial: ReseauSocial\nutilisateur: Utilisateur\nmessages: Collection Message
+
 enum TypeMembre <<enum>> {
   ADM
   MOD
@@ -41,6 +47,9 @@ class ReseauSocial {
   - nom: String
   - etatReseau: EtatReseau
 }
+
+note right of ReseauSocial: membres: Collection Membre\nmessages: Collection Message
+
 enum EtatReseau <<enum>> {
   FERMÉ
   OUVERT
@@ -49,23 +58,23 @@ class Message {
   - idMessage: int
   - contenu : String
   - etatMessage: EtatMessage
-  - caché: boolean
 }
 enum EtatMessage <<enum>> {
-  ACCEPTÉ
-  REFUSÉ
+  ACCEPTE
+  REFUSE
   ATTENTE
+  CACHE
 }
 
 'Associations, etc.'
 MiniSocs *--> "*" Utilisateur
 MiniSocs *--> "*" Membre
+MiniSocs *--> "*" Message
 MiniSocs *--> "*" ReseauSocial
-Utilisateur <|-- Membre
-ReseauSocial "1..*" -- "1..*" Membre : < fait partie
+Utilisateur "1" -- "*" Membre
+ReseauSocial "1" -- "*" Membre : < fait partie
 Message "*"<-- "1" Membre : < a posté
-ReseauSocial *-- "*" Message : < posté dans
-
+ReseauSocial *--> "*" Message : > contient
 'Au besoin, aides pour le positionnement'
 
 @enduml

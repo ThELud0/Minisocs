@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import eu.telecomsudparis.csc4102.util.OperationImpossible;
+
 /**
  * Cette classe réalise le concept de réseau social du système
  * 
@@ -23,7 +25,7 @@ public class ReseauSocial {
 	 */
 	private EtatReseau etatReseau;
 	/**
-	 * les membres.
+	 * les membres. Le string réfere au pseudo utilisé par le membre dans le réseau social.
 	 */
 	private final Map<String, Membre> membres;
 	/**
@@ -56,6 +58,20 @@ public class ReseauSocial {
 	public boolean invariant() {
 		return nomReseau != null && !nomReseau.isBlank() && etatReseau!=null && membres!=null && messages!=null;
 	}
+	
+	public void ajouterMembre(Membre membre) throws OperationImpossible {
+		if (membre == null || !(membre.invariant())) {
+			throw new OperationImpossible("membre invalide");
+		}
+		if (membres.get(membre.getPseudoReseau()) != null) {
+			throw new OperationImpossible("membre déjà dans le réseau");
+		}
+		
+		membres.put(membre.getPseudoReseau(), membre);
+		
+		assert invariant();
+	}
+	
 	
 	/**
 	 * obtient le nom du réseau.
@@ -127,7 +143,7 @@ public class ReseauSocial {
 
 	@Override
 	public String toString() {
-		return "ReseauSocial [nomReseau=" + nomReseau + ", etatReseau=" + etatReseau + "]";
+		return "ReseauSocial [nomReseau=" + nomReseau + ", etatReseau=" + etatReseau + ", membres=" + membres + ", messages=" + messages + "]";
 	}
 
 }

@@ -117,25 +117,45 @@ public class MiniSocs {
 	 * @param pseudo le nom de l'utilisateur qui crée le réseau
 	 * @throws OperationImpossible en cas de problèmes sur les pré-conditions.
 	 */
-	public void creerReseauSocial(final String pseudo, final String nomReseau) throws OperationImpossible {
+	public void creerReseauSocial(final String pseudo, final String nomReseau, final String pseudoReseau) throws OperationImpossible {
 		if (pseudo == null || pseudo.isBlank()) {
 			throw new OperationImpossible("pseudo ne peut pas être null ou vide");
+		}
+		if (pseudoReseau == null || pseudoReseau.isBlank()) {
+			throw new OperationImpossible("pseudo pour le réseau ne peut pas être null ou vide");
 		}
 		Utilisateur u = utilisateurs.get(pseudo);
 		if (u == null) {
 			throw new OperationImpossible("utilisateur inexistant avec ce pseudo (" + pseudo + ")");
+		}
+		if (u.getEtatCompte() != EtatCompte.ACTIF) {
+			throw new OperationImpossible("compte utilisateur avec ce pseudo (" + pseudo + ") n'est pas actif");
 		}
 		if (nomReseau == null || nomReseau.isBlank()) {
 			throw new OperationImpossible("nom du réseau ne peut pas être null ou vide");
 		}
 		ReseauSocial rs = reseaux.get(nomReseau);
 		if (rs != null) {
-			throw new OperationImpossible(nomReseau + "déjà un réseau");
+			throw new OperationImpossible(nomReseau + "est déjà un réseau");
 		}
+		
 		reseaux.put(nomReseau, new ReseauSocial(nomReseau));
+		
+		Membre m = new Membre(utilisateurs.get(pseudo),reseaux.get(nomReseau),pseudoReseau);
+		reseaux.get(nomReseau).ajouterMembre(m);
+		utilisateurs.get(pseudo).ajouterMembre(m);
+		m.setModerateur();
 		
 		assert invariant();
 		
+	}
+	
+	public Map<String, Utilisateur> getUtilisateurs() {
+		return utilisateurs;
+	}
+	
+	public Map<String, ReseauSocial> getReseaux() {
+		return reseaux;
 	}
 	
 	/**
@@ -151,6 +171,6 @@ public class MiniSocs {
 
 	@Override
 	public String toString() {
-		return "MiniSocs [nomDuSysteme=" + nomDuSysteme + ", utilisateurs=" + utilisateurs + "]";
+		return "MiniSocs [nomDuSysteme=" + nomDuSysteme + ", utilisateurs=" + utilisateurs + ", reseaux=" + reseaux +"]";
 	}
 }

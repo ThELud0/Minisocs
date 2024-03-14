@@ -87,7 +87,7 @@ class TestAjouterUtilisateur {
 	}
 
 	@Test
-	void ajouterUtilisateurTest4Puis4() throws Exception {
+	void ajouterUtilisateurTest4Puis() throws Exception {
 		Assertions.assertTrue(miniSocs.listerUtilisateurs().isEmpty());
 		miniSocs.ajouterUtilisateur(pseudo, nom, prenom, courriel);
 		Assertions.assertFalse(miniSocs.listerUtilisateurs().isEmpty());

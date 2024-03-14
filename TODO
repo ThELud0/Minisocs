@@ -1,2 +1,8 @@
 Tache, contenu, date limite
 Autre nouvelle information
+
+Changement readme:
+Ajouter toutes les conditions et tests sur les pseudo reseaux
+(verifier nom null non vide dans les tables de creerReseau, avant le test de reseau inexistant et apres le test de nomReseau non null non vide))
+
+membre prend boolean moderateur plutot que type membre

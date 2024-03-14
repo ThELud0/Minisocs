@@ -247,8 +247,8 @@ conditions.
 |                                                     | 1 | 2 | 3 | 4 | 5 | 6 |
 |:----------------------------------------------------|:--|:--|:--|---|---|---|
 | pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T |
-| le compte est actif                                 |   | F | T | T | T | T |
-| utilisateur avec ce pseudo existant                 |   |   | F | T | T | T |
+| utilisateur avec ce pseudo existant 				|   | F | T | T | T | T |
+| le compte est actif                                 |   |   | F | T | T | T |
 | nom bien formé (non null ∧ non vide)                |   |   |   | F | T | T |
 | réseau avec ce nom inexistant                       |   |   |   |   | F | T |
 |                                                     |   |   |   |   |   |   |
@@ -531,23 +531,6 @@ Deux tests dans le jeu de tests 2 pour l'idempotence.
 | levée d'une exception                | oui | oui | oui | oui | oui | oui | oui | oui | oui | non |
 |                                      |     |     |     |     |     |     |     |     |     |     |
 | nombre de tests dans le jeu de tests | 2   | 2   | 1   | 2   | 1   | 1   | 1   | 1   | 1   | 1   |
-
-## 8.3. Opérations de la classe ReseauSocial
-|                                                  | 1   | 2   |
-|:-------------------------------------------------|:----|:----|
-| nomReseau != null ∧ !nomReseau.isBlank()         | F   |  T  |
-|                                                  |     |     |
-| nomReseau' = nomReseau                           |     |  T  |
-|                                                  |     |     |
-| etatReseau' = OUVERT                             |     |  T  |
-|                                                  |     |     |
-| membres' != null                                 |     |  T  |
-|                                                  |     |     |
-| messages' != null                                |     |  T  |
-|                                                  |     |     |
-| levée d'une exception                            | oui | non |
-|                                                  |     |     |
-| nombre de tests dans le jeu de tests             | 2   | 1   |
 
 ---
 FIN DU DOCUMENT

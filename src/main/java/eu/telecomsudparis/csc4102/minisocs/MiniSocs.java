@@ -115,9 +115,17 @@ public class MiniSocs {
 	 * créer un réseau social.
 	 * 
 	 * @param nomReseau le nom du réseau.
+	 * @param pseudo le nom de l'utilisateur qui crée le réseau
 	 * @throws OperationImpossible en cas de problèmes sur les pré-conditions.
 	 */
-	public void creerReseauSocial(final String nomReseau) throws OperationImpossible {
+	public void creerReseauSocial(final String pseudo, final String nomReseau) throws OperationImpossible {
+		if (pseudo == null || pseudo.isBlank()) {
+			throw new OperationImpossible("pseudo ne peut pas être null ou vide");
+		}
+		Utilisateur u = utilisateurs.get(pseudo);
+		if (u == null) {
+			throw new OperationImpossible("utilisateur inexistant avec ce pseudo (" + pseudo + ")");
+		}
 		if (nomReseau == null || nomReseau.isBlank()) {
 			throw new OperationImpossible("nom du réseau ne peut pas être null ou vide");
 		}
@@ -126,6 +134,7 @@ public class MiniSocs {
 			throw new OperationImpossible(nomReseau + "déjà un réseau");
 		}
 		reseaux.put(nomReseau, new ReseauSocial(nomReseau));
+		
 		assert invariant();
 		
 	}

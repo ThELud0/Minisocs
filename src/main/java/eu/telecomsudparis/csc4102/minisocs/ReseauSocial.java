@@ -62,8 +62,8 @@ public class ReseauSocial {
 	}
 	
 	/**
-	 * rend inactif le compte de l'utilisateur. L'opération est
-	 * idempotente. L'opération est refusée si le compte n'est pas actif.
+	 * ferme le réseau social. L'opération est
+	 * idempotente. L'opération est refusée si le réseau n'est pas ouvert.
 	 */
 	public void fermerReseau() {
 		if (etatReseau.equals(EtatReseau.FERME)) {

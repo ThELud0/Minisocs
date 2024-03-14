@@ -67,6 +67,24 @@ public class ReseauSocial {
 	}
 	
 	/**
+	 * obtient les membres.
+	 * 
+	 * @return hashmap membres.
+	 */
+	public Map<String, Membre> getMembres() {
+		return membres;
+	}
+	
+	/**
+	 * obtient les messages.
+	 * 
+	 * @return hashmap messages.
+	 */
+	public Map<String, Message> getMessages() {
+		return messages;
+	}
+	
+	/**
 	 * l'état du réseau.
 	 * 
 	 * @return l'énumérateur.

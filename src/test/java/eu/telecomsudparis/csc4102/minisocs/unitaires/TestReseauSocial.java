@@ -43,8 +43,8 @@ class TestReseauSocial {
 		Assertions.assertNotNull(rs);
 		Assertions.assertEquals("nomReseau", rs.getNomReseau());
 		Assertions.assertEquals(EtatReseau.OUVERT, rs.getEtatReseau());
-		Assertions.assertNotNull(rs.membres);
-		Assertions.assertNotNull(rs.messages);
+		Assertions.assertNotNull(rs.getMembres());
+		Assertions.assertNotNull(rs.getMessages());
 	}
 
 }

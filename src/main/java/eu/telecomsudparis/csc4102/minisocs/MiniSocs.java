@@ -22,7 +22,11 @@ public class MiniSocs {
 	 * les utilisateurs.
 	 */
 	private final Map<String, Utilisateur> utilisateurs;
-
+	/**
+	 * les réseaux.
+	 */
+	private final Map<String, ReseauSocial> reseaux;
+	
 	/**
 	 * construit une instance du système.
 	 * 
@@ -31,6 +35,7 @@ public class MiniSocs {
 	public MiniSocs(final String nomDuSysteme) {
 		this.nomDuSysteme = nomDuSysteme;
 		this.utilisateurs = new HashMap<>();
+		this.reseaux = new HashMap<>();
 	}
 
 	/**
@@ -39,7 +44,7 @@ public class MiniSocs {
 	 * @return {@code true} si l'invariant est respecté.
 	 */
 	public boolean invariant() {
-		return nomDuSysteme != null && !nomDuSysteme.isBlank() && utilisateurs != null;
+		return nomDuSysteme != null && !nomDuSysteme.isBlank() && utilisateurs != null && reseaux != null;
 	}
 
 	/**
@@ -107,10 +112,31 @@ public class MiniSocs {
 	}
 
 	/**
+	 * créer un réseau social.
+	 * 
+	 * @param nomReseau le nom du réseau.
+	 * @throws OperationImpossible en cas de problèmes sur les pré-conditions.
+	 */
+	public void creerReseauSocial(final String nomReseau) throws OperationImpossible {
+		if (nomReseau == null || nomReseau.isBlank()) {
+			throw new OperationImpossible("nom du réseau ne peut pas être null ou vide");
+		}
+		ReseauSocial rs = reseaux.get(nomReseau);
+		if (rs != null) {
+			throw new OperationImpossible(nomReseau + "déjà un réseau");
+		}
+		reseaux.put(nomReseau, new ReseauSocial(nomReseau));
+		assert invariant();
+		
+	}
+	
+	/**
 	 * obtient le nom du projet.
 	 * 
 	 * @return le nom du projet.
 	 */
+	
+	
 	public String getNomDeProjet() {
 		return nomDuSysteme;
 	}

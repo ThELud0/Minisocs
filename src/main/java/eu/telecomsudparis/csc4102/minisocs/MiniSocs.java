@@ -105,7 +105,6 @@ public class MiniSocs {
 		u.desactiverCompte();
 		assert invariant();
 	}
-
 	/**
 	 * obtient le nom du projet.
 	 * 

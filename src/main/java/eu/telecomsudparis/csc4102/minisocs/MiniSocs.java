@@ -110,7 +110,6 @@ public class MiniSocs {
 		u.desactiverCompte();
 		assert invariant();
 	}
-
 	/**
 	 * créer un réseau social.
 	 * 

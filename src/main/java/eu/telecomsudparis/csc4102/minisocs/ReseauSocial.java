@@ -1,6 +1,9 @@
 package eu.telecomsudparis.csc4102.minisocs;
 
 import java.util.Objects;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -19,6 +22,14 @@ public class ReseauSocial {
 	 * état du réseau
 	 */
 	private EtatReseau etatReseau;
+	/**
+	 * les membres.
+	 */
+	private final Map<String, Membre> membres;
+	/**
+	 * les messages
+	 */
+	private final Map<String, Message> messages;
 
 	/**
 	 * construit un réseau social.
@@ -31,6 +42,9 @@ public class ReseauSocial {
 		}
 		this.nomReseau = nomReseau;
 		this.etatReseau = EtatReseau.OUVERT;
+		this.membres = new HashMap<>();
+		this.messages = new HashMap<>();
+		
 		assert invariant();
 	}
 	
@@ -40,7 +54,7 @@ public class ReseauSocial {
 	 * @return {@code true} si l'invariant est respecté.
 	 */
 	public boolean invariant() {
-		return nomReseau != null && !nomReseau.isBlank() && etatReseau!=null;
+		return nomReseau != null && !nomReseau.isBlank() && etatReseau!=null && membres!=null && messages!=null;
 	}
 	
 	/**

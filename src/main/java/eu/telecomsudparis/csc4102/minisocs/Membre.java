@@ -15,7 +15,7 @@ public class Membre {
 	/**
 	 * le pseudo au sein du réseau.
 	 */
-	private String pseudoReseau;
+	private final String pseudoReseau;
 	
 	public Membre(final Utilisateur utilisateur, final ReseauSocial reseauSocial,final String pseudoReseau){
 	

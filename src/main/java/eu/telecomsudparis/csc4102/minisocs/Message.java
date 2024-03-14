@@ -7,7 +7,7 @@ public class Message {
 	/**
 	 *  l'id du message
 	 */
-	private final int idMessage;
+	private final String idMessage;
 	
 	/**
 	 * le contenu du messsage
@@ -25,7 +25,7 @@ public class Message {
 	 * @param id l'id du message
 	 * @param contenu le contenu du message
 	 */
-	public Message(final int idMessage, final String contenu, final EtatMessage etatMessage) {
+	public Message(final String idMessage, final String contenu, final EtatMessage etatMessage) {
 		if (contenu == null || contenu.isBlank()) {
 			throw new IllegalArgumentException("le contenu du message ne peut pas être null ou vide");	
 		}

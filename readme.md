@@ -81,7 +81,11 @@ priorité HAUTE.
 ∧ utilisateur n'est pas membre du réseau \
 ∧ l'acteur a un nom bien formé (non null ^ non vide) \
 ∧ l'acteur existe \ 
+∧ le compte acteur est actif \
+∧ l'acteur fait partie du réseau \
 ∧ l'acteur est modérateur du réseau \
+∧ pseudo choisi pour le réseau bien formé (non null ^ non vide) \
+∧ pseudo choisi pour le réseau n'est pas déjà pris \
 - postcondition : \
 ∧ utilisateur est membre du réseau
 
@@ -109,8 +113,6 @@ NB : l'opération est idempotente.
 ∧ le message est non visible \
 ∧ le message est en attente de traitement par un modérateur \
 
-
-
 #### Ajouter un utilisateur (à MiniSocs) (HAUTE)
 - précondition : \
 ∧ pseudo bien formé (non null ∧ non vide) \
@@ -133,7 +135,8 @@ NB : l'opération est idempotente.
 ∧ le compte est actif \
 ∧ utilisateur avec ce pseudo existant \
 ∧ réseau avec ce nom inexistant \
-∧ nom du réseau bien formé (non null ∧ non vide)
+∧ nom du réseau bien formé (non null ∧ non vide) \
+∧ pseudo réseau bien formé (non null ∧ non vide) \
 - postcondition : \
 ∧ réseau existant \
 ∧ réseau ouvert \
@@ -169,22 +172,26 @@ NB : l'opération est idempotente.
 
 #### Ajouter un membre (à un réseau) (HAUTE)
 
-|                                                | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
-|:-----------------------------------------------|:--|:--|:--|---|---|---|---|---|---|---|---|
-| nom du réseau bien formé (non null ∧ non vide) | F | T | T | T | T | T | T | T | T | T | T |
-| réseau avec ce nom existant                    |   | F | T | T | T | T | T | T | T | T | T |
-| réseau avec ce nom ouvert                      |   |   | F | T | T | T | T | T | T | T | T |
-| pseudo bien formé (non null ∧ non vide)        |   |   |   | F | T | T | T | T | T | T | T |
-| utilisateur avec ce pseudo existant            |   |   |   |   | F | T | T | T | T | T | T |
-| utilisateur n'est pas membre du réseau         |   |   |   |   |   | F | T | T | T | T | T |
-| le compte est actif                            |   |   |   |   |   |   | F | T | T | T | T |
-| nom acteur bien formé (non null ∧ non vide)    |   |   |   |   |   |   |   | F | T | T | T |
-| acteur existant                                |   |   |   |   |   |   |   |   | F | T | T |
-| acteur est modérateur                          |   |   |   |   |   |   |   |   |   | F | T |
-|                                                |   |   |   |   |   |   |   |   |   |   |   |
-| utilisateur est membre du réseau               | F | F | F | F | F | F | F | F | F | F | T |
-|                                                |   |   |   |   |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests           | 2 | 1 | 2 | 1 | 1 | 1 | 1 | 2 | 1 | 1 | 1 |
+|                                                | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|:-----------------------------------------------|:--|:--|:--|---|---|---|---|---|---|---|---|---|---|---|---|
+| nom du réseau bien formé (non null ∧ non vide) | F | T | T | T | T | T | T | T | T | T | T | T | T | T | T |
+| réseau avec ce nom existant                    |   | F | T | T | T | T | T | T | T | T | T | T | T | T | T |
+| réseau avec ce nom ouvert                      |   |   | F | T | T | T | T | T | T | T | T | T | T | T | T |
+| pseudo bien formé (non null ∧ non vide)        |   |   |   | F | T | T | T | T | T | T | T | T | T | T | T |
+| utilisateur avec ce pseudo existant            |   |   |   |   | F | T | T | T | T | T | T | T | T | T | T |
+| utilisateur n'est pas membre du réseau         |   |   |   |   |   | F | T | T | T | T | T | T | T | T | T |
+| le compte est actif                            |   |   |   |   |   |   | F | T | T | T | T | T | T | T | T |
+| nom acteur bien formé (non null ∧ non vide)    |   |   |   |   |   |   |   | F | T | T | T | T | T | T | T |
+| acteur existant                                |   |   |   |   |   |   |   |   | F | T | T | T | T | T | T |
+| compte acteur actif                            |   |   |   |   |   |   |   |   |   | F | T | T | T | T | T |
+| acteur fait partie du réseau                   |   |   |   |   |   |   |   |   |   |   | F | T | T | T | T |
+| acteur est modérateur                          |   |   |   |   |   |   |   |   |   |   |   | F | T | T | T |
+| pseudo réseau bien formé (non null ^ non vide) |   |   |   |   |   |   |   |   |   |   |   |   | F | T | T |
+| pseudo réseau n'est pas déjà pris              |   |   |   |   |   |   |   |   |   |   |   |   |   | F | T |
+|                                                |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| utilisateur est membre du réseau               | F | F | F | F | F | F | F | F | F | F | F | F | F | F | T |
+|                                                |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests           | 2 | 1 | 2 | 1 | 1 | 1 | 1 | 2 | 1 | 1 | 1 | 1 | 2 | 1 | 1 |
 
 #### Ajouter un utilisateur (à MiniSocs) (HAUTE)
 
@@ -244,20 +251,21 @@ conditions.
 
 #### Créer un réseau (HAUTE)
 
-|                                                     | 1 | 2 | 3 | 4 | 5 | 6 |
-|:----------------------------------------------------|:--|:--|:--|---|---|---|
-| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T |
-| utilisateur avec ce pseudo existant 				|   | F | T | T | T | T |
-| le compte est actif                                 |   |   | F | T | T | T |
-| nom bien formé (non null ∧ non vide)                |   |   |   | F | T | T |
-| réseau avec ce nom inexistant                       |   |   |   |   | F | T |
-|                                                     |   |   |   |   |   |   |
-| réseau existant                                     | F | F | F | F | F | T |
-| réseau ouvert                                       | F | F | F | F | F | T |
-| utilisateur est membre du réseau                    | F | F | F | F | F | T |
-| utilisateur est modérateur du réseau                | F | F | F | F | F | T |
-|                                                     |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests                | 2 | 1 | 1 | 2 | 1 | 1 |
+|                                                     | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|:----------------------------------------------------|:--|:--|:--|---|---|---|---|
+| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T | T |
+| utilisateur avec ce pseudo existant 				|   | F | T | T | T | T | T |
+| le compte est actif                                 |   |   | F | T | T | T | T |
+| nom réseau bien formé (non null ∧ non vide)         |   |   |   | F | T | T | T |
+| pseudo réseau bien formé (non null ∧ non vide)      |   |   |   |   | F | T | T |
+| réseau avec ce nom inexistant                       |   |   |   |   |   | F | T |
+|                                                     |   |   |   |   |   |   |   |
+| réseau existant                                     | F | F | F | F | F | F | T |
+| réseau ouvert                                       | F | F | F | F | F | F | T |
+| utilisateur est membre du réseau                    | F | F | F | F | F | F | T |
+| utilisateur est modérateur du réseau                | F | F | F | F | F | F | T |
+|                                                     |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                | 2 | 1 | 1 | 2 | 2 | 1 | 1 |
 
 
 # 3. Conception

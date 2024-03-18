@@ -2,10 +2,9 @@ package eu.telecomsudparis.csc4102.minisocs;
 
 import java.util.Objects;
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
-import org.apache.commons.validator.routines.EmailValidator;
 
 import eu.telecomsudparis.csc4102.util.OperationImpossible;
 

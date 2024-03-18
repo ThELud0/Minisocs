@@ -32,7 +32,7 @@ class TestReseauSocial {
 
 	@DisplayName("nomReseau ne doit pas être vide") 
 	@Test
-	void constructeurUtilisateurTest1Jeu2() {
+	void constructeurReseauSocialTest1Jeu2() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> new ReseauSocial(""));
 	}
 	

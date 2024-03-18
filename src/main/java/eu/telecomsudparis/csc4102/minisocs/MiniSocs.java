@@ -119,7 +119,7 @@ public class MiniSocs {
 	 */
 	public void creerReseauSocial(final String pseudo, final String nomReseau, final String pseudoReseau) throws OperationImpossible {
 		if (pseudo == null || pseudo.isBlank()) {
-			throw new OperationImpossible("pseudo ne peut pas être null ou vide");
+			throw new OperationImpossible("pseudo de l'utilisateur ne peut pas être null ou vide");
 		}
 		if (pseudoReseau == null || pseudoReseau.isBlank()) {
 			throw new OperationImpossible("pseudo pour le réseau ne peut pas être null ou vide");
@@ -141,12 +141,65 @@ public class MiniSocs {
 		
 		reseaux.put(nomReseau, new ReseauSocial(nomReseau));
 		
-		Membre m = new Membre(utilisateurs.get(pseudo),reseaux.get(nomReseau),pseudoReseau);
+		Membre m = new Membre(u,reseaux.get(nomReseau),pseudoReseau);
 		reseaux.get(nomReseau).ajouterMembre(m);
-		utilisateurs.get(pseudo).ajouterMembre(m);
+		u.ajouterMembre(m);
 		m.setModerateur();
 		
 		assert invariant();
+		
+	}
+	
+	public void ajouterMembre(String pseudoMod, String pseudoMem, String pseudoReseau, String nomReseau) throws OperationImpossible{
+		if (nomReseau == null || nomReseau.isBlank()) {
+			throw new OperationImpossible("nom du réseau ne peut pas être null ou vide");
+		}
+		ReseauSocial rs = reseaux.get(nomReseau);
+		if (rs == null) {
+			throw new OperationImpossible(nomReseau + "est un réseau inexistant");
+		}
+		if (rs.getEtatReseau() != EtatReseau.OUVERT) {
+			throw new OperationImpossible(nomReseau + "n'est pas ouvert");
+		}
+		if (pseudoMem == null || pseudoMem.isBlank()) {
+			throw new OperationImpossible("pseudo du membre ne peut pas être null ou vide");
+		}
+		Utilisateur mem = utilisateurs.get(pseudoMem);
+		if (mem == null) {
+			throw new OperationImpossible("membre à ajouter inexistant avec ce pseudo (" + pseudoMem + ")");
+		}
+		if (mem.getMembres().get(nomReseau) != null) {
+			throw new OperationImpossible("utilisateur (" + pseudoMem + ") fait déjà partie du réseau (" + nomReseau + ")");
+		}
+		if (mem.getEtatCompte() != EtatCompte.ACTIF) {
+			throw new OperationImpossible("compte utilisateur avec ce pseudo (" + pseudoMem + ") n'est pas actif");
+		}
+		if (pseudoMod == null || pseudoMod.isBlank()) {
+			throw new OperationImpossible("pseudo du modérateur ne peut pas être null ou vide");
+		}
+		Utilisateur mod = utilisateurs.get(pseudoMod);
+		if (mod == null) {
+			throw new OperationImpossible("utilisateur modérateur inexistant avec ce pseudo (" + pseudoMod + ")");
+		}
+		if (mod.getEtatCompte() != EtatCompte.ACTIF) {
+			throw new OperationImpossible("compte utilisateur avec ce pseudo (" + pseudoMod + ") n'est pas actif");
+		}
+		if (mod.getMembres().get(nomReseau) == null) {
+			throw new OperationImpossible("utilisateur supposé modérateur (" + pseudoMod + ") ne fait pas partie du réseau (" + nomReseau + ")");
+		}
+		if (mod.getMembres().get(nomReseau).estModerateur() != true) {
+			throw new OperationImpossible("utilisateur supposé modérateur (" + pseudoMod + ") du réseau (" + nomReseau + ") n'est pas modérateur");
+		}
+		if (pseudoReseau == null || pseudoReseau.isBlank()) {
+			throw new OperationImpossible("pseudo pour le réseau ne peut pas être null ou vide");
+				}
+		if (rs.getMembres().get(pseudoReseau) != null) {
+			throw new OperationImpossible("pseudo choisi pour le réseau (" + pseudoReseau + ") déjà choisi");
+		}
+		
+		Membre m = new Membre(mem,rs,pseudoReseau);
+		rs.ajouterMembre(m);
+		mem.ajouterMembre(m);
 		
 	}
 	
@@ -163,8 +216,6 @@ public class MiniSocs {
 	 * 
 	 * @return le nom du projet.
 	 */
-	
-	
 	public String getNomDeProjet() {
 		return nomDuSysteme;
 	}

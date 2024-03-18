@@ -100,7 +100,7 @@ class TestCreerReseauSocial {
 	
 	@Test
 	@DisplayName ("postconditions respectées et test si le réseau existe déjà")
-	void creerReseauSocialTest6Puis7() throws Exception {
+	void creerReseauSocialTest6Et7() throws Exception {
 		Assertions.assertTrue(miniSocs.getReseaux().isEmpty());
 		miniSocs.creerReseauSocial(pseudo, nomReseau, pseudoReseau);
 		Assertions.assertTrue(miniSocs.getReseaux().get(nomReseau) != null);

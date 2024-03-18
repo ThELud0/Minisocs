@@ -10,7 +10,7 @@ import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
 /**
  * Cette classe réalise le concept d'utilisateur du système, à ne pas confondre
- * avec le concept de participant, sous-entendu à un réséeau social.
+ * avec le concept de membre, sous-entendu à un réséeau social.
  * 
  * @author Denis Conan
  */

@@ -46,5 +46,7 @@ class TestReseauSocial {
 		Assertions.assertNotNull(rs.getMembres());
 		Assertions.assertNotNull(rs.getMessages());
 	}
+	
+	
 
 }

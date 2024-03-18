@@ -58,7 +58,7 @@ public class Membre {
 	 * 
 	 * ATTENTION: ne jamais utiliser directement sauf cas exceptionnel! 
 	 * Il faut passer par la façade car il faut actualiser les collections 
-	 * de membres dans utilisateurs et reseaux.
+	 * de membres dans utilisateurs et reseaux en plus.
 	 */
 	public void setPseudoReseau(String ps) {
 		this.pseudoReseau=ps;
@@ -94,7 +94,7 @@ public class Membre {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(pseudoReseau);
+		return Objects.hash(pseudoReseau + utilisateur + reseauSocial);
 	}
 
 	@Override

@@ -80,12 +80,12 @@ priorité HAUTE.
 ∧ utilisateur avec ce pseudo existant \
 ∧ utilisateur n'est pas membre du réseau \
 ∧ l'acteur a un nom bien formé (non null ^ non vide) \
-∧ l'acteur existe \ 
+∧ l'acteur existe \
 ∧ le compte acteur est actif \
 ∧ l'acteur fait partie du réseau \
 ∧ l'acteur est modérateur du réseau \
 ∧ pseudo choisi pour le réseau bien formé (non null ^ non vide) \
-∧ pseudo choisi pour le réseau n'est pas déjà pris \
+∧ pseudo choisi pour le réseau n'est pas déjà pris
 - postcondition : \
 ∧ utilisateur est membre du réseau
 
@@ -122,8 +122,8 @@ NB : l'opération est idempotente.
 ∧ utilisateur avec ce pseudo inexistant \
 ∧ utilisateur avec ce courriel inexistant \
 ∧ l'acteur a un nom bien formé (non null ^ non vide)\
-∧ l'acteur existe \ 
-∧ l'acteur est administrateur du réseau \
+∧ l'acteur existe \
+∧ l'acteur est administrateur du réseau 
 - postcondition : \
 ∧ utilisateur avec ce pseudo existant \
 ∧ utilisateur avec ce courriel existant \
@@ -136,7 +136,7 @@ NB : l'opération est idempotente.
 ∧ utilisateur avec ce pseudo existant \
 ∧ réseau avec ce nom inexistant \
 ∧ nom du réseau bien formé (non null ∧ non vide) \
-∧ pseudo réseau bien formé (non null ∧ non vide) \
+∧ pseudo réseau bien formé (non null ∧ non vide)
 - postcondition : \
 ∧ réseau existant \
 ∧ réseau ouvert \

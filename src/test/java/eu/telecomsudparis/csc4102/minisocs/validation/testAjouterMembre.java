@@ -167,9 +167,26 @@ class testAjouterMembre {
 				() -> miniSocs.ajouterMembre(pseudoMod, pseudoMem, "", nomReseau));
 	}
 	
+	@Test
+	@DisplayName ("pseudo choisi pour le réseau est déjà pris")
+	void ajouterMembreTest14Jeu1() throws Exception {
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> miniSocs.ajouterMembre(pseudoMod, pseudoMem, "pseudoReseauMod", nomReseau));
+	}
 	
-	
-	
+	@Test
+	@DisplayName("membre créé et ajouté, puis test ajout d'un membre déjà présent")
+	void creerReseauSocialTest6Et7() throws Exception {
+		
+		miniSocs.ajouterMembre(pseudoMod, pseudoMem, pseudoReseau, nomReseau);
+
+		Assertions.assertTrue(miniSocs.getReseaux().get(nomReseau).getMembres().get(pseudoReseau) != null);
+		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudoMem).getMembres().get(nomReseau) != null);
+		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudoMem).getMembres().get(nomReseau).equals(miniSocs.getReseaux().get(nomReseau).getMembres().get(pseudoReseau)));
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> miniSocs.ajouterMembre(pseudoMod, pseudoMem, pseudoReseau, nomReseau));
+
+	}
 	
 	/* TEST 6 membre fait déja parti du réseau à faire à la fin*/
 }

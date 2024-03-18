@@ -1,0 +1,59 @@
+@startuml
+
+'Diagramme de séquence (PlantUML)'
+
+'Configuration charte graphique'
+hide footbox
+skinparam sequenceParticipantBackgroundColor White
+skinparam sequenceActorBackgroundColor White
+
+'Déclaration des acteurs et des participants (déjà existants avant la séquence)'
+
+actor "__uMod:Utilisateur__" as uMod
+participant "__mMod:Membre__" as mod
+participant "__uMem:Utilisateur__" as uMem
+participant "__m:MiniSocs__" as m 
+participant "__rs:RéseauSocial__" as rs
+
+'Séquence avec les messages, les créations de participants, etc.'
+
+uMod -> m ++ : ajouterMembre(pseudoMembre, pseudoReseau, nomReseau)
+opt uMod.pseudo, pseudoMembre, pseudoReseau, nomReseau non null ^ non vide
+m -> m ++ : userMod=utilisateurs.get(uMod.pseudo)
+return
+m -> m ++ : userMem=utilisateurs.get(pseudoMembre)
+return
+opt (userMod != null) ^ (userMem != null)
+m -> m ++ : ec1=userMod.getEtatCompte()
+return
+m -> m ++ : ec2=userMem.getEtatCompte()
+return
+m -> m ++ : r=reseaux.get(nomReseau)
+return
+opt (ec1 == ACTIF) ^ (ec2 == ACTIF) ^ (r != null)
+m -> m ++ : er = r.getEtatReseau()
+return
+opt er == OUVERT
+m -> uMem ++ : mod=membres.get(nomReseau).estModerateur()
+return
+m -> rs ++ : nom_dispo=membres.get(pseudoReseau)
+return
+opt (mod == true) ^ (nom_dispo == null)
+
+create "__mem:Membre__" as mem
+m -> mem ++ : new Membre(uMem,rs,pseudoReseau)
+return
+m -> uMem ++ : ajouterMembre(mem)
+return
+m -> rs ++ : ajouterMembre(mem)
+return
+
+
+
+end
+end
+end
+end
+end
+return
+@enduml

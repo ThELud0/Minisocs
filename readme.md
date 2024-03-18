@@ -331,9 +331,6 @@ Version recommandée
 ![diagrammeséquenceajouterutilisateur](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur.svg)
 ([source](./Diagrammes/minisocs_uml_diag_seq_ajouter_utilisateur.pu))
 
-
-*
-
 #### Poster un message (HAUTE)
 
 Version recommandée
@@ -349,6 +346,15 @@ Version recommandée
 
 ![diagrammeséquencecréerréseau](./Diagrammes/minisocs_uml_diag_seq_creer_reseau.svg)
 ([source](./Diagrammes/minisocs_uml_diag_seq_creer_reseau.pu))
+
+#### Ajouter un membre (HAUTE)
+
+Version recommandée
+([source](./Diagrammes/minisocs_uml_diag_seq_ajouter_membre.pu)).
+
+![diagrammeséquenceajouterutilisateur](./Diagrammes/minisocs_uml_diag_seq_ajouter_membre.svg)
+([source](./Diagrammes/minisocs_uml_diag_seq_ajouter_membre.pu))
+
 
 
 

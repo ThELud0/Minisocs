@@ -191,7 +191,7 @@ NB : l'opération est idempotente.
 |                                                |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 | utilisateur est membre du réseau               | F | F | F | F | F | F | F | F | F | F | F | F | F | F | T |
 |                                                |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests           | 2 | 1 | 2 | 1 | 1 | 1 | 1 | 2 | 1 | 1 | 1 | 1 | 2 | 1 | 1 |
+| nombre de tests dans le jeu de tests           | 2 | 1 | 1 | 2 | 1 | 1 | 1 | 2 | 1 | 1 | 1 | 1 | 2 | 1 | 1 |
 
 #### Ajouter un utilisateur (à MiniSocs) (HAUTE)
 

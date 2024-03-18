@@ -115,6 +115,7 @@ public class MiniSocs {
 	 * 
 	 * @param nomReseau le nom du réseau.
 	 * @param pseudo le nom de l'utilisateur qui crée le réseau
+	 * @param pseudoReseau le pseudo affiché dans le réseau par l'utilisateur
 	 * @throws OperationImpossible en cas de problèmes sur les pré-conditions.
 	 */
 	public void creerReseauSocial(final String pseudo, final String nomReseau, final String pseudoReseau) throws OperationImpossible {
@@ -150,6 +151,15 @@ public class MiniSocs {
 		
 	}
 	
+	/**
+	 * ajoute un membre à un réseau social sous un pseudo choisi.
+	 * 
+	 * @param pseudoMod   le pseudo de l'utilisateur qui ajoute.
+	 * @param pseudoMem   le pseudo de l'utilisateur ajouté.
+	 * @param pseudoReseau le pseudo sous lequel le membre est ajouté dans le réseau.
+	 * @param nomReseau   le nom du réseau social.
+	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 */
 	public void ajouterMembre(String pseudoMod, String pseudoMem, String pseudoReseau, String nomReseau) throws OperationImpossible{
 		if (nomReseau == null || nomReseau.isBlank()) {
 			throw new OperationImpossible("nom du réseau ne peut pas être null ou vide");

@@ -19,7 +19,7 @@ public class Membre {
 	/**
 	 * le pseudo au sein du réseau.
 	 */
-	private final String pseudoReseau;
+	private String pseudoReseau;
 	
 	private boolean moderateur;
 	
@@ -48,6 +48,20 @@ public class Membre {
 	
 	public void demote() {
 		this.moderateur=false;
+		return;
+	}
+	
+	
+	/**
+	 * change le pseudo choisi pour le réseau donné
+	 * @param ps le nouveau pseudo réseau
+	 * 
+	 * ATTENTION: ne jamais utiliser directement sauf cas exceptionnel! 
+	 * Il faut passer par la façade car il faut actualiser les collections 
+	 * de membres dans utilisateurs et reseaux.
+	 */
+	public void setPseudoReseau(String ps) {
+		this.pseudoReseau=ps;
 		return;
 	}
 	

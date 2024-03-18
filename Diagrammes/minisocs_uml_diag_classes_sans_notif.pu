@@ -33,16 +33,12 @@ enum ÉtatCompte <<enum>> {
 }
 class Membre {
   - pseudoReseau: String
-  - typeMembre: TypeMembre
+  - moderateur: boolean
 }
 
 note left of Membre: reseauSocial: ReseauSocial\nutilisateur: Utilisateur\nmessages: Collection Message
 
-enum TypeMembre <<enum>> {
-  ADM
-  MOD
-  MEM
-}
+
 class ReseauSocial {
   - nom: String
   - etatReseau: EtatReseau

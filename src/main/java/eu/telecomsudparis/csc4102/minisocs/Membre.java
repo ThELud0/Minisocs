@@ -1,5 +1,7 @@
 package eu.telecomsudparis.csc4102.minisocs;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -23,6 +25,11 @@ public class Membre {
 	
 	private boolean moderateur;
 	
+	/**
+	 * les messages
+	 */
+	private final Map<String, Message> messages;
+	
 	public Membre(final Utilisateur utilisateur, final ReseauSocial reseauSocial,final String pseudoReseau){
 		if (utilisateur == null || !(utilisateur.invariant())) {
 			throw new IllegalArgumentException("utilisateur invalide");
@@ -38,6 +45,8 @@ public class Membre {
 		this.reseauSocial = reseauSocial;
 		this.pseudoReseau = pseudoReseau;
 		this.moderateur = false;
+		this.messages = new HashMap<>();
+		
 		assert invariant();
 	}
 	
@@ -87,7 +96,7 @@ public class Membre {
 	 * @return {@code true} si l'invariant est respecté.
 	 */
 	public boolean invariant() {
-		return utilisateur != null && reseauSocial != null && utilisateur.invariant() && reseauSocial.invariant()
+		return utilisateur != null && reseauSocial != null && messages!=null && utilisateur.invariant() && reseauSocial.invariant()
 				&& pseudoReseau != null && !pseudoReseau.isBlank();
 	}
 	

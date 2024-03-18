@@ -10,33 +10,34 @@ skinparam sequenceActorBackgroundColor White
 'Déclaration des acteurs et des participants (déjà existants avant la séquence)'
 
 actor "__u:Utilisateur__" as u
-participant "__m:MiniSocs__" as m
-participant "__rs:RéseauSocial__" as rs
+participant "__m:MiniSocs__" as m 
 
 'Séquence avec les messages, les créations de participants, etc.'
 
-u -> m ++ : creerReseau(nom)
-opt u.pseudo non null ∧ non vide
-m -> m ++ : user=chercherUtilisateur(u.pseudo)
+u -> m ++ : creerReseau(nomReseau, pseudoReseau)
+opt u.pseudo, pseudoReseau, nomReseau non null ^ non vide
+m -> m ++ : user=utilisateurs.get(u.pseudo)
 return
-opt (nom non null ∧ non vide) ∧ (user != null)
-m -> m ++ : ec=checkEtatCompte(u.pseudo)
+opt (user != null)
+m -> m ++ : ec=user.getEtatCompte()
 return
-m -> m ++ : r=chercherReseau(nom)
+m -> m ++ : r=reseaux.get(nomReseau)
 return
 opt (r == null) ∧ (ec == ACTIF)
-m -> m ++ : createReseau(nom)
+create "__rs:RéseauSocial__" as rs
+m -> rs ++ : new ReseauSocial(nomReseau)
 return
 create "__mem:Membre__" as mem
-m -> "__mem:Membre__" as mem ++ : ajouterMembre(u, rs)
-mem -> mem ++ : setPseudoRS(u.pseudo)
+m -> mem ++ : new Membre(u,rs,pseudoReseau)
 return
-mem -> mem ++ : initType()
+m -> u ++ : ajouterMembre(mem)
 return
+m -> rs ++ : ajouterMembre(mem)
+return
+m -> "__mem:Membre__" as mem ++ : setModerateur()
 return
 
-rs -> "__mem:Membre__" as mem ++ : setModerateur(mem)
-return
+
 
 end
 end

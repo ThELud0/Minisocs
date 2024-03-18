@@ -3,8 +3,6 @@ Autre nouvelle information
 
 Changement readme:
 -- Ajouter toutes les conditions et tests sur les pseudo reseaux (déjà FAIT pour pre/post conditions et tableaux de validation des tests de: créerReseauSocial, ajouterMembre)
--- Diagramme sequence de ajouter un membre a faire
--- Diagramme de sequence de ajt utilisateur à modifier un peu en accordance avec le code
 
 
 

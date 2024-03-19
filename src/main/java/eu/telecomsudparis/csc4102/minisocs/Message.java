@@ -26,10 +26,10 @@ public class Message {
 	/**
 	 * construit un message.
 	 * 
-	 * @param id l'id du message
 	 * @param contenu le contenu du message
+	 * @param pseudoUtilisateur le pseudo de l'utilisateur qui crée le message
 	 */
-	public Message(final String contenu, final EtatMessage etatMessage, String pseudoUtilisateur) {
+	public Message(final String contenu, String pseudoUtilisateur) {
 		if (contenu == null || contenu.isBlank()) {
 			throw new IllegalArgumentException("le contenu du message ne peut pas être null ou vide");	
 		}
@@ -50,6 +50,24 @@ public class Message {
 		
 		this.etatMessage = etatMessage;
 		// A voir comment détruire le message si set à REFUSE
+		
+		assert invariant();
+	}
+	
+	public void cacher(boolean hidden) throws OperationImpossible {
+		if ((this.etatMessage == EtatMessage.REFUSE ) || (this.etatMessage == EtatMessage.ATTENTE)) {
+			throw new OperationImpossible("refusé ou en attente ne sont pas des états depuis lesquels on peut cacher ou rendre visible un message"); 
+		}
+		
+		if (!hidden) {
+			this.etatMessage=EtatMessage.ACCEPTE;	
+		}
+		
+		if(hidden) {
+			this.etatMessage=EtatMessage.CACHE;
+		}
+		
+		assert invariant();
 	}
 	
 	public String getID() {

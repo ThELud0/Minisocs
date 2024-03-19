@@ -213,6 +213,47 @@ public class MiniSocs {
 		
 	}
 	
+	public void posterMessage(String pseudoUtilisateur, String nomReseau, String contenu) throws OperationImpossible{
+		if ((contenu==null) || (contenu.isBlank())) {
+			throw new OperationImpossible("le contenu du message ne peut pas être null ou vide");
+		}
+		if ((pseudoUtilisateur==null) || (pseudoUtilisateur.isBlank())) {
+			throw new OperationImpossible("le pseudo utilisateur ne peut pas être null ou vide");
+		}
+		Utilisateur u = utilisateurs.get(pseudoUtilisateur);
+		if (u == null) {
+			throw new OperationImpossible(pseudoUtilisateur + "est un utilisateur inexistant");
+		}
+		if (u.getEtatCompte() != EtatCompte.ACTIF) {
+			throw new OperationImpossible("compte utilisateur avec ce pseudo (" + pseudoUtilisateur + ") n'est pas actif");
+		}
+		if ((nomReseau==null) || (nomReseau.isBlank())) {
+			throw new OperationImpossible("le nom du réseau ne peut pas être null ou vide");
+		}
+		ReseauSocial rs = reseaux.get(nomReseau);
+		if (rs == null) {
+			throw new OperationImpossible(nomReseau + "est un réseau inexistant");
+		}
+		if (rs.getEtatReseau() != EtatReseau.OUVERT) {
+			throw new OperationImpossible(nomReseau + "n'est pas ouvert");
+		}
+		if (getReseaux().get(nomReseau).getMembres().get(getUtilisateurs().get(pseudoUtilisateur).getMembres().get(nomReseau).getPseudoReseau())== null) {
+			throw new OperationImpossible("Cet utilisateur n'est pas membre du réseau");
+		}
+		
+		Message message = new Message(contenu, pseudoUtilisateur);
+		
+		getUtilisateurs().get(pseudoUtilisateur).getMembres().get(nomReseau).ajouterMessage(message); //On ajoute le message à la collection de messages du membre
+		getReseaux().get(nomReseau).ajouterMessage(message); // On ajoute le message à la collection de messages du réseau
+		
+		//Si le membre est modérateur  alors son message est automatiquement accepté
+		if (getUtilisateurs().get(pseudoUtilisateur).getMembres().get(nomReseau).estModerateur()) {
+			message.moderer(EtatMessage.ACCEPTE);
+		}
+		
+		assert invariant();
+	}
+	
 	public Map<String, Utilisateur> getUtilisateurs() {
 		return utilisateurs;
 	}

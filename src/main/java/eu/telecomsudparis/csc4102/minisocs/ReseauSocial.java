@@ -123,6 +123,19 @@ public class ReseauSocial {
 		assert invariant();
 	}
 	
+	public void ajouterMessage(Message message) throws OperationImpossible {
+		if ((message==null) || !message.invariant()) {
+			throw new OperationImpossible("message invalide");
+		}
+		if (messages.get(message.getID()) != null) {
+			throw new OperationImpossible("un message avec cet ID existe déjà dans ce réseau");
+		}
+		
+		messages.put(message.getID(), message);
+		
+		assert invariant();
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(nomReseau);

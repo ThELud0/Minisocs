@@ -135,7 +135,6 @@ public class Utilisateur {
 		
 		assert invariant();
 	}
-	
 	/**
 	 * obtient les membres.
 	 * 

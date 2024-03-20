@@ -3,10 +3,18 @@ package eu.telecomsudparis.csc4102.minisocs.validation;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import eu.telecomsudparis.csc4102.minisocs.EtatCompte;
+import eu.telecomsudparis.csc4102.minisocs.EtatMessage;
+import eu.telecomsudparis.csc4102.minisocs.EtatReseau;
+import eu.telecomsudparis.csc4102.minisocs.Message;
 import eu.telecomsudparis.csc4102.minisocs.MiniSocs;
+import eu.telecomsudparis.csc4102.minisocs.ReseauSocial;
+import eu.telecomsudparis.csc4102.minisocs.Utilisateur;
 import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
 class TestPosterMessage {
@@ -36,7 +44,40 @@ class TestPosterMessage {
 		pseudoReseau=null;
 		nomReseau = null;
 	}
-
 	
+	@Test
+	@DisplayName ("nom du réseau est null")
+	void posterMessageTest1Jeu1() throws Exception {
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> miniSocs.posterMessage(pseudoMem, null, "contenu"));
+	}
+		
+	@Test
+	@DisplayName ("nom du réseau est vide")
+	void posterMessageTest1Jeu2() throws Exception {
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> miniSocs.posterMessage(pseudoMem, "", "contenu"));
+	}
+	
+	@Test
+	@DisplayName ("pseudo de l'utilisateur est null")
+	void posterMessageTest2Jeu1() throws Exception {
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> miniSocs.posterMessage(null, nomReseau, "contenu"));
+	}
+
+	@Test
+	@DisplayName ("pseudo de l'utilisateur est vide")
+	void posterMessageTest2Jeu2() throws Exception {
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> miniSocs.posterMessage("", nomReseau, "contenu"));
+	}
+	
+	@Test
+	@DisplayName ("utilisateur non existant")
+	void posterMessageTest3Jeu1() throws Exception {
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> miniSocs.creerReseauSocial("pseudo2", nomReseau, "contenu"));
+	}
 
 }

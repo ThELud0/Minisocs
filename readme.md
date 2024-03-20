@@ -109,9 +109,7 @@ NB : l'opération est idempotente.
 ∧ message bien formé (non null ∧ non vide) \
 ∧ l'utilisateur est un membre du réseau
 - postcondition : \
-∧ le message est posté \
-∧ le message est non visible \
-∧ le message est en attente de traitement par un modérateur \
+∧ le message est en attente de traitement par un modérateur 
 
 #### Ajouter un utilisateur (à MiniSocs) (HAUTE)
 - précondition : \
@@ -243,8 +241,6 @@ conditions.
 | utilisateur est un membre du réseau        |   |   |   |   |   |   | F | T | T |
 | réseau avec ce nom ouvert                  |   |   |   |   |   |   |   | F | T |
 |                                            |   |   |   |   |   |   |   |   |   |
-| message posté                              | F | F | F | F | F | F | F | F | T |
-| message est non visible                    | F | F | F | F | F | F | F | F | T |
 | message en attente de traitement par un mod| F | F | F | F | F | F | F | F | T |
 |                                            |   |   |   |   |   |   |   |   |   |
 | nombre de tests dans le jeu de tests       | 2 | 2 | 1 | 1 | 2 | 2 | 1 | 1 | 1 |

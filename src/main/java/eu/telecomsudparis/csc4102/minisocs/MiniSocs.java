@@ -237,7 +237,7 @@ public class MiniSocs {
 		if (rs.getEtatReseau() != EtatReseau.OUVERT) {
 			throw new OperationImpossible(nomReseau + "n'est pas ouvert");
 		}
-		if (getReseaux().get(nomReseau).getMembres().get(getUtilisateurs().get(pseudoUtilisateur).getMembres().get(nomReseau).getPseudoReseau())== null) {
+		if (getUtilisateurs().get(pseudoUtilisateur).getMembres().get(nomReseau)== null) {
 			throw new OperationImpossible("Cet utilisateur n'est pas membre du réseau");
 		}
 		

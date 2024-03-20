@@ -191,3 +191,53 @@ Lorsque vous créez le message vous passez le paramètre "réseau" mais ne l'uti
 - OK
 2. Table de décision des tests unitaires de la méthode Message::modérer
 - OK
+
+## Programmation du logiciel
+
+### Utilisation des outils de programmation
+
+1. Module Maven et tests avec JUnit
+- [OK
+
+### Programmation de la solution
+
+#### Classes du diagramme de classes avec leurs attributs
+
+Excellent
+
+#### Méthodes des cas d'utilisation de base
+
+1. Cas d'utilisation « créer un réseau social »
+- []Excellent
+2. Cas d'utilisation « ajouter un membre à un réseau social »
+- []Excellent
+3. Cas d'utilisation « poster un message »
+- []Excellent
+
+#### Cohérence entre le code et le modèle
+
+1. Cohérences du code avec le diagramme de classes
+- []OK
+2. Cohérences du code avec les diagrammes de séquence
+- [] JAVA-08-Cohérence-avec-diagrammes-de-séquence
+  - Il faudra veiller à ce que la modélisation et les opérations des
+    classes JAVA soient en cohérence. Pour le moment ce n'est pas le
+    cas. Par exemple, les noms des méthodes sont différents, les
+    prototypes des méthodes sont différents...
+
+## Programmation et exécution des tests
+
+### Tests de validation des cas d'utilisation
+
+1. Cas d'utilisation « créer un réseau social »
+- [] EXCELLENT
+2. Cas d'utilisation « ajouter un membre à un réseau social »
+- []EXCELLENT
+3. Cas d'utilisation « poster un message »
+- []EXCELLENT
+4. ### Tests unitaires des méthodes d'une classe
+
+5. Constructeur de la classe `Message`
+- []EXCELLENT
+2. Méthode `modérer` de la classe `Message`
+- [] A FAIRE

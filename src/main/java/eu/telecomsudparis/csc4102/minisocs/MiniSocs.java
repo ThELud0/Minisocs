@@ -212,7 +212,14 @@ public class MiniSocs {
 		mem.ajouterMembre(m);
 		
 	}
-	
+	/**
+	 * poste un message dans un réseau par un membre (mis en attente ou accepté si le membre est mod).
+	 * 
+	 * @param pseudoUtilisateur   le pseudo de l'utilisateur qui poste.
+	 * @param nomReseau   le nom du réseau social.
+	 * @param contenu	le contenu du message.
+	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 */
 	public void posterMessage(String pseudoUtilisateur, String nomReseau, String contenu) throws OperationImpossible{
 		if ((contenu==null) || (contenu.isBlank())) {
 			throw new OperationImpossible("le contenu du message ne peut pas être null ou vide");
@@ -252,6 +259,55 @@ public class MiniSocs {
 		}
 		
 		assert invariant();
+	}
+	
+	/**
+	 * 
+	 * @param pseudoMod		pseudo (utilisateur) du modérateur.
+	 * @param nomReseau		nom du Réseau où le message a été posté.
+	 * @param message		message à modérer.
+	 * @param etatMessage	l'état demandé (ACCEPTE ou REFUSE) par le modérateur.
+	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
+	 */
+	public void ModererMessage(String pseudoMod, String nomReseau, Message message, EtatMessage etatMessage) throws OperationImpossible {
+		if ((pseudoMod==null) || (pseudoMod.isBlank())) {
+			throw new OperationImpossible("le pseudo utilisateur ne peut pas être null ou vide");
+		}
+		Utilisateur mod = utilisateurs.get(pseudoMod);
+		if (mod == null) {
+			throw new OperationImpossible(pseudoMod + "est un utilisateur inexistant");
+		}
+		if (mod.getEtatCompte() != EtatCompte.ACTIF) {
+			throw new OperationImpossible("compte utilisateur avec ce pseudo (" + pseudoMod + ") n'est pas actif");
+		}
+		if ((nomReseau==null) || (nomReseau.isBlank())) {
+			throw new OperationImpossible("le nom du réseau ne peut pas être null ou vide");
+		}
+		ReseauSocial rs = reseaux.get(nomReseau);
+		if (rs == null) {
+			throw new OperationImpossible(nomReseau + "est un réseau inexistant");
+		}
+		if (rs.getEtatReseau() != EtatReseau.OUVERT) {
+			throw new OperationImpossible(nomReseau + "n'est pas ouvert");
+		}
+		if (mod.getMembres().get(nomReseau)== null) {
+			throw new OperationImpossible("Cet utilisateur n'est pas membre du réseau");
+		}
+		if (!mod.getMembres().get(nomReseau).estModerateur()) {
+			throw new OperationImpossible(pseudoMod + "n'est pas modérateur du réseau " + nomReseau);
+		}
+		if (rs.getMessages().get(message.getID()) == null) {
+			throw new OperationImpossible("le message n'existe pas dans le réseau");
+		}
+		if ((message.getEtatMessage()!=EtatMessage.ATTENTE)) {
+			throw new OperationImpossible("le message n'est pas en attente de modération");
+		}
+		if ((etatMessage!=EtatMessage.ACCEPTE) && (etatMessage!=EtatMessage.REFUSE)) {
+			throw new OperationImpossible("modérer un message permet seulement de l'accepter ou de le refuser");
+		}
+		message.moderer(etatMessage);
+		
+		assert message.invariant();
 	}
 	
 	public Map<String, Utilisateur> getUtilisateurs() {

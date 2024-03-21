@@ -116,7 +116,7 @@ public class Utilisateur {
 	}
 
 	/**
-	 * bloque le comte de l'utilisateur. L'opération est idempotente.
+	 * bloque le compte de l'utilisateur. L'opération est idempotente.
 	 */
 	public void bloquerCompte() {
 		this.etatCompte = EtatCompte.BLOQUE;

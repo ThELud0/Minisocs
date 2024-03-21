@@ -118,10 +118,6 @@ NB : l'opération est idempotente.
 ∧ prénom bien formé  (non null ∧ non vide) \
 ∧ courriel bien formé (respectant le standard RFC822) \
 ∧ utilisateur avec ce pseudo inexistant \
-∧ utilisateur avec ce courriel inexistant \
-∧ l'acteur a un nom bien formé (non null ^ non vide)\
-∧ l'acteur existe \
-∧ l'acteur est administrateur du réseau 
 - postcondition : \
 ∧ utilisateur avec ce pseudo existant \
 ∧ utilisateur avec ce courriel existant \
@@ -141,23 +137,6 @@ NB : l'opération est idempotente.
 ∧ utilisateur est membre du réseau \
 ∧ utilisateur est modérateur du réseau
 
-#### Modérer un message (MOYENNE)
-- précondition : \
-∧ pseudo bien formé (non null ∧ non vide) \
-∧ utilisateur avec ce pseudo existant \
-∧ le compte est actif \
-∧ nom du réseau bien formé (non null ∧ non vide) \
-∧ réseau avec ce nom existant \
-∧ réseau avec ce nom ouvert \
-∧ utilisateur est membre du réseau \
-∧ utilisateur est modérateur du réseau \
-∧ message fait partie du réseau \
-∧ message en attente de modération \
-∧ état demandé du message est ACCEPTE ou REFUSE
-- postcondition : \
-∧ état du message ACCEPTE ou REFUSE
-
-
 #### Autres cas d'utilisation et leur priorité respective
 
 - Retirer un utilisateur (de MiniSocs) (basse)
@@ -173,6 +152,8 @@ NB : l'opération est idempotente.
 - Déstituer un modérateur (basse)
 
 - Fermer son réseau social (basse)
+
+- Modérer un message (moyenne)
 
 - Réactiver son compte (basse)
 
@@ -208,23 +189,19 @@ NB : l'opération est idempotente.
 
 #### Ajouter un utilisateur (à MiniSocs) (HAUTE)
 
-|                                                     | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-|:----------------------------------------------------|:--|:--|:--|---|---|---|---|---|---|---|
-| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T | T | T | T | T |
-| nom bien formé  (non null ∧ non vide)               |   | F | T | T | T | T | T | T | T | T |
-| prénom bien formé  (non null ∧ non vide)            |   |   | F | T | T | T | T | T | T | T |
-| courriel bien formé (respectant le standard RFC822) |   |   |   | F | T | T | T | T | T | T |
-| utilisateur avec ce pseudo inexistant               |   |   |   |   | F | T | T | T | T | T |
-| utilisateur avec ce courriel inexistant             |   |   |   |   |   | F | T | T | T | T |
-| nom acteur bien formé (non null ∧ non vide)         |   |   |   |   |   |   | F | T | T | T |
-| acteur existant                                     |   |   |   |   |   |   |   | F | T | T |
-| acteur est modérateur                               |   |   |   |   |   |   |   |   | F | T |
-|                                                     |   |   |   |   |   |   |   |   |   |   |
-| utilisateur avec ce pseudo existant                 | F | F | F | F | F | F | F | F | F | T |
-| utilisateur avec ce courriel existant               | F | F | F | F | F | F | F | F | F | T |
-| compte de l'utilisateur actif                       | F | F | F | F | F | F | F | F | F | T |
-|                                                     |   |   |   |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests                | 2 | 2 | 2 | 3 | 1 | 1 | 2 | 1 | 1 | 1 |
+|                                                     | 1 | 2 | 3 | 4 | 5 | 6 |
+|:----------------------------------------------------|:--|:--|:--|---|---|---|
+| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T |
+| nom bien formé  (non null ∧ non vide)               |   | F | T | T | T | T |
+| prénom bien formé  (non null ∧ non vide)            |   |   | F | T | T | T |
+| courriel bien formé (respectant le standard RFC822) |   |   |   | F | T | T |
+| utilisateur avec ce pseudo inexistant               |   |   |   |   | F | T |
+|                                                     |   |   |   |   |   |   |
+| utilisateur avec ce pseudo existant                 | F | F | F | F | F | T |
+| utilisateur avec ce courriel existant               | F | F | F | F | F | T |
+| compte de l'utilisateur actif                       | F | F | F | F | F | T |
+|                                                     |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                | 2 | 2 | 2 | 3 | 1 | 1 |
 
 Le jeu de test 4 comporte trois tests : non null, non vide, et adresse
 courriel bien formée. On aurait pu n'en faire qu'un en considérant la
@@ -277,26 +254,6 @@ conditions.
 | utilisateur est modérateur du réseau                | F | F | F | F | F | F | T |
 |                                                     |   |   |   |   |   |   |   |
 | nombre de tests dans le jeu de tests                | 2 | 1 | 1 | 2 | 2 | 1 | 1 |
-
-#### Modérer un message (MOYENNE)
-
-|                                            | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
-|:-------------------------------------------|:--|:--|:--|---|---|---|---|---|---|---|---|---|
-| pseudo bien formé (non null ∧ non vide)    | F | T | T | T | T | T | T | T | T |T | T | T |
-| utilisateur avec ce pseudo existant        |   | F | T | T | T | T | T | T | T |T | T | T |
-| le compte utilisateur est actif            |   |   | F | T | T | T | T | T | T |T | T | T |
-| nom réseau bien formé (non null ∧ non vide)|   |   |   | F | T | T | T | T | T |T | T | T |
-| réseau avec ce nom existant                |   |   |   |   | F | T | T | T | T |T | T | T |
-| réseau avec ce nom ouvert                  |   |   |   |   |   | F | T | T | T |T | T | T |
-| utilisateur est un membre du réseau        |   |   |   |   |   |   | F | T | T |T | T | T |
-| utilisateur est modérateur du réseau       |   |   |   |   |   |   |   | F | T |T | T | T |
-| message fait partie du réseau              |   |   |   |   |   |   |   |   | F |T | T | T |
-| message en attente de modération           |   |   |   |   |   |   |   |   |   |F | T | T |
-| état demandé est ACCEPTE ou REFUSE         |   |   |   |   |   |   |   |   |   |  | F | T |
-|                                            |   |   |   |   |   |   |   |   |   |
-| état du message est ACCEPTE ou REFUSE      | F | F | F | F | F | F | F | F | F | F | F | T |
-|                                            |   |   |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests       | 2 | 1 | 1 | 2 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
 
 
 # 3. Conception

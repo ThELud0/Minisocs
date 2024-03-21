@@ -110,6 +110,70 @@ public class MiniSocs {
 		u.desactiverCompte();
 		assert invariant();
 	}
+	
+	/**
+	 * fermer un réseau social.
+	 * 
+	 * @param nomReseau le nom du réseau.
+	 * @throws OperationImpossible en cas de problèmes sur les pré-conditions.
+	 */
+	public void fermerReseauSocial(final String nomReseau) throws OperationImpossible {
+		if (nomReseau == null || nomReseau.isBlank()) {
+			throw new OperationImpossible("nom du réseau ne peut pas être null ou vide");
+		}
+		ReseauSocial rs = reseaux.get(nomReseau);
+		if (rs == null) {
+			throw new OperationImpossible("réseau inexistant avec ce nom (" + nomReseau + ")");
+		}
+		rs.fermerReseau();
+		assert invariant();
+	}
+	
+	
+	public void cacherMessage(Membre mem, Message msg, boolean hidden) throws OperationImpossible {
+		String pseudo = mem.getUtilisateur().getPseudonyme();
+		String nomReseau = mem.getReseauSocial().getNomReseau();
+		String idMessage = msg.getID();
+		if (pseudo == null || pseudo.isBlank()) {
+			throw new OperationImpossible("pseudo ne peut pas être null ou vide");
+		}
+		Utilisateur u = utilisateurs.get(pseudo);
+		if (u == null) {
+			throw new OperationImpossible("utilisateur inexistant avec ce pseudo (" + pseudo + ")");
+		}
+		if (u.getEtatCompte() != EtatCompte.ACTIF) {
+			throw new OperationImpossible("compte utilisateur avec ce pseudo (" + pseudo + ") n'est pas actif");
+		}
+		if ((nomReseau==null) || (nomReseau.isBlank())) {
+			throw new OperationImpossible("le nom du réseau ne peut pas être null ou vide");
+		}
+		ReseauSocial rs = reseaux.get(nomReseau);
+		if (rs == null) {
+			throw new OperationImpossible(nomReseau + "est un réseau inexistant");
+		}
+		if (rs.getEtatReseau() != EtatReseau.OUVERT) {
+			throw new OperationImpossible(nomReseau + "n'est pas ouvert");
+		}
+		if ( (!(u.getMembres().get(nomReseau).equals(mem))) || (!(rs.getMembres().get(mem.getPseudoReseau()).equals(mem))) )  {
+			throw new OperationImpossible("Cet utilisateur n'est pas membre du réseau");
+		}
+		if (idMessage == null || idMessage.isBlank()) {
+			throw new OperationImpossible("id du message ne peut pas être null ou vide");
+		}
+		if (!(mem.getMessages().get(idMessage).equals(msg))) {
+			throw new OperationImpossible("utilisateur n'a pas envoyé ce message");
+		}
+		if (!(rs.getMessages().get(idMessage).equals(msg))) {
+			throw new OperationImpossible("ce message n'est pas dans le réseau");
+		}
+		if ((msg.getEtatMessage() == EtatMessage.REFUSE ) || (msg.getEtatMessage() == EtatMessage.ATTENTE)) {
+			throw new OperationImpossible("refusé ou en attente ne sont pas des états depuis lesquels on peut cacher ou rendre visible un message"); 
+		}
+		msg.cacher(hidden);
+		
+	}
+	
+	
 	/**
 	 * créer un réseau social.
 	 * 

@@ -14,7 +14,7 @@ import eu.telecomsudparis.csc4102.minisocs.EtatReseau;
 import eu.telecomsudparis.csc4102.minisocs.EtatCompte;
 import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
-class testAjouterMembre {
+class TestAjouterMembre {
 	private MiniSocs miniSocs;
 	private String nomReseau;
 	private String pseudoMod;

@@ -9,38 +9,42 @@ skinparam sequenceActorBackgroundColor White
 
 'Déclaration des acteurs et des participants (déjà existants avant la séquence)'
 
-actor "__mem:Membre__" as mem
+actor "__u:Utilisateur__" as u
+participant "__mem:Membre__" as mem
 participant "__m:MiniSocs__" as m
 participant "__rs:RéseauSocial__" as rs
-participant "__msg:Message__" as msg
 
 'Séquence avec les messages, les créations de participants, etc.'
 
-mem -> m ++ : posterMessage(contenu, réseau)
-opt mem.pseudo non null ∧ non vide
-m -> m ++ : u=chercherUtilisateur(mem.pseudo)
+u -> m ++ : posterMessage(u.pseudo, nomReseau, contenu)
+opt contenu, u.pseudo, nomReseau non null ∧ non vide
+m -> m ++ : user=utilisateurs.get(u.pseudo)
 return
-opt (contenu, réseau non null ∧ non vide) ∧ (u != null)
-m -> m ++ : ec=checkEtatCompte(mem.pseudo)
+opt user != null
+m -> m ++ : ec=user.getEtatCompte()
 return
-m -> m ++ : r=chercherReseau(réseau)
+m -> m ++ : r=reseaux.get(nomReseau)
 return
 opt (r != null) ∧ (ec == ACTIF)
-m -> rs ++ : p=faitpartie()
+m -> m ++ : er=r.getEtatReseau()
 return
-opt p == True
-m -> msg ++ : id=créerMessage(contenu, réseau)
-msg -> msg ++ : setContent(contenu)
+opt er == OUVERT
+m -> m ++ : member=user.getMembres.get(nomReseau)
 return
-msg -> msg ++ : setId(id)
+opt member != null
+create "__msg:Message__" as msg
+m -> msg ++ : new Message(contenu, u.pseudo)
 return
-msg -> msg ++ : initEtatMessage()
+m -> mem ++ : member.ajouterMessage(msg)
 return
-msg -> msg ++ : nonCaché()
+m -> rs ++ : r.ajouterMessage(msg)
 return
-msg -> rs ++ : envoyerVersListeAttente()
+opt member.estModerateur() == True
+m -> msg ++ : msg.moderer(ACCEPTE)
 return
-return
+end
+
+end
 end
 end
 end

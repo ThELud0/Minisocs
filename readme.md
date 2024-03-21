@@ -118,10 +118,6 @@ NB : l'opération est idempotente.
 ∧ prénom bien formé  (non null ∧ non vide) \
 ∧ courriel bien formé (respectant le standard RFC822) \
 ∧ utilisateur avec ce pseudo inexistant \
-∧ utilisateur avec ce courriel inexistant \
-∧ l'acteur a un nom bien formé (non null ^ non vide)\
-∧ l'acteur existe \
-∧ l'acteur est administrateur du réseau 
 - postcondition : \
 ∧ utilisateur avec ce pseudo existant \
 ∧ utilisateur avec ce courriel existant \
@@ -193,23 +189,19 @@ NB : l'opération est idempotente.
 
 #### Ajouter un utilisateur (à MiniSocs) (HAUTE)
 
-|                                                     | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-|:----------------------------------------------------|:--|:--|:--|---|---|---|---|---|---|---|
-| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T | T | T | T | T |
-| nom bien formé  (non null ∧ non vide)               |   | F | T | T | T | T | T | T | T | T |
-| prénom bien formé  (non null ∧ non vide)            |   |   | F | T | T | T | T | T | T | T |
-| courriel bien formé (respectant le standard RFC822) |   |   |   | F | T | T | T | T | T | T |
-| utilisateur avec ce pseudo inexistant               |   |   |   |   | F | T | T | T | T | T |
-| utilisateur avec ce courriel inexistant             |   |   |   |   |   | F | T | T | T | T |
-| nom acteur bien formé (non null ∧ non vide)         |   |   |   |   |   |   | F | T | T | T |
-| acteur existant                                     |   |   |   |   |   |   |   | F | T | T |
-| acteur est modérateur                               |   |   |   |   |   |   |   |   | F | T |
-|                                                     |   |   |   |   |   |   |   |   |   |   |
-| utilisateur avec ce pseudo existant                 | F | F | F | F | F | F | F | F | F | T |
-| utilisateur avec ce courriel existant               | F | F | F | F | F | F | F | F | F | T |
-| compte de l'utilisateur actif                       | F | F | F | F | F | F | F | F | F | T |
-|                                                     |   |   |   |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests                | 2 | 2 | 2 | 3 | 1 | 1 | 2 | 1 | 1 | 1 |
+|                                                     | 1 | 2 | 3 | 4 | 5 | 6 |
+|:----------------------------------------------------|:--|:--|:--|---|---|---|
+| pseudo bien formé (non null ∧ non vide)             | F | T | T | T | T | T |
+| nom bien formé  (non null ∧ non vide)               |   | F | T | T | T | T |
+| prénom bien formé  (non null ∧ non vide)            |   |   | F | T | T | T |
+| courriel bien formé (respectant le standard RFC822) |   |   |   | F | T | T |
+| utilisateur avec ce pseudo inexistant               |   |   |   |   | F | T |
+|                                                     |   |   |   |   |   |   |
+| utilisateur avec ce pseudo existant                 | F | F | F | F | F | T |
+| utilisateur avec ce courriel existant               | F | F | F | F | F | T |
+| compte de l'utilisateur actif                       | F | F | F | F | F | T |
+|                                                     |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests                | 2 | 2 | 2 | 3 | 1 | 1 |
 
 Le jeu de test 4 comporte trois tests : non null, non vide, et adresse
 courriel bien formée. On aurait pu n'en faire qu'un en considérant la

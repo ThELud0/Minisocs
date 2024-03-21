@@ -14,7 +14,7 @@ participant "__m:MiniSocs__" as m
 
 'Séquence avec les messages, les créations de participants, etc.'
 
-u -> m ++ : creerReseau(nomReseau, pseudoReseau)
+u -> m ++ : creerReseauSocial(u.pseudo, nomReseau, pseudoReseau)
 opt u.pseudo, pseudoReseau, nomReseau non null ^ non vide
 m -> m ++ : user=utilisateurs.get(u.pseudo)
 return

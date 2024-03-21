@@ -18,8 +18,6 @@ admin -> m ++ : ajouterUtilisateur(pseudo, nom, prénom, courriel)
 opt pseudo, nom, prénom, courriel non null ∧ non vide
   m -> m ++ : u=chercherUtilisateur(pseudo): Utilisateur
   return
-  m -> m ++ : u=chercherCourriel(courriel): Utilisateur
-  return
   opt u == null
     create "__u:Utilisateur__" as u
     m -> "__u:Utilisateur__" as u ++ : u=<<create(pseudo, nom, prénom, courriel)>>

@@ -237,17 +237,17 @@ public class MiniSocs {
 		if (rs.getEtatReseau() != EtatReseau.OUVERT) {
 			throw new OperationImpossible(nomReseau + "n'est pas ouvert");
 		}
-		if (getUtilisateurs().get(pseudoUtilisateur).getMembres().get(nomReseau)== null) {
+		if (u.getMembres().get(nomReseau)== null) {
 			throw new OperationImpossible("Cet utilisateur n'est pas membre du réseau");
 		}
 		
 		Message message = new Message(contenu, pseudoUtilisateur);
 		
-		getUtilisateurs().get(pseudoUtilisateur).getMembres().get(nomReseau).ajouterMessage(message); //On ajoute le message à la collection de messages du membre
-		getReseaux().get(nomReseau).ajouterMessage(message); // On ajoute le message à la collection de messages du réseau
+		u.getMembres().get(nomReseau).ajouterMessage(message); //On ajoute le message à la collection de messages du membre
+		rs.ajouterMessage(message); // On ajoute le message à la collection de messages du réseau
 		
 		//Si le membre est modérateur  alors son message est automatiquement accepté
-		if (getUtilisateurs().get(pseudoUtilisateur).getMembres().get(nomReseau).estModerateur()) {
+		if (u.getMembres().get(nomReseau).estModerateur()) {
 			message.moderer(EtatMessage.ACCEPTE);
 		}
 		

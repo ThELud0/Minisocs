@@ -17,7 +17,7 @@ participant "__rs:RéseauSocial__" as rs
 
 'Séquence avec les messages, les créations de participants, etc.'
 
-uMod -> m ++ : ajouterMembre(pseudoMembre, pseudoReseau, nomReseau)
+uMod -> m ++ : ajouterMembre(uMod.pseudo, pseudoMembre, pseudoReseau, nomReseau)
 opt uMod.pseudo, pseudoMembre, pseudoReseau, nomReseau non null ^ non vide
 m -> m ++ : userMod=utilisateurs.get(uMod.pseudo)
 return

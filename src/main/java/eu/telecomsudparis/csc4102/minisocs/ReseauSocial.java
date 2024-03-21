@@ -110,7 +110,7 @@ public class ReseauSocial {
 	
 	/**
 	 * ferme le réseau social. L'opération est
-	 * idempotente. L'opération est refusée si le réseau n'est pas ouvert.
+	 * idempotente.
 	 */
 	public void fermerReseau() {
 		if (etatReseau.equals(EtatReseau.FERME)) {

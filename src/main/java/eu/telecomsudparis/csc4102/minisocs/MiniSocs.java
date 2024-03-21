@@ -110,6 +110,26 @@ public class MiniSocs {
 		u.desactiverCompte();
 		assert invariant();
 	}
+	
+	/**
+	 * fermer un réseau social.
+	 * 
+	 * @param nomReseau le nom du réseau.
+	 * @throws OperationImpossible en cas de problèmes sur les pré-conditions.
+	 */
+	public void fermerReseauSocial(final String nomReseau) throws OperationImpossible {
+		if (nomReseau == null || nomReseau.isBlank()) {
+			throw new OperationImpossible("nom du réseau ne peut pas être null ou vide");
+		}
+		ReseauSocial rs = reseaux.get(nomReseau);
+		if (rs == null) {
+			throw new OperationImpossible("réseau inexistant avec ce nom (" + nomReseau + ")");
+		}
+		rs.fermerReseau();
+		assert invariant();
+	}
+	
+	
 	/**
 	 * créer un réseau social.
 	 * 

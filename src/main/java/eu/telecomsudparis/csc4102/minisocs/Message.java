@@ -33,6 +33,9 @@ public class Message {
 		if (contenu == null || contenu.isBlank()) {
 			throw new IllegalArgumentException("le contenu du message ne peut pas être null ou vide");	
 		}
+		if (pseudoUtilisateur == null || pseudoUtilisateur.isBlank()) {
+			throw new IllegalArgumentException("le pseudo de l'utilisateur ne peut pas être null ou vide");	
+		}
 		Instant instant = Datutil.instantDuTest(); // j'espère que ça fait ce qu'il faut lol
 		
 		this.idMessage=pseudoUtilisateur + Datutil.instantToString(instant);

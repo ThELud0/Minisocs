@@ -134,7 +134,6 @@ class TestPosterMessage {
 		//lorsqu'un modérateur poste le message
 		miniSocs.posterMessage(pseudoMod, nomReseau, "contenu");
 		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudoMod).getMembres().get(nomReseau).getMessages().get(0).getEtatMessage() == EtatMessage.ACCEPTE);
-		
 		//lorsqu'un membre simple poste le message
 		miniSocs.ajouterMembre(pseudoMod, pseudoMem, "pseudoReseau", nomReseau);
 		miniSocs.posterMessage(pseudoMem, nomReseau, "contenu");

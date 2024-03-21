@@ -14,7 +14,7 @@ public class Message {
 	private final String idMessage;
 	
 	/**
-	 * le contenu du messsage
+	 * le contenu du message
 	 */
 	private String contenu;
 	
@@ -113,7 +113,7 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "Message [idMessgae=" + idMessage + ", Contenu=" + contenu + ", État du message=" + etatMessage + "]";
+		return "Message [idMessage=" + idMessage + ", Contenu=" + contenu + ", État du message=" + etatMessage + "]";
 	}
 	
 

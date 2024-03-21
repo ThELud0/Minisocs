@@ -132,12 +132,20 @@ class TestPosterMessage {
 	@DisplayName("postconditions respectées et test si le message existe déjà") 
 	void posterMessageTest9et10() throws Exception {
 		//lorsqu'un modérateur poste le message
+		String idMessage = "";
 		miniSocs.posterMessage(pseudoMod, nomReseau, "contenu");
-		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudoMod).getMembres().get(nomReseau).getMessages().get(0).getEtatMessage() == EtatMessage.ACCEPTE);
+		for (String i: miniSocs.getUtilisateurs().get(pseudoMod).getMembres().get(nomReseau).getMessages().keySet()) {
+			idMessage = i;
+		}
+		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudoMod).getMembres().get(nomReseau).getMessages().get(idMessage).getEtatMessage() == EtatMessage.ACCEPTE);
+		
 		//lorsqu'un membre simple poste le message
 		miniSocs.ajouterMembre(pseudoMod, pseudoMem, "pseudoReseau", nomReseau);
 		miniSocs.posterMessage(pseudoMem, nomReseau, "contenu");
-		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudoMem).getMembres().get(nomReseau).getMessages().get(0).getEtatMessage() == EtatMessage.ATTENTE);
+		for (String i: miniSocs.getUtilisateurs().get(pseudoMem).getMembres().get(nomReseau).getMessages().keySet()) {
+			idMessage = i;
+		}
+		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudoMem).getMembres().get(nomReseau).getMessages().get(idMessage).getEtatMessage() == EtatMessage.ATTENTE);
 	}
 	
 	

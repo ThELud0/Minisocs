@@ -1,5 +1,6 @@
 // CHECKSTYLE:OFF
 
+
 package eu.telecomsudparis.csc4102.minisocs.unitaires;
 
 import org.junit.jupiter.api.AfterEach;

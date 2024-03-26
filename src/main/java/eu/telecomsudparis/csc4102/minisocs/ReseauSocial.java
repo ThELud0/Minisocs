@@ -11,7 +11,7 @@ import eu.telecomsudparis.csc4102.util.OperationImpossible;
 /**
  * Cette classe réalise le concept de réseau social du système
  * 
- * @author Jeanne Villette & Ludovic Hu
+ * @author Jeanne Villette et Ludovic Hu
  */
 
 public class ReseauSocial {

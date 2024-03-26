@@ -145,7 +145,7 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "Message [idMessage=" + idMessage + ", Contenu=" + contenu + ", État du message=" + etatMessage + "]";
+		return "Message [idMessage=" + idMessage + "\nContenu=" + contenu + "\nÉtat du message=" + etatMessage + "]";
 	}
 	
 

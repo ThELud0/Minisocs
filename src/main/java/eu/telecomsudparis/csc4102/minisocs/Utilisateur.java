@@ -36,9 +36,10 @@ public class Utilisateur {
 	 * état du compte de l'utilisateur.
 	 */
 	private EtatCompte etatCompte;
-	
+
 	/**
-	 * le string clé du hashmap réfere au nom du réseau social pour lequel l'utilisateur est membre
+	 * le string clé du hashmap réfere au nom du réseau social pour lequel
+	 * l'utilisateur est membre
 	 */
 	private final Map<String, Membre> membres;
 
@@ -80,7 +81,7 @@ public class Utilisateur {
 	public boolean invariant() {
 		return pseudonyme != null && !pseudonyme.isBlank() && nom != null && !nom.isBlank() && prenom != null
 				&& !prenom.isBlank() && EmailValidator.getInstance().isValid(courriel) && etatCompte != null
-				&& membres!=null;
+				&& membres != null;
 	}
 
 	/**
@@ -123,7 +124,7 @@ public class Utilisateur {
 		this.etatCompte = EtatCompte.BLOQUE;
 		assert invariant();
 	}
-	
+
 	public void ajouterMembre(Membre membre) throws OperationImpossible {
 		if (membre == null || !(membre.invariant())) {
 			throw new OperationImpossible("membre invalide");
@@ -131,11 +132,12 @@ public class Utilisateur {
 		if (membres.get(membre.getReseauSocial().getNomReseau()) != null) {
 			throw new OperationImpossible("utilisateur déjà membre du réseau");
 		}
-		
+
 		membres.put(membre.getReseauSocial().getNomReseau(), membre);
-		
+
 		assert invariant();
 	}
+
 	/**
 	 * obtient les membres.
 	 * 

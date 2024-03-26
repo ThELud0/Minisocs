@@ -9,17 +9,17 @@ import eu.telecomsudparis.csc4102.util.OperationImpossible;
 public class Message {
 	
 	/**
-	 *  l'id du message
+	 *  l'id du message.
 	 */
 	private final String idMessage;
 	
 	/**
-	 * le contenu du message
+	 * le contenu du message.
 	 */
 	private String contenu;
 	
 	/**
-	 *  l'état du message 
+	 *  l'état du message. 
 	 */
 	private EtatMessage etatMessage;
 	
@@ -29,7 +29,7 @@ public class Message {
 	 * @param contenu le contenu du message
 	 * @param pseudoUtilisateur le pseudo de l'utilisateur qui crée le message
 	 */
-	public Message(final String contenu, String pseudoUtilisateur) {
+	public Message(final String contenu, final String pseudoUtilisateur) {
 		if (contenu == null || contenu.isBlank()) {
 			throw new IllegalArgumentException("le contenu du message ne peut pas être null ou vide");	
 		}
@@ -38,12 +38,19 @@ public class Message {
 		}
 		Instant instant = Datutil.instantDuTest(); // j'espère que ça fait ce qu'il faut lol
 		
-		this.idMessage=pseudoUtilisateur + Datutil.instantToString(instant);
-		this.contenu=contenu;
-		this.etatMessage=EtatMessage.ATTENTE;
+		this.idMessage = pseudoUtilisateur + Datutil.instantToString(instant);
+		this.contenu = contenu;
+		this.etatMessage = EtatMessage.ATTENTE;
 	}	
 	
-	public void moderer(EtatMessage etatMessage) throws OperationImpossible {
+	/**
+	 * 
+	 * Accepter ou refuser un message en attente.
+	 * 
+	 * @param etatMessage
+	 * @throws OperationImpossible
+	 */
+	public void moderer(final EtatMessage etatMessage) throws OperationImpossible {
 		if (this.etatMessage != EtatMessage.ATTENTE) {
 			throw new OperationImpossible("seul un message en attente peut être modéré");
 		}
@@ -57,30 +64,55 @@ public class Message {
 		assert invariant();
 	}
 	
-	public void cacher(boolean hidden) throws OperationImpossible {
-		if ((this.etatMessage == EtatMessage.REFUSE ) || (this.etatMessage == EtatMessage.ATTENTE)) {
+	/**
+	 * 
+	 * Cache un message si cacher(True) et le rend visible si cacher(False).
+	 * 
+	 * @param hidden
+	 * @throws OperationImpossible
+	 */
+	public void cacher(final boolean hidden) throws OperationImpossible {
+		if ((this.etatMessage == EtatMessage.REFUSE) || (this.etatMessage == EtatMessage.ATTENTE)) {
 			throw new OperationImpossible("refusé ou en attente ne sont pas des états depuis lesquels on peut cacher ou rendre visible un message"); 
 		}
 		
 		if (!hidden) {
-			this.etatMessage=EtatMessage.ACCEPTE;	
+			this.etatMessage = EtatMessage.ACCEPTE;	
 		}
 		
-		if(hidden) {
-			this.etatMessage=EtatMessage.CACHE;
+		if (hidden) {
+			this.etatMessage = EtatMessage.CACHE;
 		}
 		
 		assert invariant();
 	}
 	
+	/**
+	 * 
+	 * obtenir l'ID d'un message.
+	 * 
+	 * @return l'idMessage.
+	 */
 	public String getID() {
 		return idMessage;
 	}
 	
+	/**
+	 * 
+	 * obtenir le contenu d'un message.
+	 * 
+	 * @return le contenu.
+	 */
 	public String getContenu() {
 		return contenu;
 	}
 	
+	/**
+	 * 
+	 * obtenir l'état d'un message.
+	 * 
+	 * @return l'etatMessage.
+	 */
 	public EtatMessage getEtatMessage() {
 		return etatMessage;
 	}
@@ -91,7 +123,7 @@ public class Message {
 	 * @return {@code true} si l'invariant est respecté.
 	 */
 	public boolean invariant() {
-		return idMessage != null && !idMessage.isBlank() && etatMessage != null && contenu !=null && !contenu.isBlank(); 
+		return idMessage != null && !idMessage.isBlank() && etatMessage != null && contenu != null && !contenu.isBlank(); 
 	}
 	
 	@Override

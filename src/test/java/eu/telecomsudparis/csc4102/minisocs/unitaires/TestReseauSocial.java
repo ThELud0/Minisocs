@@ -1,6 +1,6 @@
-package eu.telecomsudparis.csc4102.minisocs.unitaires;
+// CHECKSTYLE:OFF
 
-import static org.junit.jupiter.api.Assertions.*;
+package eu.telecomsudparis.csc4102.minisocs.unitaires;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -8,10 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import eu.telecomsudparis.csc4102.minisocs.EtatCompte;
 import eu.telecomsudparis.csc4102.minisocs.EtatReseau;
 import eu.telecomsudparis.csc4102.minisocs.ReseauSocial;
-import eu.telecomsudparis.csc4102.minisocs.Utilisateur;
+
 
 class TestReseauSocial {
 
@@ -38,7 +37,7 @@ class TestReseauSocial {
 	@DisplayName("constructeur fonctionne")
 	@Test
 	void constructeurReseauSocialTest2() {
-		ReseauSocial rs = new ReseauSocial("nomReseau");
+		final ReseauSocial rs = new ReseauSocial("nomReseau");
 		Assertions.assertNotNull(rs);
 		Assertions.assertEquals("nomReseau", rs.getNomReseau());
 		Assertions.assertEquals(EtatReseau.OUVERT, rs.getEtatReseau());

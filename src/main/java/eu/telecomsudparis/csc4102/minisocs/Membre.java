@@ -120,7 +120,7 @@ public class Membre {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(pseudoReseau + utilisateur + reseauSocial);
+		return Objects.hash(utilisateur.hashCode() + reseauSocial.hashCode());
 	}
 
 	@Override
@@ -132,8 +132,7 @@ public class Membre {
 			return false;
 		}
 		Membre other = (Membre) obj;
-		return (utilisateur.equals(other.getUtilisateur()) && reseauSocial.equals(other.getReseauSocial())
-				&& pseudoReseau.equals(other.getPseudoReseau()));
+		return (utilisateur.equals(other.getUtilisateur()) && reseauSocial.equals(other.getReseauSocial()));
 	}
 
 	@Override

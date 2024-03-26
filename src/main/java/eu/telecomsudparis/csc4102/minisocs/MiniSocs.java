@@ -77,6 +77,7 @@ public class MiniSocs {
 		if (u != null) {
 			throw new OperationImpossible(pseudo + "déjà un utilisateur");
 		}
+		
 		utilisateurs.put(pseudo, new Utilisateur(pseudo, nom, prenom, courriel));
 		assert invariant();
 	}
@@ -333,7 +334,7 @@ public class MiniSocs {
 	 * @param etatMessage	l'état demandé (ACCEPTE ou REFUSE) par le modérateur.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
 	 */
-	public void ModererMessage(String pseudoMod, String nomReseau, Message message, EtatMessage etatMessage) throws OperationImpossible {
+	public void modererMessage(String pseudoMod, String nomReseau, Message message, EtatMessage etatMessage) throws OperationImpossible {
 		if ((pseudoMod==null) || (pseudoMod.isBlank())) {
 			throw new OperationImpossible("le pseudo utilisateur ne peut pas être null ou vide");
 		}

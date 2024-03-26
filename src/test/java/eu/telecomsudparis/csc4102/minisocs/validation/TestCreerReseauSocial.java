@@ -1,3 +1,4 @@
+// CHECKSTYLE:OFF
 package eu.telecomsudparis.csc4102.minisocs.validation;
 
 import static org.junit.jupiter.api.Assertions.*;

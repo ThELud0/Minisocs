@@ -1,3 +1,5 @@
+// CHECKSTYLE:OFF
+
 package eu.telecomsudparis.csc4102.minisocs.unitaires;
 
 import static org.junit.jupiter.api.Assertions.*;

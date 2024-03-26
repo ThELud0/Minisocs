@@ -37,6 +37,7 @@ public class MiniSocs {
 		this.utilisateurs = new HashMap<>();
 		this.reseaux = new HashMap<>();
 	}
+	
 
 	/**
 	 * l'invariant de la façade.
@@ -130,8 +131,16 @@ public class MiniSocs {
 		assert invariant();
 	}
 	
-	
-	public void cacherMessage(Membre mem, Message msg, boolean hidden) throws OperationImpossible {
+	/**
+	 * 
+	 * Cacher ou rendre visible un message.
+	 * 
+	 * @param mem	le membre qui cache sont message.
+	 * @param msg	le message à cacher.
+	 * @param hidden	si True cache le message, si False le rend visible.
+	 * @throws OperationImpossible		
+	 */
+	public void cacherMessage(final Membre mem, final Message msg, final boolean hidden) throws OperationImpossible {
 		String pseudo = mem.getUtilisateur().getPseudonyme();
 		String nomReseau = mem.getReseauSocial().getNomReseau();
 		String idMessage = msg.getID();
@@ -145,7 +154,7 @@ public class MiniSocs {
 		if (u.getEtatCompte() != EtatCompte.ACTIF) {
 			throw new OperationImpossible("compte utilisateur avec ce pseudo (" + pseudo + ") n'est pas actif");
 		}
-		if ((nomReseau==null) || (nomReseau.isBlank())) {
+		if ((nomReseau == null) || (nomReseau.isBlank())) {
 			throw new OperationImpossible("le nom du réseau ne peut pas être null ou vide");
 		}
 		ReseauSocial rs = reseaux.get(nomReseau);
@@ -155,7 +164,7 @@ public class MiniSocs {
 		if (rs.getEtatReseau() != EtatReseau.OUVERT) {
 			throw new OperationImpossible(nomReseau + "n'est pas ouvert");
 		}
-		if ( (!(u.getMembres().get(nomReseau).equals(mem))) || (!(rs.getMembres().get(mem.getPseudoReseau()).equals(mem))) )  {
+		if ((!(u.getMembres().get(nomReseau).equals(mem))) || (!(rs.getMembres().get(mem.getPseudoReseau()).equals(mem))))  {
 			throw new OperationImpossible("Cet utilisateur n'est pas membre du réseau");
 		}
 		if (idMessage == null || idMessage.isBlank()) {
@@ -167,7 +176,7 @@ public class MiniSocs {
 		if (!(rs.getMessages().get(idMessage).equals(msg))) {
 			throw new OperationImpossible("ce message n'est pas dans le réseau");
 		}
-		if ((msg.getEtatMessage() == EtatMessage.REFUSE ) || (msg.getEtatMessage() == EtatMessage.ATTENTE)) {
+		if ((msg.getEtatMessage() == EtatMessage.REFUSE) || (msg.getEtatMessage() == EtatMessage.ATTENTE)) {
 			throw new OperationImpossible("refusé ou en attente ne sont pas des états depuis lesquels on peut cacher ou rendre visible un message"); 
 		}
 		msg.cacher(hidden);
@@ -207,7 +216,7 @@ public class MiniSocs {
 		
 		reseaux.put(nomReseau, new ReseauSocial(nomReseau));
 		
-		Membre m = new Membre(u,reseaux.get(nomReseau),pseudoReseau);
+		Membre m = new Membre(u, reseaux.get(nomReseau), pseudoReseau);
 		reseaux.get(nomReseau).ajouterMembre(m);
 		u.ajouterMembre(m);
 		m.setModerateur();
@@ -225,7 +234,7 @@ public class MiniSocs {
 	 * @param nomReseau   le nom du réseau social.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
 	 */
-	public void ajouterMembre(String pseudoMod, String pseudoMem, String pseudoReseau, String nomReseau) throws OperationImpossible{
+	public void ajouterMembre(final String pseudoMod, final String pseudoMem, final String pseudoReseau, final String nomReseau) throws OperationImpossible {
 		if (nomReseau == null || nomReseau.isBlank()) {
 			throw new OperationImpossible("nom du réseau ne peut pas être null ou vide");
 		}
@@ -262,7 +271,7 @@ public class MiniSocs {
 		if (mod.getMembres().get(nomReseau) == null) {
 			throw new OperationImpossible("utilisateur supposé modérateur (" + pseudoMod + ") ne fait pas partie du réseau (" + nomReseau + ")");
 		}
-		if (mod.getMembres().get(nomReseau).estModerateur() != true) {
+		if (!(mod.getMembres().get(nomReseau).estModerateur())) {
 			throw new OperationImpossible("utilisateur supposé modérateur (" + pseudoMod + ") du réseau (" + nomReseau + ") n'est pas modérateur");
 		}
 		if (pseudoReseau == null || pseudoReseau.isBlank()) {
@@ -272,7 +281,7 @@ public class MiniSocs {
 			throw new OperationImpossible("pseudo choisi pour le réseau (" + pseudoReseau + ") déjà choisi");
 		}
 		
-		Membre m = new Membre(mem,rs,pseudoReseau);
+		Membre m = new Membre(mem, rs, pseudoReseau);
 		rs.ajouterMembre(m);
 		mem.ajouterMembre(m);
 		
@@ -285,11 +294,11 @@ public class MiniSocs {
 	 * @param contenu	le contenu du message.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
 	 */
-	public void posterMessage(String pseudoUtilisateur, String nomReseau, String contenu) throws OperationImpossible{
-		if ((contenu==null) || (contenu.isBlank())) {
+	public void posterMessage(final String pseudoUtilisateur, final String nomReseau, final String contenu) throws OperationImpossible {
+		if ((contenu == null) || (contenu.isBlank())) {
 			throw new OperationImpossible("le contenu du message ne peut pas être null ou vide");
 		}
-		if ((pseudoUtilisateur==null) || (pseudoUtilisateur.isBlank())) {
+		if ((pseudoUtilisateur == null) || (pseudoUtilisateur.isBlank())) {
 			throw new OperationImpossible("le pseudo utilisateur ne peut pas être null ou vide");
 		}
 		Utilisateur u = utilisateurs.get(pseudoUtilisateur);
@@ -299,7 +308,7 @@ public class MiniSocs {
 		if (u.getEtatCompte() != EtatCompte.ACTIF) {
 			throw new OperationImpossible("compte utilisateur avec ce pseudo (" + pseudoUtilisateur + ") n'est pas actif");
 		}
-		if ((nomReseau==null) || (nomReseau.isBlank())) {
+		if ((nomReseau == null) || (nomReseau.isBlank())) {
 			throw new OperationImpossible("le nom du réseau ne peut pas être null ou vide");
 		}
 		ReseauSocial rs = reseaux.get(nomReseau);
@@ -309,7 +318,7 @@ public class MiniSocs {
 		if (rs.getEtatReseau() != EtatReseau.OUVERT) {
 			throw new OperationImpossible(nomReseau + "n'est pas ouvert");
 		}
-		if (u.getMembres().get(nomReseau)== null) {
+		if (u.getMembres().get(nomReseau) == null) {
 			throw new OperationImpossible("Cet utilisateur n'est pas membre du réseau");
 		}
 		
@@ -334,8 +343,9 @@ public class MiniSocs {
 	 * @param etatMessage	l'état demandé (ACCEPTE ou REFUSE) par le modérateur.
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
 	 */
-	public void modererMessage(String pseudoMod, String nomReseau, Message message, EtatMessage etatMessage) throws OperationImpossible {
-		if ((pseudoMod==null) || (pseudoMod.isBlank())) {
+
+	public void modererMessage(final String pseudoMod, final String nomReseau, final Message message, final  EtatMessage etatMessage) throws OperationImpossible {
+		if ((pseudoMod == null) || (pseudoMod.isBlank())) {
 			throw new OperationImpossible("le pseudo utilisateur ne peut pas être null ou vide");
 		}
 		Utilisateur mod = utilisateurs.get(pseudoMod);
@@ -345,7 +355,7 @@ public class MiniSocs {
 		if (mod.getEtatCompte() != EtatCompte.ACTIF) {
 			throw new OperationImpossible("compte utilisateur avec ce pseudo (" + pseudoMod + ") n'est pas actif");
 		}
-		if ((nomReseau==null) || (nomReseau.isBlank())) {
+		if ((nomReseau == null) || (nomReseau.isBlank())) {
 			throw new OperationImpossible("le nom du réseau ne peut pas être null ou vide");
 		}
 		ReseauSocial rs = reseaux.get(nomReseau);
@@ -355,7 +365,7 @@ public class MiniSocs {
 		if (rs.getEtatReseau() != EtatReseau.OUVERT) {
 			throw new OperationImpossible(nomReseau + "n'est pas ouvert");
 		}
-		if (mod.getMembres().get(nomReseau)== null) {
+		if (mod.getMembres().get(nomReseau) == null) {
 			throw new OperationImpossible("Cet utilisateur n'est pas membre du réseau");
 		}
 		if (!mod.getMembres().get(nomReseau).estModerateur()) {
@@ -364,10 +374,10 @@ public class MiniSocs {
 		if (rs.getMessages().get(message.getID()) == null) {
 			throw new OperationImpossible("le message n'existe pas dans le réseau");
 		}
-		if ((message.getEtatMessage()!=EtatMessage.ATTENTE)) {
+		if ((message.getEtatMessage() != EtatMessage.ATTENTE)) {
 			throw new OperationImpossible("le message n'est pas en attente de modération");
 		}
-		if ((etatMessage!=EtatMessage.ACCEPTE) && (etatMessage!=EtatMessage.REFUSE)) {
+		if ((etatMessage != EtatMessage.ACCEPTE) && (etatMessage != EtatMessage.REFUSE)) {
 			throw new OperationImpossible("modérer un message permet seulement de l'accepter ou de le refuser");
 		}
 		message.moderer(etatMessage);
@@ -375,10 +385,22 @@ public class MiniSocs {
 		assert message.invariant();
 	}
 	
+	/**
+	 * 
+	 * obtenir la liste des utilisateurs.
+	 * 
+	 * @return utilisateurs.
+	 */
 	public Map<String, Utilisateur> getUtilisateurs() {
 		return utilisateurs;
 	}
 	
+	/**
+	 * 
+	 * obtenir la liste des reseaux.
+	 * 
+	 * @return reseaux.
+	 */
 	public Map<String, ReseauSocial> getReseaux() {
 		return reseaux;
 	}
@@ -394,6 +416,6 @@ public class MiniSocs {
 
 	@Override
 	public String toString() {
-		return "MiniSocs [nomDuSysteme=" + nomDuSysteme + ", utilisateurs=" + utilisateurs + ", reseaux=" + reseaux +"]";
+		return "MiniSocs [nomDuSysteme=" + nomDuSysteme + ", utilisateurs=" + utilisateurs + ", reseaux=" + reseaux + "]";
 	}
 }

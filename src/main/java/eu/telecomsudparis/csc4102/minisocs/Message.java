@@ -47,8 +47,8 @@ public class Message {
 	 * 
 	 * Accepter ou refuser un message en attente.
 	 * 
-	 * @param etatMessage
-	 * @throws OperationImpossible
+	 * @param etatMessage REFUSE ou ACCEPTE uniquement.
+	 * @throws OperationImpossible si le message n'est pas en attente ou qu'on veut le mettre dans un autre état que REFUSE ou ACCEPTE.
 	 */
 	public void moderer(final EtatMessage etatMessage) throws OperationImpossible {
 		if (this.etatMessage != EtatMessage.ATTENTE) {

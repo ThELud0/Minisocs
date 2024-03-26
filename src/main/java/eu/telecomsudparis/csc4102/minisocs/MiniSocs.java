@@ -348,6 +348,8 @@ public class MiniSocs {
 
 	/**
 	 * 
+	 * un modérateur décide d'accepter ou de refuse un message en attente. 
+	 * 
 	 * @param pseudoMod   pseudo (utilisateur) du modérateur.
 	 * @param nomReseau   nom du Réseau où le message a été posté.
 	 * @param message     message à modérer.

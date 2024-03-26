@@ -1,7 +1,8 @@
 // CHECKSTYLE:OFF
 package eu.telecomsudparis.csc4102.minisocs;
+
 /**
- *  ce type énumère l'état d'un message.
+ * ce type énumère l'état d'un message.
  */
 public enum EtatMessage {
 	/**

@@ -14,7 +14,7 @@ import eu.telecomsudparis.csc4102.minisocs.ReseauSocial;
 import eu.telecomsudparis.csc4102.minisocs.Utilisateur;
 
 class TestReseauSocial {
-	
+
 	@BeforeEach
 	void setUp() {
 	}
@@ -22,20 +22,19 @@ class TestReseauSocial {
 	@AfterEach
 	void tearDown() {
 	}
-	
-	@DisplayName("nomReseau ne doit pas être null") 
+
+	@DisplayName("nomReseau ne doit pas être null")
 	@Test
 	void constructeurReseauSocialTest1Jeu1() {
-		Assertions.assertThrows(IllegalArgumentException.class,
-				() -> new ReseauSocial(null));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new ReseauSocial(null));
 	}
 
-	@DisplayName("nomReseau ne doit pas être vide") 
+	@DisplayName("nomReseau ne doit pas être vide")
 	@Test
 	void constructeurReseauSocialTest1Jeu2() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> new ReseauSocial(""));
 	}
-	
+
 	@DisplayName("constructeur fonctionne")
 	@Test
 	void constructeurReseauSocialTest2() {
@@ -46,7 +45,5 @@ class TestReseauSocial {
 		Assertions.assertNotNull(rs.getMembres());
 		Assertions.assertNotNull(rs.getMessages());
 	}
-	
-	
 
 }

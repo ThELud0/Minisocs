@@ -26,38 +26,38 @@ class TestCreerReseauSocial {
 		nomReseau = "nomReseau";
 		miniSocs.ajouterUtilisateur(pseudo, "nom", "prenom", "courriel@gmail.com");
 	}
-	
+
 	@AfterEach
 	void tearDown() {
 		miniSocs = null;
-		pseudo=null;
-		pseudoReseau=null;
+		pseudo = null;
+		pseudoReseau = null;
 		nomReseau = null;
 	}
-	
+
 	@Test
-	@DisplayName ("pseudo est null")
+	@DisplayName("pseudo est null")
 	void creerReseauSocialTest1Jeu1() throws Exception {
 		Assertions.assertThrows(OperationImpossible.class,
 				() -> miniSocs.creerReseauSocial(null, nomReseau, pseudoReseau));
 	}
-	
+
 	@Test
-	@DisplayName ("pseudo est vide")
+	@DisplayName("pseudo est vide")
 	void creerReseauSocialTest1Jeu2() throws Exception {
 		Assertions.assertThrows(OperationImpossible.class,
 				() -> miniSocs.creerReseauSocial("", nomReseau, pseudoReseau));
 	}
-	
+
 	@Test
-	@DisplayName ("utilisateur non existant")
+	@DisplayName("utilisateur non existant")
 	void creerReseauSocialTest2Jeu1() throws Exception {
 		Assertions.assertThrows(OperationImpossible.class,
 				() -> miniSocs.creerReseauSocial("pseudo2", nomReseau, pseudoReseau));
 	}
-	
+
 	@Test
-	@DisplayName ("compte utilisateur non actif")
+	@DisplayName("compte utilisateur non actif")
 	void creerReseauSocialTest3Jeu1() throws Exception {
 		try {
 			miniSocs.getUtilisateurs().get(pseudo).desactiverCompte();
@@ -67,52 +67,47 @@ class TestCreerReseauSocial {
 		Assertions.assertThrows(OperationImpossible.class,
 				() -> miniSocs.creerReseauSocial(pseudo, nomReseau, pseudoReseau));
 	}
-	
+
 	@Test
-	@DisplayName ("nom du reseau est null")
+	@DisplayName("nom du reseau est null")
 	void creerReseauSocialTest4Jeu1() throws Exception {
 		Assertions.assertThrows(OperationImpossible.class,
 				() -> miniSocs.creerReseauSocial(pseudo, null, pseudoReseau));
 	}
-	
+
 	@Test
-	@DisplayName ("nom du reseau est vide")
+	@DisplayName("nom du reseau est vide")
 	void creerReseauSocialTest4Jeu2() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.creerReseauSocial(pseudo, "", pseudoReseau));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.creerReseauSocial(pseudo, "", pseudoReseau));
 	}
-	
+
 	@Test
-	@DisplayName ("pseudo pour le reseau est null")
+	@DisplayName("pseudo pour le reseau est null")
 	void creerReseauSocialTest5Jeu1() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.creerReseauSocial(pseudo, nomReseau, null));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.creerReseauSocial(pseudo, nomReseau, null));
 	}
-	
+
 	@Test
-	@DisplayName ("pseudo pour le reseau est vide")
+	@DisplayName("pseudo pour le reseau est vide")
 	void creerReseauSocialTest5Jeu2() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.creerReseauSocial(pseudo, nomReseau, ""));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.creerReseauSocial(pseudo, nomReseau, ""));
 	}
-	
-	
-	
+
 	@Test
-	@DisplayName ("postconditions respectées et test si le réseau existe déjà")
+	@DisplayName("postconditions respectées et test si le réseau existe déjà")
 	void creerReseauSocialTest6Et7() throws Exception {
 		Assertions.assertTrue(miniSocs.getReseaux().isEmpty());
 		miniSocs.creerReseauSocial(pseudo, nomReseau, pseudoReseau);
 		Assertions.assertTrue(miniSocs.getReseaux().get(nomReseau) != null);
-		Assertions.assertTrue(miniSocs.getReseaux().get(nomReseau).getEtatReseau()==EtatReseau.OUVERT);
+		Assertions.assertTrue(miniSocs.getReseaux().get(nomReseau).getEtatReseau() == EtatReseau.OUVERT);
 		Assertions.assertTrue(miniSocs.getReseaux().get(nomReseau).getMembres().get(pseudoReseau) != null);
 		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudo).getMembres().get(nomReseau) != null);
-		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudo).getMembres().get(nomReseau).equals(miniSocs.getReseaux().get(nomReseau).getMembres().get(pseudoReseau)));
+		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudo).getMembres().get(nomReseau)
+				.equals(miniSocs.getReseaux().get(nomReseau).getMembres().get(pseudoReseau)));
 		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudo).getMembres().get(nomReseau).estModerateur());
 		Assertions.assertThrows(OperationImpossible.class,
 				() -> miniSocs.creerReseauSocial(pseudo, nomReseau, pseudoReseau));
 
 	}
-	
 
 }

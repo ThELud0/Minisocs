@@ -76,7 +76,7 @@ class TestUtilisateur {
 		Assertions.assertEquals("pseudo", utilisateur.getPseudonyme());
 		Assertions.assertEquals(EtatCompte.ACTIF, utilisateur.getEtatCompte());
 	}
-	
+
 	@Test
 	void desactiverTest1() {
 		Utilisateur utilisateur = new Utilisateur("pseudo", "nom", "prénom", "bon@courriel.fr");

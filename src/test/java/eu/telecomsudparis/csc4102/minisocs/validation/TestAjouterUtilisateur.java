@@ -67,12 +67,14 @@ class TestAjouterUtilisateur {
 
 	@Test
 	void ajouterUtilisateurTest3Jeu2() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.ajouterUtilisateur(pseudo, nom, "", courriel));
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> miniSocs.ajouterUtilisateur(pseudo, nom, "", courriel));
 	}
 
 	@Test
 	void ajouterUtilisateurTest4Jeu1() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.ajouterUtilisateur(pseudo, nom, prenom, null));
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> miniSocs.ajouterUtilisateur(pseudo, nom, prenom, null));
 	}
 
 	@Test

@@ -6,13 +6,12 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-
 import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
 /**
  * Cette classe réalise le concept de réseau social du système
  * 
- * @author Jeanne Villette & Ludovic Hu
+ * @author Jeanne Villette et Ludovic Hu
  */
 
 public class ReseauSocial {
@@ -20,12 +19,13 @@ public class ReseauSocial {
 	 * le nom du réseau social
 	 */
 	private final String nomReseau;
-	/** 
+	/**
 	 * état du réseau
 	 */
 	private EtatReseau etatReseau;
 	/**
-	 * les membres. Le string réfere au pseudo utilisé par le membre dans le réseau social.
+	 * les membres. Le string réfere au pseudo utilisé par le membre dans le réseau
+	 * social.
 	 */
 	private final Map<String, Membre> membres;
 	/**
@@ -46,19 +46,19 @@ public class ReseauSocial {
 		this.etatReseau = EtatReseau.OUVERT;
 		this.membres = new HashMap<>();
 		this.messages = new HashMap<>();
-		
+
 		assert invariant();
 	}
-	
+
 	/**
 	 * vérifie l'invariant de la classe.
 	 * 
 	 * @return {@code true} si l'invariant est respecté.
 	 */
 	public boolean invariant() {
-		return nomReseau != null && !nomReseau.isBlank() && etatReseau!=null && membres!=null && messages!=null;
+		return nomReseau != null && !nomReseau.isBlank() && etatReseau != null && membres != null && messages != null;
 	}
-	
+
 	public void ajouterMembre(Membre membre) throws OperationImpossible {
 		if (membre == null || !(membre.invariant())) {
 			throw new OperationImpossible("membre invalide");
@@ -66,13 +66,12 @@ public class ReseauSocial {
 		if (membres.get(membre.getPseudoReseau()) != null) {
 			throw new OperationImpossible("membre déjà dans le réseau");
 		}
-		
+
 		membres.put(membre.getPseudoReseau(), membre);
-		
+
 		assert invariant();
 	}
-	
-	
+
 	/**
 	 * obtient le nom du réseau.
 	 * 
@@ -81,7 +80,7 @@ public class ReseauSocial {
 	public String getNomReseau() {
 		return nomReseau;
 	}
-	
+
 	/**
 	 * obtient les membres.
 	 * 
@@ -90,7 +89,7 @@ public class ReseauSocial {
 	public Map<String, Membre> getMembres() {
 		return membres;
 	}
-	
+
 	/**
 	 * obtient les messages.
 	 * 
@@ -99,7 +98,7 @@ public class ReseauSocial {
 	public Map<String, Message> getMessages() {
 		return messages;
 	}
-	
+
 	/**
 	 * l'état du réseau.
 	 * 
@@ -108,10 +107,9 @@ public class ReseauSocial {
 	public EtatReseau getEtatReseau() {
 		return etatReseau;
 	}
-	
+
 	/**
-	 * ferme le réseau social. L'opération est
-	 * idempotente.
+	 * ferme le réseau social. L'opération est idempotente.
 	 */
 	public void fermerReseau() {
 		if (etatReseau.equals(EtatReseau.FERME)) {
@@ -123,25 +121,25 @@ public class ReseauSocial {
 		this.etatReseau = EtatReseau.FERME;
 		assert invariant();
 	}
-	
+
 	public void ajouterMessage(Message message) throws OperationImpossible {
-		if ((message==null) || !message.invariant()) {
+		if ((message == null) || !message.invariant()) {
 			throw new OperationImpossible("message invalide");
 		}
 		if (messages.get(message.getID()) != null) {
 			throw new OperationImpossible("un message avec cet ID existe déjà dans ce réseau");
 		}
-		
+
 		messages.put(message.getID(), message);
-		
+
 		assert invariant();
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(nomReseau);
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -156,7 +154,8 @@ public class ReseauSocial {
 
 	@Override
 	public String toString() {
-		return "ReseauSocial [nomReseau=" + nomReseau + ", etatReseau=" + etatReseau + ", membres=" + membres + ", messages=" + messages + "]";
+		return "ReseauSocial [nomReseau=" + nomReseau + ", etatReseau=" + etatReseau + ", membres=" + membres
+				+ ", messages=" + messages + "]";
 	}
 
 }

@@ -17,57 +17,52 @@ class TestDesactiverCompteUtilisateur {
 	private MiniSocs miniSocs;
 	private String pseudo;
 
-
 	@BeforeEach
 	void setUp() throws OperationImpossible {
 		miniSocs = new MiniSocs("MiniSocs");
 		pseudo = "pseudo";
 		miniSocs.ajouterUtilisateur(pseudo, "nom", "prenom", "courriel@gmail.com");
 	}
-	
+
 	@AfterEach
 	void tearDown() {
 		miniSocs = null;
-		pseudo=null;
+		pseudo = null;
 	}
-	
+
 	@Test
-	@DisplayName ("pseudo est null")
+	@DisplayName("pseudo est null")
 	void desactiverCompteUtilisateurTest1Jeu1() {
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.desactiverCompteUtilisateur(null));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.desactiverCompteUtilisateur(null));
 	}
-	
+
 	@Test
-	@DisplayName ("pseudo est vide")
+	@DisplayName("pseudo est vide")
 	void desactiverCompteUtilisateurTest1Jeu2() {
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.desactiverCompteUtilisateur(""));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.desactiverCompteUtilisateur(""));
 	}
+
 	@Test
-	@DisplayName ("utilisateur est inexistant")
+	@DisplayName("utilisateur est inexistant")
 	void desactiverCompteUtilisateurTest2Jeu1() {
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.desactiverCompteUtilisateur("inexistant"));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.desactiverCompteUtilisateur("inexistant"));
 	}
-	
+
 	@Test
-	@DisplayName ("le compte est bloqué")
+	@DisplayName("le compte est bloqué")
 	void desactiverCompteUtilisateurTest3Jeu1() {
 		miniSocs.getUtilisateurs().get(pseudo).bloquerCompte();
-		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.desactiverCompteUtilisateur(pseudo));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.desactiverCompteUtilisateur(pseudo));
 	}
-	
+
 	@Test
-	@DisplayName ("le compte utilisateur est désactivé")
+	@DisplayName("le compte utilisateur est désactivé")
 	void desactiverCompteUtilisateurTest4Jeu1() throws Exception {
-		
+
 		miniSocs.desactiverCompteUtilisateur(pseudo);
 
-		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudo).getEtatCompte()==EtatCompte.DESACTIVE);
-		
+		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudo).getEtatCompte() == EtatCompte.DESACTIVE);
+
 	}
-	
 
 }

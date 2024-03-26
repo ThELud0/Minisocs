@@ -22,33 +22,31 @@ class TestMessage {
 	@AfterEach
 	void tearDown() {
 	}
-	
-	@DisplayName("contenu ne doit pas être null") 
+
+	@DisplayName("contenu ne doit pas être null")
 	@Test
 	void constructeurMessageTest1Jeu1() {
-		Assertions.assertThrows(IllegalArgumentException.class,
-				() -> new Message(null, "pseudoUtilisateur"));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new Message(null, "pseudoUtilisateur"));
 	}
 
-	@DisplayName("contenu ne doit pas être vide") 
+	@DisplayName("contenu ne doit pas être vide")
 	@Test
 	void constructeurReseauSocialTest1Jeu2() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> new Message("", "pseudoUtilisateur"));
 	}
-	
-	@DisplayName("pseudoUtilisateur ne doit pas être null") 
+
+	@DisplayName("pseudoUtilisateur ne doit pas être null")
 	@Test
 	void constructeurMessageTest2Jeu1() {
-		Assertions.assertThrows(IllegalArgumentException.class,
-				() -> new Message("contenu", null));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new Message("contenu", null));
 	}
 
-	@DisplayName("pseudoUtilisateur ne doit pas être vide") 
+	@DisplayName("pseudoUtilisateur ne doit pas être vide")
 	@Test
 	void constructeurMessageTest2Jeu2() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> new Message("contenu", ""));
 	}
-	
+
 	@DisplayName("constructeur fonctionne")
 	@Test
 	void constructeurMessageTest3() {

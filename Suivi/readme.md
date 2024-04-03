@@ -241,3 +241,36 @@ Excellent
 - []EXCELLENT
 2. Méthode `modérer` de la classe `Message`
 - [] A FAIRE
+
+## Cohérence entre le code et le modèle
+
+1. Préconditions, postconditions et diagrammes de séquence
+- [] OK
+2. Diagrammes de classes et de séquence
+- [] OK
+3. Diagrammes de classes et code
+- []  A REVOIR - eg dans MiniSocs il y a des attributs dans votre diagramme de classes qui ne sont pas  dans votre code.
+4. Diagrammes de séquence et code
+- [] OK
+5. Table de décision des tests unitaires et programmation des tests unitaires
+- [] A COMPLETER (eg Message constructeur)
+6. Table de décision des tests de validation et programmation des tests de validation
+- [] A COMPLETER - moderer message
+
+## Qualité du code
+
+1. Spotbugs
+- [] OK
+2. Checkstyle
+- [] A COMPLETER
+
+## Application d'idiomes JAVA
+
+1. Idiome méthode `equals` et `hashCode` de la classe `Object`
+- [] OK
+2. Idiome méthode `toString` de la classe `Object`
+- [] OK
+3. Idiome des pipelines de *Streams*
+- [] A FAIRE
+4. Idiome de gestion des références `null` avec `Optional`
+- []A FAIRE

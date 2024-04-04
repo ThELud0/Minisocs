@@ -2,10 +2,12 @@
 package eu.telecomsudparis.csc4102.minisocs;
 
 import java.util.Objects;
+import java.util.concurrent.SubmissionPublisher;
 import java.util.HashMap;
 
 import java.util.Map;
 
+import eu.telecomsudparis.csc4102.cours.seance8.patrondeconception.publiersouscrire.Publication;
 import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
 /**
@@ -32,7 +34,8 @@ public class ReseauSocial {
 	 * les messages
 	 */
 	private final Map<String, Message> messages;
-
+	
+	private final SubmissionPublisher<Publication> producteur;
 	/**
 	 * construit un réseau social.
 	 * 
@@ -46,6 +49,7 @@ public class ReseauSocial {
 		this.etatReseau = EtatReseau.OUVERT;
 		this.membres = new HashMap<>();
 		this.messages = new HashMap<>();
+		this.producteur = new SubmissionPublisher<>();
 
 		assert invariant();
 	}
@@ -56,7 +60,8 @@ public class ReseauSocial {
 	 * @return {@code true} si l'invariant est respecté.
 	 */
 	public boolean invariant() {
-		return nomReseau != null && !nomReseau.isBlank() && etatReseau != null && membres != null && messages != null;
+		return nomReseau != null && !nomReseau.isBlank() && etatReseau != null && membres != null 
+				&& messages != null && producteur != null;
 	}
 
 	public void ajouterMembre(Membre membre) throws OperationImpossible {
@@ -88,6 +93,15 @@ public class ReseauSocial {
 	 */
 	public Map<String, Membre> getMembres() {
 		return membres;
+	}
+	
+	/**
+	 * obtient le producteur
+	 * 
+	 * @return SubmissionPublisheur<Publication>
+	 */
+	public SubmissionPublisher<Publication> getProducteur(){
+		return producteur;
 	}
 
 	/**

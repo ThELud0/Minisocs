@@ -35,6 +35,7 @@ public class Message {
 		if (pseudoUtilisateur == null || pseudoUtilisateur.isBlank()) {
 			throw new IllegalArgumentException("le pseudo de l'utilisateur ne peut pas être null ou vide");
 		}
+
 		if (instant == null || instant.isBlank()) {
 			throw new IllegalArgumentException("l'instant ne peut pas être null ou vide");
 		}

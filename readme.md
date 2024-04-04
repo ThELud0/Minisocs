@@ -535,27 +535,18 @@ Deux tests dans le jeu de tests 2 pour l'idempotence.
 
 ### Opération constructeur
 
-|                                            | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
-|:-------------------------------------------|:--|:--|:--|---|---|---|---|---|---|
-| nom réseau bien formé (non null ∧ non vide)| F | T | T | T | T | T | T | T | T |
-| pseudo bien formé (non null ∧ non vide)    |   | F | T | T | T | T | T | T | T |
-| utilisateur avec ce pseudo existant        |   |   | F | T | T | T | T | T | T |
-| réseau avec ce nom existant                |   |   |   | F | T | T | T | T | T |
-| le compte utilisateur est actif            |   |   |   |   | F | T | T | T | T |
-| message bien formé (contenu non null ∧ non vide)|   |   |   |   |   | F | T | T | T |
-| utilisateur est un membre du réseau        |   |   |   |   |   |   | F | T | T |
-| réseau avec ce nom ouvert                  |   |   |   |   |   |   |   | F | T |
-|                                            |   |   |   |   |   |   |   |   |   |
-| idMessage = setId(id)                      | F | F | F | F | F | F | F | F | T |
-| contenu' = contenu                         | F | F | F | F | F | F | F | F | T |
-| etatMessage = ATTENTE                      | F | F | F | F | F | F | F | F | T |
-| cache = False                              | F | F | F | F | F | F | F | F | T |
-| reseauSocial = reseau                      | F | F | F | F | F | F | F | F | T |
-| membre' = membre                           | F | F | F | F | F | F | F | F | T |
-|                                            |   |   |   |   |   |   |   |   |   |
-| levée d'une exception                      | oui | oui | oui | oui | oui | oui | oui | oui | non |
-|                                            |   |   |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests       | 2 | 2 | 1 | 1 | 2 | 2 | 1 | 1 | 1 |
+|                                                  | 1   | 2   | 3   |
+|:-------------------------------------------------|:----|:----|:----|
+| pseudo bien formé (non null ∧ non vide)          |  F  |  T  |  T  |
+| message bien formé (contenu non null ∧ non vide) |     |  F  |  T  |
+|                                                  |     |     |     |
+| idMessage non null                               |  F  |  F  |  T  |
+| contenu' = contenu                               |  F  |  F  |  T  |
+| etatMessage = ATTENTE                            |  F  |  F  |  T  |
+|                                                  |     |     |     |
+| levée d'une exception                            | oui | oui | non |
+|                                                  |     |     |     |
+| nombre de tests dans le jeu de tests             |  2  |  2  |  1  |
 
 ### Opération modérer()
  

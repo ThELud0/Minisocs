@@ -14,8 +14,10 @@ skinparam class {
 'Classes, énumérations, etc.'
 
 class MiniSocs {
-  - nom: String
+  - nomDuSysteme: String
 }
+note left of MiniSocs: utilisateurs: Collection Utilisateur\nreseaux: Collection ReseauSocial
+
 class Utilisateur {
   - pseudonyme: String
   - nom: String
@@ -23,8 +25,7 @@ class Utilisateur {
   - courriel: String
   - etatCompte: ÉtatCompte
 }
-
-note left of Utilisateur: membres: Collection Membre
+note bottom of Utilisateur: membres: Collection Membre
 
 enum ÉtatCompte <<enum>> {
   ACTIF

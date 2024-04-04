@@ -90,6 +90,15 @@ public class MiniSocs {
 	public List<String> listerUtilisateurs() {
 		return utilisateurs.values().stream().map(Utilisateur::toString).toList();
 	}
+	
+	/**
+	 * liste les réseaux.
+	 * 
+	 * @return la liste des noms des réseaux.
+	 */
+	public List<String> listerReseaux() {
+		return reseaux.values().stream().map(ReseauSocial::toString).toList();
+	}
 
 	/**
 	 * désactiver son compte utilisateur.

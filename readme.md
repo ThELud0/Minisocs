@@ -10,6 +10,10 @@ La syntaxe MarkDown de ce document est compatible avec la syntaxe
 GitLab, qui est documentée dans
 https://docs.gitlab.com/ee/user/markdown.html
 
+## 0. Dettes techniques 
+* Pour le moment nous avons des méthodes **getReseaux()** et **getUtilisateurs()** dans MiniSocs qui renvoie les collections complètes. Pour obtenir un élément de la collection nous procédons ainsi : **miniSocs.getReseaux().get(nomReseau)**. \
+Nous savons qu'il serait mieux de créer des méthodes **getReseau(nomReseau)** (et **getUtilisateur(pseudoUtilisateur)**) pour éviter le double appel mais n'avons pas le temps de le faire.
+
 ## 1. Spécification
 
 ### 1.1. Acteurs et cas d'utilisation

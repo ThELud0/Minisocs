@@ -23,6 +23,7 @@ class TestPosterMessage {
 	private String nomReseau;
 	private String pseudoMod;
 	private String pseudoMem;
+	private String instant;
 
 	@BeforeEach
 	void setUp() throws OperationImpossible {
@@ -33,6 +34,7 @@ class TestPosterMessage {
 		miniSocs.ajouterUtilisateur(pseudoMod, "nom1", "prenom1", "courriel1@gmail.com");
 		miniSocs.ajouterUtilisateur(pseudoMem, "nom2", "prenom2", "courriel2@gmail.com");
 		miniSocs.creerReseauSocial(pseudoMod, nomReseau, "pseudoReseauMod");
+		instant = miniSocs.getInstant();
 	}
 
 	@AfterEach
@@ -41,44 +43,45 @@ class TestPosterMessage {
 		pseudoMod = null;
 		pseudoMem = null;
 		nomReseau = null;
+		instant = null;
 	}
 
 	@Test
 	@DisplayName("nom du réseau est null")
 	void posterMessageTest1Jeu1() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage(pseudoMod, null, "contenu"));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage(pseudoMod, null, "contenu", instant));
 	}
 
 	@Test
 	@DisplayName("nom du réseau est vide")
 	void posterMessageTest1Jeu2() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage(pseudoMod, "", "contenu"));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage(pseudoMod, "", "contenu", instant));
 	}
 
 	@Test
 	@DisplayName("pseudo de l'utilisateur est null")
 	void posterMessageTest2Jeu1() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage(null, nomReseau, "contenu"));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage(null, nomReseau, "contenu", instant));
 	}
 
 	@Test
 	@DisplayName("pseudo de l'utilisateur est vide")
 	void posterMessageTest2Jeu2() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage("", nomReseau, "contenu"));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage("", nomReseau, "contenu", instant));
 	}
 
 	@Test
 	@DisplayName("utilisateur non existant")
 	void posterMessageTest3() throws Exception {
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.posterMessage("pseudo2", nomReseau, "contenu"));
+				() -> miniSocs.posterMessage("pseudo2", nomReseau, "contenu", instant));
 	}
 
 	@Test
 	@DisplayName("réseau non existant")
 	void posterMessageTest4() throws Exception {
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.posterMessage(pseudoMod, "nomReseau2", "contenu"));
+				() -> miniSocs.posterMessage(pseudoMod, "nomReseau2", "contenu", instant));
 	}
 
 	@Test
@@ -90,26 +93,26 @@ class TestPosterMessage {
 			Assertions.fail();
 		}
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.posterMessage(pseudoMod, nomReseau, "contenu"));
+				() -> miniSocs.posterMessage(pseudoMod, nomReseau, "contenu", instant));
 	}
 
 	@Test
 	@DisplayName("contenu du message est null")
 	void posterMessageTest6Jeu1() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage(pseudoMod, nomReseau, null));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage(pseudoMod, nomReseau, null, instant));
 	}
 
 	@Test
 	@DisplayName("contenu du message est vide")
 	void posterMessageTest6Jeu2() throws Exception {
-		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage(pseudoMem, nomReseau, ""));
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage(pseudoMem, nomReseau, "", instant));
 	}
 
 	@Test
 	@DisplayName("l'utilsateur n'est pas membre du réseau")
 	void posterMessageTest7() throws Exception {
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.posterMessage(pseudoMem, nomReseau, "contenu"));
+				() -> miniSocs.posterMessage(pseudoMem, nomReseau, "contenu", instant));
 	}
 
 	@Test
@@ -120,15 +123,27 @@ class TestPosterMessage {
 		rs.fermerReseau();
 
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.posterMessage(pseudoMod, nomReseau, "contenu"));
+				() -> miniSocs.posterMessage(pseudoMod, nomReseau, "contenu", instant));
+	}
+	
+	@Test
+	@DisplayName("instant est null")
+	void posterMessageTest9Jeu1() throws Exception {
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage(pseudoMod, nomReseau, "contenu", null));
+	}
+
+	@Test
+	@DisplayName("instant est vide")
+	void posterMessageTest9Jeu2() throws Exception {
+		Assertions.assertThrows(OperationImpossible.class, () -> miniSocs.posterMessage(pseudoMod, nomReseau, "contenu", ""));
 	}
 
 	@Test
 	@DisplayName("postconditions respectées et test si le message existe déjà")
-	void posterMessageTest9et10() throws Exception {
+	void posterMessageTest10et11() throws Exception {
 		// lorsqu'un modérateur poste le message
 		String idMessage = "";
-		miniSocs.posterMessage(pseudoMod, nomReseau, "contenu");
+		miniSocs.posterMessage(pseudoMod, nomReseau, "contenu", instant);
 		for (String i : miniSocs.getUtilisateurs().get(pseudoMod).getMembres().get(nomReseau).getMessages().keySet()) {
 			idMessage = i;
 		}
@@ -137,7 +152,7 @@ class TestPosterMessage {
 
 		// lorsqu'un membre simple poste le message
 		miniSocs.ajouterMembre(pseudoMod, pseudoMem, "pseudoReseau", nomReseau);
-		miniSocs.posterMessage(pseudoMem, nomReseau, "contenu");
+		miniSocs.posterMessage(pseudoMem, nomReseau, "contenu", instant);
 		for (String i : miniSocs.getUtilisateurs().get(pseudoMem).getMembres().get(nomReseau).getMessages().keySet()) {
 			idMessage = i;
 		}

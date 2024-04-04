@@ -5,4 +5,8 @@ Changement readme:
 -- Ajouter toutes les conditions et tests sur les pseudo reseaux (déjà FAIT pour pre/post conditions et tableaux de validation des tests de: créerReseauSocial, ajouterMembre)
 	Reste pour posterMessage.
 
+-- Compléter le changement de la table de POsterMessage (ajouter colonne pour test instant et modifier valeurs)
+-- Modifier diagrammes de sequences pour prendre en compte nouvel attribut instant de poster message
+	
+
 

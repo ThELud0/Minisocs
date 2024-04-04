@@ -1,9 +1,7 @@
 package eu.telecomsudparis.csc4102.minisocs;
 
-import java.time.Instant;
 import java.util.Objects;
 
-import eu.telecomsudparis.csc4102.util.Datutil;
 import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
 public class Message {
@@ -28,17 +26,19 @@ public class Message {
 	 * 
 	 * @param contenu           le contenu du message
 	 * @param pseudoUtilisateur le pseudo de l'utilisateur qui crée le message
+	 * @param instant			l'instant de création du message donné par MiniSocs
 	 */
-	public Message(final String contenu, final String pseudoUtilisateur) {
+	public Message(final String contenu, final String pseudoUtilisateur, final String instant) {
 		if (contenu == null || contenu.isBlank()) {
 			throw new IllegalArgumentException("le contenu du message ne peut pas être null ou vide");
 		}
 		if (pseudoUtilisateur == null || pseudoUtilisateur.isBlank()) {
 			throw new IllegalArgumentException("le pseudo de l'utilisateur ne peut pas être null ou vide");
 		}
-		Instant instant = Datutil.instantDuTest(); // j'espère que ça fait ce qu'il faut lol
-
-		this.idMessage = pseudoUtilisateur + Datutil.instantToString(instant);
+		if (instant == null || instant.isBlank()) {
+			throw new IllegalArgumentException("l'instant ne peut pas être null ou vide");
+		}
+		this.idMessage = pseudoUtilisateur + instant;
 		this.contenu = contenu;
 		this.etatMessage = EtatMessage.ATTENTE;
 	}

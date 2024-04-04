@@ -1,5 +1,6 @@
 package eu.telecomsudparis.csc4102.minisocs;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Optional;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import eu.telecomsudparis.csc4102.util.Datutil;
 import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
 /**
@@ -317,9 +319,10 @@ public class MiniSocs {
 	 * @param pseudoUtilisateur le pseudo de l'utilisateur qui poste.
 	 * @param nomReseau         le nom du réseau social.
 	 * @param contenu           le contenu du message.
+	 * @param instant			l'instant de création du message donné par MiniSocs
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
 	 */
-	public void posterMessage(final String pseudoUtilisateur, final String nomReseau, final String contenu)
+	public void posterMessage(final String pseudoUtilisateur, final String nomReseau, final String contenu, final String instant)
 			throws OperationImpossible {
 		if ((contenu == null) || (contenu.isBlank())) {
 			throw new OperationImpossible("le contenu du message ne peut pas être null ou vide");
@@ -349,7 +352,7 @@ public class MiniSocs {
 			throw new OperationImpossible("Cet utilisateur n'est pas membre du réseau");
 		}
 
-		Message message = new Message(contenu, pseudoUtilisateur);
+		Message message = new Message(contenu, pseudoUtilisateur, instant);
 
 		u.getMembres().get(nomReseau).ajouterMessage(message); // On ajoute le message à la collection de messages du
 																// membre
@@ -414,6 +417,14 @@ public class MiniSocs {
 		message.moderer(etatMessage);
 
 		assert message.invariant();
+	}
+	/**
+	 * 
+	 * @return	l'instant de l'appel de la fonction
+	 */
+	public String getInstant() {
+		Instant instant = Datutil.instantDuTest();
+		return Datutil.instantToString(instant);
 	}
 
 	/**

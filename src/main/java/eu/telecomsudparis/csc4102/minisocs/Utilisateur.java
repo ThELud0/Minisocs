@@ -36,7 +36,12 @@ public class Utilisateur {
 	 * état du compte de l'utilisateur.
 	 */
 	private EtatCompte etatCompte;
-
+	
+	/**
+	 * consommateur pour recevoir des notifications
+	 */
+	private MonConsommateur consommateur;
+	
 	/**
 	 * le string clé du hashmap réfere au nom du réseau social pour lequel
 	 * l'utilisateur est membre
@@ -70,6 +75,7 @@ public class Utilisateur {
 		this.courriel = courriel;
 		this.etatCompte = EtatCompte.ACTIF;
 		this.membres = new HashMap<>();
+		this.consommateur = new MonConsommateur(pseudonyme);
 		assert invariant();
 	}
 
@@ -81,7 +87,7 @@ public class Utilisateur {
 	public boolean invariant() {
 		return pseudonyme != null && !pseudonyme.isBlank() && nom != null && !nom.isBlank() && prenom != null
 				&& !prenom.isBlank() && EmailValidator.getInstance().isValid(courriel) && etatCompte != null
-				&& membres != null;
+				&& membres != null && consommateur != null;
 	}
 
 	/**
@@ -146,7 +152,16 @@ public class Utilisateur {
 	public Map<String, Membre> getMembres() {
 		return membres;
 	}
-
+	
+	/**
+	 * obtient le consommateur
+	 * 
+	 *  @return MonConsommateur consommateur
+	 */
+	public MonConsommateur getCnsommateur() {
+		return consommateur;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(pseudonyme);

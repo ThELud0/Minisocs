@@ -36,7 +36,7 @@ public class Message {
 		if (pseudoUtilisateur == null || pseudoUtilisateur.isBlank()) {
 			throw new IllegalArgumentException("le pseudo de l'utilisateur ne peut pas être null ou vide");
 		}
-		Instant instant = Datutil.instantDuTest(); // j'espère que ça fait ce qu'il faut lol
+		Instant instant = Datutil.instantDuTest(); 
 
 		this.idMessage = pseudoUtilisateur + Datutil.instantToString(instant);
 		this.contenu = contenu;

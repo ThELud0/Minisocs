@@ -3,6 +3,7 @@ package eu.telecomsudparis.csc4102.minisocs;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -92,14 +93,18 @@ public class MiniSocs {
 	}
 	
 	/**
-	 * liste les réseaux.
+	 * trouve un réseau fermé, s'il y en a un.
 	 * 
-	 * @return la liste des noms des réseaux.
+	 * @return un réseau fermé, s'il y en a un.
 	 */
-	public List<String> listerReseaux() {
-		return reseaux.values().stream().map(ReseauSocial::toString).toList();
+	public Optional<ReseauSocial> trouverReseauFerme() throws OperationImpossible {
+		return Optional.ofNullable(reseaux.values().stream().filter(rs -> rs.getEtatReseau().equals(EtatReseau.FERME)).findAny())
+				.orElseThrow(() -> new OperationImpossible("aucun réseau fermé"));
 	}
 
+	
+	
+	
 	/**
 	 * désactiver son compte utilisateur.
 	 * 

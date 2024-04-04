@@ -95,6 +95,9 @@ public class MiniSocs {
 	/**
 	 * trouve un réseau fermé, s'il y en a un.
 	 * 
+	 * (méthode non demandée par le cahier des charges
+	 *  pour montrer l'utilisation de Stream et Optional).
+	 * 
 	 * @return un réseau fermé, s'il y en a un.
 	 */
 	public Optional<ReseauSocial> trouverReseauFerme() throws OperationImpossible {

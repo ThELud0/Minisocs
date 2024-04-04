@@ -5,6 +5,7 @@ package eu.telecomsudparis.csc4102.minisocs.validation;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,6 +45,12 @@ class TestModererMessage {
 		contenu = null;
 	}
 
+	@Test
+	@DisplayName("pseudo modérateur est null")
+	void modererMessageTest1Jeu1() throws Exception {
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> miniSocs.modererMessage(pseudoMod, pseudoMem, pseudoReseau, null));
+	}
 	
 
 }

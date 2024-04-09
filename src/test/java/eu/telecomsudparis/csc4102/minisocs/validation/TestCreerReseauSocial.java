@@ -108,7 +108,6 @@ class TestCreerReseauSocial {
 		Assertions.assertTrue(miniSocs.getUtilisateurs().get(pseudo).getMembres().get(nomReseau).estModerateur());
 		Assertions.assertThrows(OperationImpossible.class,
 				() -> miniSocs.creerReseauSocial(pseudo, nomReseau, pseudoReseau));
-
 	}
 
 }

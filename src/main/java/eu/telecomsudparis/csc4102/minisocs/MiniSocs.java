@@ -351,6 +351,9 @@ public class MiniSocs {
 		if (u.getMembres().get(nomReseau) == null) {
 			throw new OperationImpossible("Cet utilisateur n'est pas membre du réseau");
 		}
+		if ((instant == null) || (instant.isBlank())) {
+			throw new OperationImpossible("l'instant ne peut pas être null ou vide");
+		}
 
 		Message message = new Message(contenu, pseudoUtilisateur, instant);
 

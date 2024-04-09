@@ -136,7 +136,42 @@ class TestModererMessage {
 	@Test
 	@DisplayName("message ne fait pas partie du réseau")
 	void modererMessageTest9() throws Exception {
+		
+		miniSocs.creerReseauSocial(pseudoMod, "nomReseau2", pseudoReseau);
+		miniSocs.ajouterMembre(pseudoMod, pseudoMem, "pseudoReseau2", "nomReseau2");
+		String instant2 = miniSocs.getInstant();
+		miniSocs.posterMessage(pseudoMem, "nomReseau2", "contenu2", instant2);
+		Message messageAutreReseau = miniSocs.getReseaux().get("nomReseau2").getMessages().get(pseudoMem+instant2);
+		
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.modererMessage();
+				() -> miniSocs.modererMessage(pseudoMod, nomReseau, messageAutreReseau, EtatMessage.ACCEPTE));
 	}
+	
+	@Test
+	@DisplayName("état demandé par modérateur n'est ni ACCEPTE ni REFUSE")
+	void modererMessageTest11() throws Exception {
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> miniSocs.modererMessage(pseudoMem, nomReseau, message, EtatMessage.ATTENTE));
+	}
+	
+	@Test
+	@DisplayName("état du message modéré est ACCEPTE après modération ACCEPTE")
+	void modererMessageTest11Jeu1() throws Exception {
+		
+		miniSocs.modererMessage(pseudoMod, nomReseau, message, EtatMessage.ACCEPTE);
+		
+		Assertions.assertTrue(message.getEtatMessage()== EtatMessage.ACCEPTE);
+	}
+	
+	@Test
+	@DisplayName("état du message modéré est REFUSE après modération REFUSE, puis test message n'est pas en attente de modération")
+	void modererMessageTest11Jeu2Puis10() throws Exception {
+		
+		miniSocs.modererMessage(pseudoMod, nomReseau, message, EtatMessage.REFUSE);
+		
+		Assertions.assertTrue(message.getEtatMessage()== EtatMessage.REFUSE);
+		Assertions.assertThrows(OperationImpossible.class,
+				() -> miniSocs.modererMessage(pseudoMod, nomReseau, message, EtatMessage.ACCEPTE));
+	}
+	
 }

@@ -139,10 +139,8 @@ class TestModererMessage {
 		
 		miniSocs.creerReseauSocial(pseudoMod, "nomReseau2", pseudoReseau);
 		miniSocs.ajouterMembre(pseudoMod, pseudoMem, "pseudoReseau2", "nomReseau2");
-		String instant2 = miniSocs.getInstant();
-		miniSocs.posterMessage(pseudoMem, "nomReseau2", "contenu2", instant2);
-		Message messageAutreReseau = miniSocs.getReseaux().get("nomReseau2").getMessages().get(pseudoMem+instant2);
-		
+		miniSocs.posterMessage(pseudoMem, "nomReseau2", "contenu2", "instant2");
+		Message messageAutreReseau = miniSocs.getReseaux().get("nomReseau2").getMessages().get(pseudoMem+"instant2");
 		Assertions.assertThrows(OperationImpossible.class,
 				() -> miniSocs.modererMessage(pseudoMod, nomReseau, messageAutreReseau, EtatMessage.ACCEPTE));
 	}

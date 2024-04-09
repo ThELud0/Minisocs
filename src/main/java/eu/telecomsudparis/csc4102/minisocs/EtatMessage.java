@@ -3,6 +3,7 @@ package eu.telecomsudparis.csc4102.minisocs;
 
 /**
  * ce type énumère l'état d'un message.
+ * États possibles : ACCEPTE, REFUSE, ATTENTE, CACHE
  */
 public enum EtatMessage {
 	/**

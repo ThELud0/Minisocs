@@ -3,6 +3,7 @@ package eu.telecomsudparis.csc4102.minisocs;
 
 /**
  * Ce type énuméré modélise l'état d'un réseau.
+ * États possibles : OUVERT, FERME
  */
 public enum EtatReseau {
 	/**

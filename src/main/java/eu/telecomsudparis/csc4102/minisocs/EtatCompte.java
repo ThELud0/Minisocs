@@ -4,6 +4,7 @@ package eu.telecomsudparis.csc4102.minisocs;
 
 /**
  * Ce type énuméré modélise l'état du compte d'un utilisateur.
+ * États possibles : ACTIF, DESACTIVE, BLOQUE
  */
 public enum EtatCompte {
 	/**

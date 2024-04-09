@@ -2,13 +2,7 @@ Tache, contenu, date limite
 Autre nouvelle information
 
 Changement readme:
--- Ajouter toutes les conditions et tests sur les pseudo reseaux (déjà FAIT pour pre/post conditions et tableaux de validation des tests de: créerReseauSocial, ajouterMembre)
-	Reste pour posterMessage.
-
--- Compléter le changement de la table de POsterMessage (ajouter colonne pour test instant et modifier valeurs)
--- Modifier diagrammes de sequences pour prendre en compte nouvel attribut instant de poster message
--- Mettre aussi a jour les preconditions post conditions
-(ENSEMBLE FAIT)
+-- Changer le diagramme de machine à états de message 
 
 
 

@@ -302,7 +302,7 @@ conditions.
 |                                            |   |   |   |   |   |   |   |   |   |
 | état du message est ACCEPTE ou REFUSE      | F | F | F | F | F | F | F | F | F | F | F | T |
 |                                            |   |   |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests       | 2 | 1 | 1 | 2 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| nombre de tests dans le jeu de tests       | 2 | 1 | 1 | 2 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 2 |
 
 
 # 3. Conception

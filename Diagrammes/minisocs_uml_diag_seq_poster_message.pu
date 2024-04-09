@@ -1,0 +1,58 @@
+@startuml
+
+'Diagramme de séquence (PlantUML)'
+
+'Configuration charte graphique'
+hide footbox
+skinparam sequenceParticipantBackgroundColor White
+skinparam sequenceActorBackgroundColor White
+
+'Déclaration des acteurs et des participants (déjà existants avant la séquence)'
+
+actor "__u:Utilisateur__" as u
+participant "__mem:Membre__" as mem
+participant "__m:MiniSocs__" as m
+participant "__rs:RéseauSocial__" as rs
+
+'Séquence avec les messages, les créations de participants, etc.'
+
+u -> m ++ : posterMessage(u.pseudo, nomReseau, contenu, instant)
+opt contenu, u.pseudo, nomReseau, instant non null ∧ non vide
+m -> m ++ : user=utilisateurs.get(u.pseudo)
+return
+opt user != null
+m -> m ++ : ec=user.getEtatCompte()
+return
+m -> m ++ : r=reseaux.get(nomReseau)
+return
+opt (r != null) ∧ (ec == ACTIF)
+m -> m ++ : er=r.getEtatReseau()
+return
+opt er == OUVERT
+m -> m ++ : member=user.getMembres.get(nomReseau)
+return
+opt member != null
+create "__msg:Message__" as msg
+m -> msg ++ : new Message(contenu, u.pseudo, instant)
+return
+m -> mem ++ : member.ajouterMessage(msg)
+return
+m -> rs ++ : r.ajouterMessage(msg)
+return
+opt member.estModerateur() == True
+m -> msg ++ : msg.moderer(ACCEPTE)
+return
+end
+
+end
+end
+end
+end
+end
+return
+
+
+
+
+
+@enduml

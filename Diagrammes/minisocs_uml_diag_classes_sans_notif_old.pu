@@ -14,10 +14,8 @@ skinparam class {
 'Classes, énumérations, etc.'
 
 class MiniSocs {
-  - nomDuSysteme: String
+  - nom: String
 }
-note left of MiniSocs: utilisateurs: Collection Utilisateur\nreseaux: Collection ReseauSocial
-
 class Utilisateur {
   - pseudonyme: String
   - nom: String
@@ -25,28 +23,24 @@ class Utilisateur {
   - courriel: String
   - etatCompte: ÉtatCompte
 }
-note bottom of Utilisateur: membres: Collection Membre
-
 enum ÉtatCompte <<enum>> {
   ACTIF
-  DESACTIVE
-  BLOQUE
+  DÉSACTIVÉ
+  BLOQUÉ
 }
 class Membre {
   - pseudoReseau: String
-  - moderateur: boolean
+  - typeMembre: TypeMembre
 }
-
-note left of Membre: reseauSocial: ReseauSocial\nutilisateur: Utilisateur\nmessages: Collection Message
-
-
+enum TypeMembre <<enum>> {
+  ADM
+  MOD
+  MEM
+}
 class ReseauSocial {
   - nom: String
   - etatReseau: EtatReseau
 }
-
-note right of ReseauSocial: membres: Collection Membre\nmessages: Collection Message
-
 enum EtatReseau <<enum>> {
   FERMÉ
   OUVERT
@@ -54,24 +48,19 @@ enum EtatReseau <<enum>> {
 class Message {
   - idMessage: int
   - contenu : String
-  - etatMessage: EtatMessage
-}
-enum EtatMessage <<enum>> {
-  ACCEPTE
-  REFUSE
-  ATTENTE
-  CACHE
+  - accepté: boolean
+  - caché: boolean
 }
 
 'Associations, etc.'
 MiniSocs *--> "*" Utilisateur
 MiniSocs *--> "*" Membre
-MiniSocs *--> "*" Message
 MiniSocs *--> "*" ReseauSocial
-Utilisateur "1" -- "*" Membre
-ReseauSocial "1" -- "*" Membre : < fait partie
-Message "*"<-- "1" Membre : < a posté
-ReseauSocial *--> "*" Message : > contient
+Utilisateur <|-- Membre
+ReseauSocial "1..*" -- "1..*" Membre : < fait partie
+Message "*" -- "1" Membre : < a posté
+ReseauSocial o-- "*" Message : < posté dans
+
 'Au besoin, aides pour le positionnement'
 
 @enduml

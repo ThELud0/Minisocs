@@ -14,15 +14,31 @@ left to right direction
 
 'Déclaration des acteurs :'
 actor Administrateur
+actor Moderateur
+actor Membre
 actor Utilisateur
-Utilisateur <|-- Administrateur
-
+Moderateur <|-- Administrateur
+Membre <|-- Moderateur
+Utilisateur <|-- Membre
 'Déclaration des cas d'utilisation dans le système'
 rectangle "MiniSocs" {
-:Administrateur: -- (ajouter un utilisateur)
-:Administrateur: -- (lister les utilisateur)
-:Administrateur: -- (bloquer un compte utilisateur)
-:Utilisateur:    -- (désactiver son compte)
+
+:Administrateur: -- (bloquer un compte utilisateur) 
+:Administrateur: -- (ajouter un utilisateur) 
+:Administrateur: -- (retirer un utilisateur) 
+:Moderateur: -- (ajouter un membre) 
+:Moderateur: -- (retirer un membre) 
+:Moderateur: -- (promouvoir un membre) 
+:Moderateur: -- (déstituer un modérateur)
+:Moderateur: -- (lister les membres)
+:Moderateur: -- (fermer son réseau social) 
+:Moderateur: -- (modérer un message) 
+:Utilisateur:    -- (désactiver son compte) 
+:Utilisateur:    -- (réactiver son compte) 
+:Membre:    -- (poster un message)
+:Membre:    -- (cacher son message) 
+:Membre:    -- (définir son pseudo pour un réseau) 
+:Utilisateur:    -- (créer un réseau social) 
 }
 
 @enduml

@@ -1,12 +1,17 @@
+// CHECKSTYLE:OFF
 package eu.telecomsudparis.csc4102.minisocs;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import eu.telecomsudparis.csc4102.util.OperationImpossible;
+
 /**
  * Cette classe réalise le concept d'utilisateur du système, à ne pas confondre
- * avec le concept de participant, sous-entendu à un réséeau social.
+ * avec le concept de membre, sous-entendu à un réséeau social.
  * 
  * @author Denis Conan
  */
@@ -31,6 +36,17 @@ public class Utilisateur {
 	 * état du compte de l'utilisateur.
 	 */
 	private EtatCompte etatCompte;
+	
+	/**
+	 * consommateur pour recevoir des notifications
+	 */
+	private MonConsommateur consommateur;
+	
+	/**
+	 * le string clé du hashmap réfere au nom du réseau social pour lequel
+	 * l'utilisateur est membre
+	 */
+	private final Map<String, Membre> membres;
 
 	/**
 	 * construit un utilisateur.
@@ -58,6 +74,8 @@ public class Utilisateur {
 		this.prenom = prenom;
 		this.courriel = courriel;
 		this.etatCompte = EtatCompte.ACTIF;
+		this.membres = new HashMap<>();
+		this.consommateur = new MonConsommateur(pseudonyme);
 		assert invariant();
 	}
 
@@ -68,7 +86,8 @@ public class Utilisateur {
 	 */
 	public boolean invariant() {
 		return pseudonyme != null && !pseudonyme.isBlank() && nom != null && !nom.isBlank() && prenom != null
-				&& !prenom.isBlank() && EmailValidator.getInstance().isValid(courriel) && etatCompte != null;
+				&& !prenom.isBlank() && EmailValidator.getInstance().isValid(courriel) && etatCompte != null
+				&& membres != null && consommateur != null;
 	}
 
 	/**
@@ -105,13 +124,44 @@ public class Utilisateur {
 	}
 
 	/**
-	 * bloque le comte de l'utilisateur. L'opération est idempotente.
+	 * bloque le compte de l'utilisateur. L'opération est idempotente.
 	 */
 	public void bloquerCompte() {
 		this.etatCompte = EtatCompte.BLOQUE;
 		assert invariant();
 	}
 
+	public void ajouterMembre(Membre membre) throws OperationImpossible {
+		if (membre == null || !(membre.invariant())) {
+			throw new OperationImpossible("membre invalide");
+		}
+		if (membres.get(membre.getReseauSocial().getNomReseau()) != null) {
+			throw new OperationImpossible("utilisateur déjà membre du réseau");
+		}
+
+		membres.put(membre.getReseauSocial().getNomReseau(), membre);
+
+		assert invariant();
+	}
+
+	/**
+	 * obtient les membres.
+	 * 
+	 * @return hashmap membres.
+	 */
+	public Map<String, Membre> getMembres() {
+		return membres;
+	}
+	
+	/**
+	 * obtient le consommateur
+	 * 
+	 *  @return MonConsommateur consommateur
+	 */
+	public MonConsommateur getCnsommateur() {
+		return consommateur;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(pseudonyme);

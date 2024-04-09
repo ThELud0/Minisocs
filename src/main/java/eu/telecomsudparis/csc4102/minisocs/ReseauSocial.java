@@ -168,8 +168,9 @@ public class ReseauSocial {
 
 	@Override
 	public String toString() {
-		return "ReseauSocial [nomReseau=" + nomReseau + ", etatReseau=" + etatReseau + ", membres=" + membres
-				+ ", messages=" + messages + "]";
+	
+		return "ReseauSocial [nomReseau=" + nomReseau + ", etatReseau=" + etatReseau +  "]";
+	
+	
 	}
-
 }

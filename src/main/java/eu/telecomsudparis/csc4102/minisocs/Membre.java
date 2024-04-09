@@ -137,7 +137,7 @@ public class Membre {
 
 	@Override
 	public String toString() {
-		return "Membre [utilisateur=" + utilisateur + ", reseau social=" + reseauSocial + ", pseudo dans le reseau="
+		return "Membre [utilisateur=" + utilisateur.toString() + ", reseau social=" + reseauSocial.toString() + ", pseudo dans le reseau="
 				+ pseudoReseau + "]";
 	}
 

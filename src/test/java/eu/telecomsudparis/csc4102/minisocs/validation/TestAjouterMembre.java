@@ -189,6 +189,4 @@ class TestAjouterMembre {
 				() -> miniSocs.ajouterMembre(pseudoMod, pseudoMem, pseudoReseau, nomReseau));
 
 	}
-
-	/* TEST 6 membre fait déja parti du réseau à faire à la fin */
 }

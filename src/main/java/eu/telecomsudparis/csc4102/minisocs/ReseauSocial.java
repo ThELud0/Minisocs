@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-import eu.telecomsudparis.csc4102.cours.seance8.patrondeconception.publiersouscrire.Publication;
+
 import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
 /**

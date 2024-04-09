@@ -16,8 +16,8 @@ participant "__rs:RéseauSocial__" as rs
 
 'Séquence avec les messages, les créations de participants, etc.'
 
-u -> m ++ : posterMessage(u.pseudo, nomReseau, contenu)
-opt contenu, u.pseudo, nomReseau non null ∧ non vide
+u -> m ++ : posterMessage(u.pseudo, nomReseau, contenu, instant)
+opt contenu, u.pseudo, nomReseau, instant non null ∧ non vide
 m -> m ++ : user=utilisateurs.get(u.pseudo)
 return
 opt user != null
@@ -33,7 +33,7 @@ m -> m ++ : member=user.getMembres.get(nomReseau)
 return
 opt member != null
 create "__msg:Message__" as msg
-m -> msg ++ : new Message(contenu, u.pseudo)
+m -> msg ++ : new Message(contenu, u.pseudo, instant)
 return
 m -> mem ++ : member.ajouterMessage(msg)
 return

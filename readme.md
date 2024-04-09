@@ -111,7 +111,8 @@ NB : l'opération est idempotente.
 ∧ le compte n'est pas bloqué \
 ∧ utilisateur avec ce pseudo existant \
 ∧ message bien formé (non null ∧ non vide) \
-∧ l'utilisateur est un membre du réseau
+∧ l'utilisateur est un membre du réseau \
+∧ instant non null ∧ non vide
 - postcondition : \
 ∧ le message est en attente de traitement par un modérateur 
 
@@ -249,21 +250,21 @@ conditions.
 
 #### Poster un message (HAUTE)
 
-|                                            | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
-|:-------------------------------------------|:--|:--|:--|---|---|---|---|---|---|
-| nom réseau bien formé (non null ∧ non vide)| F | T | T | T | T | T | T | T | T |
-| pseudo bien formé (non null ∧ non vide)    |   | F | T | T | T | T | T | T | T |
-| utilisateur avec ce pseudo existant        |   |   | F | T | T | T | T | T | T |
-| réseau avec ce nom existant                |   |   |   | F | T | T | T | T | T |
-| le compte utilisateur n'est pas bloqué     |   |   |   |   | F | T | T | T | T |
-| message bien formé (non null ∧ non vide)   |   |   |   |   |   | F | T | T | T |
-| utilisateur est un membre du réseau        |   |   |   |   |   |   | F | T | T |
-| réseau avec ce nom ouvert                  |   |   |   |   |   |   |   | F | T |
-| instant bien formé (non null ∧ non vide)   |   |   |   |   |   |   |   |   |   |
-|                                            |   |   |   |   |   |   |   |   |   |
-| message en attente de traitement par un mod| F | F | F | F | F | F | F | F | T |
-|                                            |   |   |   |   |   |   |   |   |   |
-| nombre de tests dans le jeu de tests       | 2 | 2 | 1 | 1 | 2 | 2 | 1 | 1 | 1 |
+|                                            | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|:-------------------------------------------|:--|:--|:--|---|---|---|---|---|---|---|
+| nom réseau bien formé (non null ∧ non vide)| F | T | T | T | T | T | T | T | T | T |
+| pseudo bien formé (non null ∧ non vide)    |   | F | T | T | T | T | T | T | T | T |
+| utilisateur avec ce pseudo existant        |   |   | F | T | T | T | T | T | T | T |
+| réseau avec ce nom existant                |   |   |   | F | T | T | T | T | T | T |
+| le compte utilisateur n'est pas bloqué     |   |   |   |   | F | T | T | T | T | T |
+| message bien formé (non null ∧ non vide)   |   |   |   |   |   | F | T | T | T | T |
+| utilisateur est un membre du réseau        |   |   |   |   |   |   | F | T | T | T |
+| réseau avec ce nom ouvert                  |   |   |   |   |   |   |   | F | T | T |
+| instant bien formé (non null ∧ non vide)   |   |   |   |   |   |   |   |   | F | T |
+|                                            |   |   |   |   |   |   |   |   |   |   |
+| message en attente de traitement par un mod| F | F | F | F | F | F | F | F | F | T |
+|                                            |   |   |   |   |   |   |   |   |   |   |
+| nombre de tests dans le jeu de tests       | 2 | 2 | 1 | 1 | 2 | 2 | 1 | 1 | 2 | 1 |
 
 #### Créer un réseau (HAUTE)
 
@@ -464,35 +465,31 @@ Voici tous les attributs de la classe :
 — final int idMessage
 — String contenu
 — etatMessage EtatMessage 
-— boolean cache
-— reseauSocial ReseauSocial
-— membre Membre
 
 Voici toute les méthodes de la classe : 
 # constructeur()
 + modérer()
 + cacher()
 + visible()
-+ setId()
-+ setContent()
-+ initEtatMessage()
-+ envoyerVersListeAttente()
 + getId() : int
-+ getContent : String
-+ getEtatMessage : EtatMessage
-+ getMembre() : Membre
-# destructeur
++ getContent() : String
++ getEtatMessage() : EtatMessage
++ hashcode() : int
++ equals() : boolean
++ invariant() : boolean
++ toString() : String
+# destructeur()
 
 ```
 
 ### 7.2.3. Invariant
 
 ```
-  (cache ⇒ etatMessage==ACCEPTE)
-∧ contenu != null ∧ !contenu.isBlank()
-∧ idMessage != null
-∧ reseauSocial != null
-∧ membre != null
+ (idMessage != null)
+ && (!idMessage.isBlank()) 
+ && (etatMessage != null 
+ && contenu != null)
+ && (!contenu.isBlank())
 ```
 
 # 8 Préparation des tests unitaires

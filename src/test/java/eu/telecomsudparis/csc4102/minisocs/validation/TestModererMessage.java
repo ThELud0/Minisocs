@@ -7,8 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import eu.telecomsudparis.csc4102.minisocs.Message;
 import eu.telecomsudparis.csc4102.minisocs.MiniSocs;
 import eu.telecomsudparis.csc4102.util.OperationImpossible;
 
@@ -19,6 +21,7 @@ class TestModererMessage {
 	private String pseudoMem;
 	private String pseudoReseau;
 	private String contenu;
+	private String instant;
 	
 	@BeforeEach
 	void setUp() throws OperationImpossible {
@@ -28,12 +31,13 @@ class TestModererMessage {
 		pseudoReseau = "pseudoReseau";
 		nomReseau = "nomReseau";
 		contenu = "contenu";
+		instant = miniSocs.getInstant();
 		miniSocs.ajouterUtilisateur(pseudoMod, "nom1", "prenom1", "courriel1@gmail.com");
 		miniSocs.ajouterUtilisateur(pseudoMem, "nom2", "prenom2", "courriel2@gmail.com");
 		miniSocs.creerReseauSocial(pseudoMod, nomReseau, "pseudoReseauMod");
 		miniSocs.ajouterMembre(pseudoMod, pseudoMem, pseudoReseau, nomReseau);
-		miniSocs.posterMessage(pseudoMem, nomReseau, contenu);
-	}
+		miniSocs.posterMessage(pseudoMem, nomReseau, contenu, instant);
+				}
 	
 	@AfterEach
 	void tearDown() {
@@ -43,13 +47,14 @@ class TestModererMessage {
 		pseudoReseau = null;
 		nomReseau = null;
 		contenu = null;
+		instant = null;
 	}
 
 	@Test
 	@DisplayName("pseudo modérateur est null")
 	void modererMessageTest1Jeu1() throws Exception {
 		Assertions.assertThrows(OperationImpossible.class,
-				() -> miniSocs.modererMessage(pseudoMod, pseudoMem, pseudoReseau, null));
+				() -> miniSocs.modererMessage(null, nomReseau, , null));
 	}
 	
 

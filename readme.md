@@ -470,7 +470,6 @@ Voici toute les méthodes de la classe :
 # constructeur()
 + modérer()
 + cacher()
-+ visible()
 + getId() : int
 + getContent() : String
 + getEtatMessage() : EtatMessage

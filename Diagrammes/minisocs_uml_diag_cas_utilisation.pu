@@ -33,11 +33,14 @@ rectangle "MiniSocs" {
 :Moderateur: -- (lister les membres)
 :Moderateur: -- (fermer son réseau social) 
 :Moderateur: -- (modérer un message) 
+:Moderateur:    <-- (notifier un message en attente de modération)
 :Utilisateur:    -- (désactiver son compte) 
 :Utilisateur:    -- (réactiver son compte) 
+:Membre:    <-- (notifier un message accepté sur le réseau)
 :Membre:    -- (poster un message)
 :Membre:    -- (cacher son message) 
 :Membre:    -- (définir son pseudo pour un réseau) 
+:Membre:    -- (définir sa stratégie de notification) 
 :Utilisateur:    -- (créer un réseau social) 
 }
 

@@ -10,7 +10,7 @@ import java.util.concurrent.Flow.Subscription;
 /**
  * Cette classe définit le consommateur. Les publications sont typées.
  * 
- * @author Denis Conan
+ * @author Denis Conan, modifié par Ludovic HU
  */
 public class MonConsommateur implements Subscriber<Publication> {
 	/**

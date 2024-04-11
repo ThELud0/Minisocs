@@ -43,7 +43,8 @@ opt member.estModerateur() == True
 m -> msg ++ : msg.moderer(ACCEPTE)
 return
 end
-
+m -> rs ++ : getProducteur().submit(new Publication(msg, nomReseau));
+return
 end
 end
 end

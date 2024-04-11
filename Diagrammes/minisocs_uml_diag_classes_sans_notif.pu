@@ -27,7 +27,7 @@ class Utilisateur {
 }
 note bottom of Utilisateur: membres: Collection Membre
 
-enum ÉtatCompte <<enum>> {
+enum EtatCompte <<enum>> {
   ACTIF
   DESACTIVE
   BLOQUE
@@ -37,12 +37,34 @@ class Membre {
   - moderateur: boolean
 }
 
-note left of Membre: reseauSocial: ReseauSocial\nutilisateur: Utilisateur\nmessages: Collection Message
+note left of Membre: reseauSocial: ReseauSocial\nutilisateur: Utilisateur\nmessages: Collection Message\nconsommateur: MonConsommateur
+
+enum EtatNotif <<enum>> {
+  IMMEDIAT
+  RIEN
+  QUOTIDIEN
+}
+
+class MonConsommateur {
+  - id: String
+  - souscription: Subscription
+  - etatNotif: EtatNotif 
+  - date: LocalDate
+  - moderateur: boolean 
+  - compteurMessage: int
+  - compteurMessageEnAttente: int
+}
+
+class Publication {
+  - nomReseau: String
+}
+note bottom of Publication: message: Message
 
 
 class ReseauSocial {
   - nom: String
   - etatReseau: EtatReseau
+  - producteur: SubmissionPublisher<Publication>
 }
 
 note right of ReseauSocial: membres: Collection Membre\nmessages: Collection Message
@@ -68,7 +90,11 @@ MiniSocs *--> "*" Utilisateur
 MiniSocs *--> "*" Membre
 MiniSocs *--> "*" Message
 MiniSocs *--> "*" ReseauSocial
+MiniSocs *--> "*" MonConsommateur
+MiniSocs *--> "*" Publication
 Utilisateur "1" -- "*" Membre
+Membre "1" --> "1" MonConsommateur
+Publication "1" --> "1" Message : > contient un
 ReseauSocial "1" -- "*" Membre : < fait partie
 Message "*"<-- "1" Membre : < a posté
 ReseauSocial *--> "*" Message : > contient

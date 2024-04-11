@@ -9,14 +9,14 @@ state EnCréation : entry : constructeur()
 state EnDestruction : entry : destructeur()
 
 [*] -right-> EnCréation
-EnCréation --> AcceptéEtNonCaché : post\n[typeMembre==MOD ∨ typeMembre==ADM]\n/modérer(mem.getTypeMembre(), etatMessage)
-EnCréation -right-> EnAttente : mise en attente\n[typeMembre==MEM]\n/envoyerVersListeAttente()
-AcceptéEtNonCaché -right-> AcceptéEtCaché : membre cache\n/cacher()
-AcceptéEtCaché -left-> AcceptéEtNonCaché : membre rend visible\n/setVisible()
-EnAttente --> AcceptéEtNonCaché : post/modérer()
-EnAttente --> EnDestruction : refus/modérer()
+EnCréation --> Accepté : post\n[u.getMembres().get(nomReseau).EstModerateur==True]\n/posterMessage(Utilisateur u)
+EnCréation -right-> EnAttente : mise en attente\n[u.getMembres().get(nomReseau).EstModerateur==False]\n/posterMessage(Utilisateur u)
+Accepté -right-> Caché : membre cache\n[hidden==True]\n/cacher(boolean hidden)
+Caché -left-> Accepté : membre rend visible\n[hidden==False]\n/cacher(boolean hidden)
+EnAttente --> Accepté : post\n[etat==ACCEPTE]\n/moderer(EtatMessage etat)
+EnAttente --> EnDestruction : refus\n[etat==REFUSE]\n/moderer(EtatMessage etat)
 EnAttente --> EnDestruction : supression du réseau
-AcceptéEtNonCaché --> EnDestruction : supression du réseau
-AcceptéEtCaché --> EnDestruction : supression du réseau
+Accepté --> EnDestruction : supression du réseau
+Caché --> EnDestruction : supression du réseau
 EnDestruction -left-> [*]
 @enduml

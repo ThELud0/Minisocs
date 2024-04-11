@@ -25,13 +25,18 @@ public class Membre {
 	private String pseudoReseau;
 
 	private boolean moderateur;
+	
+	/**
+	 * consommateur pour recevoir des notifications
+	 */
+	private MonConsommateur consommateur;
 
 	/**
 	 * les messages
 	 */
 	private final Map<String, Message> messages;
 
-	public Membre(final Utilisateur utilisateur, final ReseauSocial reseauSocial, final String pseudoReseau) {
+	public Membre(final Utilisateur utilisateur, final ReseauSocial reseauSocial, final String pseudoReseau, EtatNotif etat) {
 		if (utilisateur == null || !(utilisateur.invariant())) {
 			throw new IllegalArgumentException("utilisateur invalide");
 		}
@@ -47,17 +52,21 @@ public class Membre {
 		this.pseudoReseau = pseudoReseau;
 		this.moderateur = false;
 		this.messages = new HashMap<>();
+		this.consommateur = new MonConsommateur(pseudoReseau);
+		this.consommateur.setEtatNotif(etat);
 
 		assert invariant();
 	}
 
 	public void setModerateur() {
 		this.moderateur = true;
+		this.consommateur.setModerateur();
 		return;
 	}
 
 	public void demote() {
 		this.moderateur = false;
+		this.consommateur.demote();
 		return;
 	}
 
@@ -115,7 +124,11 @@ public class Membre {
 	 */
 	public boolean invariant() {
 		return utilisateur != null && reseauSocial != null && messages != null && utilisateur.invariant()
-				&& reseauSocial.invariant() && pseudoReseau != null && !pseudoReseau.isBlank();
+				&& reseauSocial.invariant() && pseudoReseau != null && !pseudoReseau.isBlank() && consommateur != null;
+	}
+	
+	public MonConsommateur getConsommateur() {
+		return consommateur;
 	}
 
 	@Override
@@ -138,7 +151,7 @@ public class Membre {
 	@Override
 	public String toString() {
 		return "Membre [utilisateur=" + utilisateur.toString() + ", reseau social=" + reseauSocial.toString() + ", pseudo dans le reseau="
-				+ pseudoReseau + "]";
+				+ pseudoReseau + ", modérateur=" + moderateur + "]";
 	}
 
 }

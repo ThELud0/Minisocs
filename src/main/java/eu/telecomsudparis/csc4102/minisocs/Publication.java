@@ -7,32 +7,46 @@ import java.util.Objects;
  * Cette classe definit le type des publications transmises entre les
  * producteurs et les consommateurs.
  * 
- * @author Denis Conan
+ * @author Denis Conan, modifié par Ludovic HU et Jeanne VILLETTE
  */
 public class Publication {
 	/**
 	 * l'information.
 	 */
-	private String contenu;
+	private Message message;
+	
+	/**
+	 * le nom du réseau envoyant la publication
+	 */
+	private String nomReseau;
 	
 	/**
 	 * constructeur.
 	 */
-	public Publication(final String contenu) {
-		this.contenu = contenu;
+	public Publication(final Message message, String nomReseau) {
+		this.nomReseau = nomReseau;
+		this.message = message;
 	}
 
 	/**
-	 * obtient le contenu.
+	 * obtient le message.
+	 * @return le message.
+	 */
+	public Message getMessage() {
+		return message;
+	}
+	
+	/**
+	 * obtient le nom du réseau.
 	 * @return la chaîne de caractères.
 	 */
-	public String getContenu() {
-		return contenu;
+	public String getNomReseau() {
+		return nomReseau;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(contenu);
+		return Objects.hash(message);
 	}
 
 	@Override
@@ -43,11 +57,11 @@ public class Publication {
 		if (!(obj instanceof Publication other)) {
 			return false;
 		}
-		return Objects.equals(contenu, other.contenu);
+		return Objects.equals(message, other.message);
 	}
 
 	@Override
 	public String toString() {
-		return "Publication [contenu=" + contenu + "]";
+		return "Publication [message=" + message.toString() + ", en provenance de : " + nomReseau + "]";
 	}
 }

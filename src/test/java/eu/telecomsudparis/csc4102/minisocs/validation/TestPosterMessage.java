@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import eu.telecomsudparis.csc4102.minisocs.EtatCompte;
 import eu.telecomsudparis.csc4102.minisocs.EtatMessage;
+import eu.telecomsudparis.csc4102.minisocs.EtatNotif;
 import eu.telecomsudparis.csc4102.minisocs.EtatReseau;
 import eu.telecomsudparis.csc4102.minisocs.Message;
 import eu.telecomsudparis.csc4102.minisocs.MiniSocs;
@@ -24,6 +25,7 @@ class TestPosterMessage {
 	private String pseudoMod;
 	private String pseudoMem;
 	private String instant;
+	private EtatNotif etat;
 
 	@BeforeEach
 	void setUp() throws OperationImpossible {
@@ -31,9 +33,10 @@ class TestPosterMessage {
 		pseudoMod = "pseudoMod";
 		pseudoMem = "pseudoMem";
 		nomReseau = "nomReseau";
+		etat = EtatNotif.IMMEDIAT;
 		miniSocs.ajouterUtilisateur(pseudoMod, "nom1", "prenom1", "courriel1@gmail.com");
 		miniSocs.ajouterUtilisateur(pseudoMem, "nom2", "prenom2", "courriel2@gmail.com");
-		miniSocs.creerReseauSocial(pseudoMod, nomReseau, "pseudoReseauMod");
+		miniSocs.creerReseauSocial(pseudoMod, nomReseau, "pseudoReseauMod", etat);
 		instant = miniSocs.getInstant();
 	}
 
@@ -151,7 +154,7 @@ class TestPosterMessage {
 				.get(idMessage).getEtatMessage() == EtatMessage.ACCEPTE);
 
 		// lorsqu'un membre simple poste le message
-		miniSocs.ajouterMembre(pseudoMod, pseudoMem, "pseudoReseau", nomReseau);
+		miniSocs.ajouterMembre(pseudoMod, pseudoMem, "pseudoReseau", nomReseau, etat);
 		miniSocs.posterMessage(pseudoMem, nomReseau, "contenu", instant);
 		for (String i : miniSocs.getUtilisateurs().get(pseudoMem).getMembres().get(nomReseau).getMessages().keySet()) {
 			idMessage = i;

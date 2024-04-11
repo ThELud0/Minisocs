@@ -20,6 +20,11 @@ public class Message {
 	 * l'état du message.
 	 */
 	private EtatMessage etatMessage;
+	
+	/**
+	 * l'instant du message.
+	 */
+	private String instant;
 
 	/**
 	 * construit un message.
@@ -42,6 +47,7 @@ public class Message {
 		this.idMessage = pseudoUtilisateur + instant;
 		this.contenu = contenu;
 		this.etatMessage = EtatMessage.ATTENTE;
+		this.instant = instant;
 	}
 
 	/**
@@ -109,6 +115,16 @@ public class Message {
 		return contenu;
 	}
 
+	/**
+	 * 
+	 * obtenir l'instant d'un message.
+	 * 
+	 * @return l'instant du message.
+	 */
+	public String getInstant() {
+		return instant;
+	}
+	
 	/**
 	 * 
 	 * obtenir l'état d'un message.

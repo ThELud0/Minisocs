@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import eu.telecomsudparis.csc4102.minisocs.EtatMessage;
+import eu.telecomsudparis.csc4102.minisocs.EtatNotif;
 import eu.telecomsudparis.csc4102.minisocs.Message;
 import eu.telecomsudparis.csc4102.minisocs.MiniSocs;
 import eu.telecomsudparis.csc4102.minisocs.ReseauSocial;
@@ -25,6 +26,7 @@ class TestModererMessage {
 	private String contenu;
 	private String instant;
 	private Message message;
+	private EtatNotif etat;
 	
 	@BeforeEach
 	void setUp() throws OperationImpossible {
@@ -34,11 +36,12 @@ class TestModererMessage {
 		pseudoReseau = "pseudoReseau";
 		nomReseau = "nomReseau";
 		contenu = "contenu";
+		etat = EtatNotif.IMMEDIAT;
 		instant = miniSocs.getInstant();
 		miniSocs.ajouterUtilisateur(pseudoMod, "nom1", "prenom1", "courriel1@gmail.com");
 		miniSocs.ajouterUtilisateur(pseudoMem, "nom2", "prenom2", "courriel2@gmail.com");
-		miniSocs.creerReseauSocial(pseudoMod, nomReseau, "pseudoReseauMod");
-		miniSocs.ajouterMembre(pseudoMod, pseudoMem, pseudoReseau, nomReseau);
+		miniSocs.creerReseauSocial(pseudoMod, nomReseau, "pseudoReseauMod", etat);
+		miniSocs.ajouterMembre(pseudoMod, pseudoMem, pseudoReseau, nomReseau, etat);
 		miniSocs.ajouterUtilisateur("pseudoUtilisateur", "nom3", "prenom3", "courriel3@gmail.com");
 		miniSocs.posterMessage(pseudoMem, nomReseau, contenu, instant);
 		message = miniSocs.getReseaux().get(nomReseau).getMessages().get(pseudoMem+instant);
@@ -137,8 +140,8 @@ class TestModererMessage {
 	@DisplayName("message ne fait pas partie du réseau")
 	void modererMessageTest9() throws Exception {
 		
-		miniSocs.creerReseauSocial(pseudoMod, "nomReseau2", pseudoReseau);
-		miniSocs.ajouterMembre(pseudoMod, pseudoMem, "pseudoReseau2", "nomReseau2");
+		miniSocs.creerReseauSocial(pseudoMod, "nomReseau2", pseudoReseau, etat);
+		miniSocs.ajouterMembre(pseudoMod, pseudoMem, "pseudoReseau2", "nomReseau2", etat);
 		miniSocs.posterMessage(pseudoMem, "nomReseau2", "contenu2", "instant2");
 		Message messageAutreReseau = miniSocs.getReseaux().get("nomReseau2").getMessages().get(pseudoMem+"instant2");
 		Assertions.assertThrows(OperationImpossible.class,
@@ -155,8 +158,9 @@ class TestModererMessage {
 	@Test
 	@DisplayName("état du message modéré est ACCEPTE après modération ACCEPTE")
 	void modererMessageTest11Jeu1() throws Exception {
-		
+
 		miniSocs.modererMessage(pseudoMod, nomReseau, message, EtatMessage.ACCEPTE);
+
 		
 		Assertions.assertTrue(message.getEtatMessage()== EtatMessage.ACCEPTE);
 	}

@@ -93,7 +93,7 @@ public class MiniSocs {
 	public List<String> listerUtilisateurs() {
 		return utilisateurs.values().stream().map(Utilisateur::toString).toList();
 	}
-	
+
 	/**
 	 * trouve un réseau fermé, s'il y en a un.
 	 * 
@@ -107,9 +107,9 @@ public class MiniSocs {
 				.orElseThrow(() -> new OperationImpossible("aucun réseau fermé"));
 	}
 
-	
-	
-	
+
+
+
 	/**
 	 * désactiver son compte utilisateur.
 	 * 
@@ -209,9 +209,10 @@ public class MiniSocs {
 	 * @param nomReseau    le nom du réseau.
 	 * @param pseudo       le nom de l'utilisateur qui crée le réseau
 	 * @param pseudoReseau le pseudo affiché dans le réseau par l'utilisateur
+	 * @param etat		   le type de notifications choisi pour le membre
 	 * @throws OperationImpossible en cas de problèmes sur les pré-conditions.
 	 */
-	public void creerReseauSocial(final String pseudo, final String nomReseau, final String pseudoReseau)
+	public void creerReseauSocial(final String pseudo, final String nomReseau, final String pseudoReseau, final EtatNotif etat)
 			throws OperationImpossible {
 		if (pseudo == null || pseudo.isBlank()) {
 			throw new OperationImpossible("pseudo de l'utilisateur ne peut pas être null ou vide");
@@ -236,11 +237,18 @@ public class MiniSocs {
 
 		reseaux.put(nomReseau, new ReseauSocial(nomReseau));
 
-		Membre m = new Membre(u, reseaux.get(nomReseau), pseudoReseau);
+		Membre m = new Membre(u, reseaux.get(nomReseau), pseudoReseau, etat);
 		reseaux.get(nomReseau).ajouterMembre(m);
 		u.ajouterMembre(m);
 		m.setModerateur();
-
+		reseaux.get(nomReseau).getProducteur().subscribe(m.getConsommateur());
+		try {
+			final int sleeptime = 80;
+			Thread.sleep(sleeptime);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assert invariant();
 
 	}
@@ -253,10 +261,11 @@ public class MiniSocs {
 	 * @param pseudoReseau le pseudo sous lequel le membre est ajouté dans le
 	 *                     réseau.
 	 * @param nomReseau    le nom du réseau social.
+	 * @param etat			la strategie de notification choisie
 	 * @throws OperationImpossible en cas de problème sur les pré-conditions.
 	 */
 	public void ajouterMembre(final String pseudoMod, final String pseudoMem, final String pseudoReseau,
-			final String nomReseau) throws OperationImpossible {
+			final String nomReseau, final EtatNotif etat) throws OperationImpossible {
 		if (nomReseau == null || nomReseau.isBlank()) {
 			throw new OperationImpossible("nom du réseau ne peut pas être null ou vide");
 		}
@@ -306,9 +315,17 @@ public class MiniSocs {
 			throw new OperationImpossible("pseudo choisi pour le réseau (" + pseudoReseau + ") déjà choisi");
 		}
 
-		Membre m = new Membre(mem, rs, pseudoReseau);
+		Membre m = new Membre(mem, rs, pseudoReseau, etat);
 		rs.ajouterMembre(m);
 		mem.ajouterMembre(m);
+		rs.getProducteur().subscribe(m.getConsommateur());
+		try {
+			final int sleeptime = 80;
+			Thread.sleep(sleeptime);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -358,12 +375,22 @@ public class MiniSocs {
 		Message message = new Message(contenu, pseudoUtilisateur, instant);
 
 		u.getMembres().get(nomReseau).ajouterMessage(message); // On ajoute le message à la collection de messages du
-																// membre
+		// membre
 		rs.ajouterMessage(message); // On ajoute le message à la collection de messages du réseau
 
+			
 		// Si le membre est modérateur alors son message est automatiquement accepté
 		if (u.getMembres().get(nomReseau).estModerateur()) {
 			message.moderer(EtatMessage.ACCEPTE);
+		}
+
+		rs.getProducteur().submit(new Publication(message, rs.getNomReseau()));
+		try {
+			final int sleeptime = 80;
+			Thread.sleep(sleeptime);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		assert invariant();
@@ -418,6 +445,20 @@ public class MiniSocs {
 			throw new OperationImpossible("modérer un message permet seulement de l'accepter ou de le refuser");
 		}
 		message.moderer(etatMessage);
+
+		if (etatMessage == EtatMessage.ACCEPTE) {
+
+			rs.getProducteur().submit(new Publication(message, rs.getNomReseau()));
+			
+			try {
+				final int sleeptime = 80;
+				Thread.sleep(sleeptime);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 
 		assert message.invariant();
 	}
